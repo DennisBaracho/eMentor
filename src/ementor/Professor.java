@@ -17,23 +17,31 @@ public class Professor extends Pessoa implements Serializable {
     
    private String DataAdmissao;
    private double SalarioBruto;
+   private boolean isChefia;
+   private boolean isCoordenacao;
    
    public Professor (){
         super();
         this.DataAdmissao = "";
-        this.SalarioBruto = 0.00; 
+        this.SalarioBruto = 0.00;
+        this.isChefia = false;
+        this.isCoordenacao = false;
    }
 
-     public Professor(String nome, String data, long cpf, String contato, String DataAdmissao, double SalarioBruto) {
-        super(nome, data, cpf, contato);
+     public Professor(String nome, String data, long cpf, String contato, String DataAdmissao, double SalarioBruto, String rua, String bairro, String cidade, String estado, boolean isChefia, boolean isCoordenacao) {
+        super(nome, data, cpf, contato, rua, bairro, cidade, estado);
         this.DataAdmissao = DataAdmissao;
         this.SalarioBruto = SalarioBruto;
+        this.isChefia = isChefia;
+        this.isCoordenacao = isCoordenacao;
     }
    
-    public void SetDados(String DataAdmissao, double SalarioBruto, String nome, String data, long cpf, String contato) {
-        super.SetDados(nome, data, cpf, contato);
+    public void SetDados(String nome, String data, long cpf, String contato, String rua, String bairro, String cidade, String estado, String DataAdmissao, double SalarioBruto, boolean isChefia, boolean isCoordenacao) {
+        super.SetDados(nome, data, cpf, contato, rua, bairro, cidade, estado);
         this.DataAdmissao = DataAdmissao;
         this.SalarioBruto = SalarioBruto;
+        this.isChefia = isChefia;
+        this.isCoordenacao = isCoordenacao;
     }
     
     public String getDataAdmissao(){
@@ -44,7 +52,44 @@ public class Professor extends Pessoa implements Serializable {
         return this.SalarioBruto;
     }
    
+    public boolean isChefia() {
+        return this.isChefia;
+    }
+    
+    public boolean isCoordenacao() {
+        return this.isCoordenacao;
+    }
+    
+    public double SalBruto(double salBruto, boolean isChefia, boolean isCoordenacao){
+        if(isChefia)
+            salBruto += salBruto * 0.1;
+        
+        if(isCoordenacao)
+            salBruto += salBruto * 0.2;
+        
+        return salBruto;
+    }
+    
     public double SalarioLiquido(double salBruto){
-        return (salBruto-(salBruto*0.14+salBruto*0.225));
+        if (salBruto >= 5000.00)
+            return (salBruto-(salBruto*0.14+salBruto*0.225));
+        else 
+            return (salBruto-(salBruto*0.14));
+    }
+    
+     public void imprimeDados(){
+        System.out.println("Nome: "+this.Nome);
+        System.out.println("CPF: "+this.CPF);
+        System.out.println("Data Nascimento: "+this.DataNascimento);
+        System.out.println("Rua: "+this.Rua);
+        System.out.println("Bairro: "+this.Bairro);
+        System.out.println("Cidade: "+this.Cidade);
+        System.out.println("Estado: "+this.Estado);
+        System.out.println("Data de Admissão: "+this.DataAdmissao);
+        System.out.println("Salario Bruto : R$"+this.SalarioBruto);
+        System.out.println(this.isChefia ? "É Chefia" : "Não é Chefia");
+        System.out.println(this.isCoordenacao ? "É Coordenador(a)" : "Não é Coordenador(a)");
+        System.out.println("Salario Líquido: R$"+this.SalarioLiquido(SalarioBruto));
     }
 }
+

@@ -10,36 +10,41 @@ package ementor;
 public class Aluno extends Pessoa {
     private long Matricula;
     private int Periodo;  
+    private float Notas[];
     
     public Aluno (){
         super();
         this.Matricula = 0;
         this.Periodo = 0;
+        this.Notas[10] = 0;
     }
 
-    public Aluno(long Matricula, int Periodo) {
+    public Aluno(long Matricula, int Periodo, float Notas[]) {
         this.Matricula = Matricula;
         this.Periodo = Periodo;
+        this.Notas = Notas;
     }
 
-    public Aluno(String nome, String data, long cpf, String contato,long Matricula, int Periodo) {
-        super(nome, data, cpf, contato);
+    public Aluno(String nome, String data, long cpf, String contato, String rua, String bairro, String cidade, String estado, long Matricula, int Periodo, float notas[]) {
+        super(nome, data, cpf, contato, rua, bairro, cidade, estado);
         this.Matricula = Matricula;
         this.Periodo = Periodo;
+        this.Notas = notas;
     }
     
-    public void setDados( String nome, String data, long cpf, String contato, long Matricula, int Periodo) {
-       super.SetDados(nome, data, cpf, contato);
-       this.Matricula = Matricula;
-       this.Periodo = Periodo;
+    public void setDados( String nome, String data, long cpf, String contato, String rua, String bairro, String cidade, String estado, long Matricula, int Periodo, float notas[] ) {
+        super.SetDados(nome, data, cpf, contato, rua, bairro, cidade, estado);
+        this.Matricula = Matricula;
+        this.Periodo = Periodo;
+        this.Notas = notas;
     }
     
     public void setMatricula(long matricula){
-       this.Matricula=matricula;
+        this.Matricula=matricula;
     }
     
     public void setPeriodo(int periodo){
-       this.Periodo=periodo;
+        this.Periodo=periodo;
     }
     
     public long getMatricula(){
@@ -49,6 +54,10 @@ public class Aluno extends Pessoa {
     public int getPeriodo(){
         return this.Periodo;
     }
+    
+    public long getTurma(){
+        return this.CodigoTurma;
+    }
    
     public void imprimeDados(){
         System.out.println("Nome: "+this.Nome);
@@ -56,6 +65,13 @@ public class Aluno extends Pessoa {
         System.out.println("Data Nascimento: "+this.DataNascimento);
         System.out.println("Matricula: "+this.Matricula);
         System.out.println("Periodo: "+this.Periodo);
+        System.out.println("Rua: "+this.Rua);
+        System.out.println("Bairro: "+this.Bairro);
+        System.out.println("Cidade: "+this.Cidade);
+        System.out.println("Estado: "+this.Estado);
+        
+        for(int i = 0; i <= 10; i++)
+            System.out.println("Nota "+i+": "+this.Notas[i]);
     }
     
     
