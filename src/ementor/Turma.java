@@ -41,6 +41,10 @@ public class Turma {
         return this.CodigoTurma;
     }
     
+    public ArrayList<Aluno> getAlunos(){
+        return this.aluno;
+    }
+    
     public void adicionarAluno(Aluno aluno){
         this.aluno.add(aluno);
     }
@@ -50,7 +54,14 @@ public class Turma {
     }
     
     public void imprimeTurma(){
-       
+
+        System.out.println("Código: " + CodigoTurma);
+        System.out.println("Turma: " + NomeTurma);
+        System.out.println("Alunos:");
+        for(Aluno a : aluno){
+            System.out.println(a.getNome()
+                    + " - "
+                    + a.getMatricula());
+        }
     }
-    
 }

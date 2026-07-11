@@ -12,6 +12,8 @@ public class Egresso extends Aluno {
     private String CursoAtual;
     
     public Egresso(){
+        super();
+        
         this.ProfissaoAtual = "";
         this.FaixaSalarial = "";
         this.CursoAnterior = "";
@@ -67,22 +69,13 @@ public class Egresso extends Aluno {
     }
     
   @Override
-   
-    public void imprimeDados(){
-        System.out.println("Nome: "+this.Nome);
-        System.out.println("CPF: "+this.CPF);
-        System.out.println("Data Nascimento: "+this.DataNascimento);
-        System.out.println("Matricula: "+this.Matricula);
-        System.out.println("Curso Atual: "+this.CursoAtual);
-        System.out.println("Curso Anterior: "+this.CursoAnterior);
-        System.out.println("Faixa Salarial: "+this.FaixaSalarial);
-        System.out.println("Profissão Atual: "+this.ProfissaoAtual);
-        System.out.println("Rua: "+this.Rua);
-        System.out.println("Bairro: "+this.Bairro);
-        System.out.println("Cidade: "+this.Cidade);
-        System.out.println("Estado: "+this.Estado);
-        
-        for(int i = 0; i <= 10; i++)
-            System.out.println("Nota "+i+": "+this.Notas[i]);
+    public void imprimeDados() {
+
+    super.imprimeDados();
+
+    System.out.println("Profissão Atual: " + this.ProfissaoAtual);
+    System.out.println("Faixa Salarial: " + this.FaixaSalarial);
+    System.out.println("Curso Anterior: " + this.CursoAnterior);
+    System.out.println("Curso Atual: " + this.CursoAtual);
     }
 }

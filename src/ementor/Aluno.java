@@ -8,16 +8,16 @@ outro método para imprimir os dados (preferencialmente utilizar mensagens gráf
 package ementor;
 
 public class Aluno extends Pessoa {
-    protected long Matricula;
-    protected int Periodo;  
-    protected float Notas[];
-    protected long Turma;
+    private long Matricula;
+    private int Periodo;  
+    private float Notas[];
+    private long Turma;
     
     public Aluno (){
         super();
         this.Matricula = 0;
         this.Periodo = 0;
-        this.Notas[10] = 0;
+        this.Notas = new float[10];
         this.Turma = 0;
     }
 
@@ -52,23 +52,30 @@ public class Aluno extends Pessoa {
     public int getPeriodo(){
         return this.Periodo;
     }
-//    
-//    public long getTurma(){
-//        return this.CodigoTurma;
-//    }
-   
+    
+    public float[] getNotas() {
+        return Notas;
+    }
+    
+    public void setNotas(float[] notas){
+        this.Notas = notas;
+    }
+
+    public long getTurma() {
+        return this.Turma;
+    }
+
+    public void setTurma(long turma) {
+        this.Turma = turma;
+    }
+
+    
     public void imprimeDados(){
-        System.out.println("Nome: "+this.Nome);
-        System.out.println("CPF: "+this.CPF);
-        System.out.println("Data Nascimento: "+this.DataNascimento);
+        super.imprimeDados();
         System.out.println("Matricula: "+this.Matricula);
         System.out.println("Periodo: "+this.Periodo);
-        System.out.println("Rua: "+this.Rua);
-        System.out.println("Bairro: "+this.Bairro);
-        System.out.println("Cidade: "+this.Cidade);
-        System.out.println("Estado: "+this.Estado);
         
-        for(int i = 0; i <= 10; i++)
+        for(int i = 0; i < 10; i++)
             System.out.println("Nota "+i+": "+this.Notas[i]);
     }
 }

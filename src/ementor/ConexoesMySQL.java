@@ -1,28 +1,48 @@
 package ementor;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 public class ConexoesMySQL {
     
-    /* Seção de atributos/variaveis iniciais */
+    /* Seção de atributos/variáveis iniciais */
     private final String caminho = "localhost"; 
     private final String porta = "3306"; 
-    private final String nome = "ementor"; 
+    private final String nome = "ementor-Plus"; 
     private final String usuario = "root"; 
     private final String senha = "admin"; 
     private final String fusoHorario = "?useTimezone=true&serverTimezone=UTC";
     private final String URL = "jdbc:mysql://" + caminho + ":" + porta + "/" + nome + fusoHorario; 
     
+    private void registrarErroLog(String codigo, String descricao) {
+        try (FileWriter fw = new FileWriter("erros.dat", true);
+             BufferedWriter bw = new BufferedWriter(fw);
+             PrintWriter out = new PrintWriter(bw)) {
+            
+            String dataHora = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
+            out.println("[" + dataHora + "] CÓDIGO: " + codigo + " | DESCRIÇÃO: " + descricao);
+            
+        } catch (IOException e) {
+            System.err.println("Erro crítico: Não foi possível gravar no arquivo erros.dat. " + e.getMessage());
+        }
+    }
+    
     public Connection realizaConexaoMySQL() {
         try {
             return DriverManager.getConnection(URL, usuario, senha); 
         } catch (SQLException e) {
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro de Conexão: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro de conexão: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
             return null;
         }        
@@ -34,11 +54,13 @@ public class ConexoesMySQL {
                 conexao.close();
             }
         } catch (SQLException e) {
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao desconectar: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao desconectar: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }   
     }
+
     // ========================================================================
-    // Pessoa
+    // PESSOA - GRAVAR E ALTERAR
 
     public void inserePessoa(Pessoa pessoa) {
         Connection conexao = realizaConexaoMySQL();
@@ -47,7 +69,6 @@ public class ConexoesMySQL {
         String sql = "INSERT INTO Pessoa (CPF, Nome, DataNascimento, Telefone, Rua, Bairro, Cidade, Estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         
         try (PreparedStatement ps = conexao.prepareStatement(sql)) {
-            // Pegando os dados de dentro do objeto 'pessoa'
             ps.setLong(1, pessoa.CPF);
             ps.setString(2, pessoa.Nome);
             ps.setString(3, pessoa.DataNascimento); 
@@ -60,30 +81,29 @@ public class ConexoesMySQL {
             ps.executeUpdate(); 
             JOptionPane.showMessageDialog(null, "Pessoa cadastrada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException e) {
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao inserir Pessoa: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar Pessoa: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         } finally {
             desconectaMySQL(conexao);
         }
     }
-    // ========================================================================
-    // ALUNO (Envolve Pessoa)
 
-    
+    // ========================================================================
+    // ALUNO - GRAVAR, RECUPERAR E ALTERAR
+
     public void insereAluno(Aluno aluno) {
-        
         Connection conexao = realizaConexaoMySQL();
         if (conexao == null) return;
 
         String sqlPessoa = "INSERT INTO Pessoa (CPF, Nome, DataNascimento, Telefone, Rua, Bairro, Cidade, Estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        String sqlAluno = "INSERT INTO Aluno (Matricula, Periodo, CPF_Pessoa, Turma) VALUES (?, ?, ?, ?)";
+        String sqlAluno = "INSERT INTO Aluno (Matricula, Periodo, CPF_Pessoa, Codigo_Turma) VALUES (?, ?, ?, ?)";
         
         try {
-            conexao.setAutoCommit(false);
+            conexao.setAutoCommit(false); 
             
             try (PreparedStatement psPessoa = conexao.prepareStatement(sqlPessoa);
                  PreparedStatement psAluno = conexao.prepareStatement(sqlAluno)) {
                 
-                // Pegando os dados direto do OBJETO aluno
                 psPessoa.setLong(1, aluno.CPF);
                 psPessoa.setString(2, aluno.Nome);
                 psPessoa.setString(3, aluno.DataNascimento); 
@@ -94,11 +114,10 @@ public class ConexoesMySQL {
                 psPessoa.setString(8, aluno.getEstado());
                 psPessoa.executeUpdate(); 
                 
-                // Pegando os dados do OBJETO aluno
                 psAluno.setLong(1, aluno.getMatricula());
                 psAluno.setInt(2, aluno.getPeriodo());
                 psAluno.setLong(3, aluno.CPF); 
-                psAluno.setLong(4, aluno.getTurma());
+                psAluno.setLong(4, aluno.Turma); 
                 psAluno.executeUpdate();
                 
                 conexao.commit(); 
@@ -106,38 +125,59 @@ public class ConexoesMySQL {
             }
         } catch (SQLException e) {
             try { conexao.rollback(); } catch (SQLException ex) {} 
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao inserir Aluno: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao inserir Aluno: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         } finally {
             desconectaMySQL(conexao);
         }
     }
 
-    public void atualizaPeriodoAluno(long matricula, int novoPeriodo) {
+    public void alteraAluno(Aluno aluno) {
         Connection conexao = realizaConexaoMySQL();
         if (conexao == null) return;
 
-        // O update deve ser feito apenas na tabela Aluno
-        String sql = "UPDATE Aluno SET Periodo = ? WHERE Matricula = ?";
-        
-        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
-            ps.setInt(1, novoPeriodo);
-            ps.setLong(2, matricula);
-            ps.executeUpdate();
-            
-            JOptionPane.showMessageDialog(null, "Período atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        String sqlPessoa = "UPDATE Pessoa SET Nome = ?, DataNascimento = ?, Telefone = ?, Rua = ?, Bairro = ?, Cidade = ?, Estado = ? WHERE CPF = ?";
+        String sqlAluno = "UPDATE Aluno SET Periodo = ?, Codigo_Turma = ? WHERE Matricula = ?";
+
+        try {
+            conexao.setAutoCommit(false);
+
+            try (PreparedStatement psPessoa = conexao.prepareStatement(sqlPessoa);
+                 PreparedStatement psAluno = conexao.prepareStatement(sqlAluno)) {
+
+                psPessoa.setString(1, aluno.Nome);
+                psPessoa.setString(2, aluno.DataNascimento);
+                psPessoa.setString(3, aluno.Telefone);
+                psPessoa.setString(4, aluno.getRua());
+                psPessoa.setString(5, aluno.getBairro());
+                psPessoa.setString(6, aluno.getCidade());
+                psPessoa.setString(7, aluno.getEstado());
+                psPessoa.setLong(8, aluno.CPF);
+                psPessoa.executeUpdate();
+
+                psAluno.setInt(1, aluno.getPeriodo());
+                psAluno.setLong(2, aluno.Turma);
+                psAluno.setLong(3, aluno.getMatricula());
+                psAluno.executeUpdate();
+
+                conexao.commit();
+                JOptionPane.showMessageDialog(null, "Dados do Aluno alterados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+            try { conexao.rollback(); } catch (SQLException ex) {}
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao alterar Aluno: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao alterar Aluno: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         } finally {
             desconectaMySQL(conexao);
         }
     }
 
-    public ArrayList<Aluno> recuperaTodosAlunos(String tipoOrdenacao) {
+    public ArrayList<Aluno> recuperaTodosAlunos(String campoOrdenacao) {
         Connection conexao = realizaConexaoMySQL();
         ArrayList<Aluno> listaAlunos = new ArrayList<>();
         if (conexao == null) return listaAlunos;
         
-        String sql = "SELECT * FROM Pessoa p INNER JOIN Aluno a ON p.CPF = a.CPF_Pessoa ORDER BY " + tipoOrdenacao;
+        String sql = "SELECT * FROM Pessoa p INNER JOIN Aluno a ON p.CPF = a.CPF_Pessoa ORDER BY " + campoOrdenacao;
         
         try (PreparedStatement ps = conexao.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -148,13 +188,18 @@ public class ConexoesMySQL {
                 aluno.Nome = rs.getString("Nome");
                 aluno.DataNascimento = rs.getString("DataNascimento");
                 aluno.Telefone = rs.getString("Telefone");
+                aluno.Rua = rs.getString("Rua");
+                aluno.Bairro = rs.getString("Bairro");
+                aluno.Cidade = rs.getString("Cidade");
+                aluno.Estado = rs.getString("Estado");
                 aluno.setMatricula(rs.getLong("Matricula"));
                 aluno.setPeriodo(rs.getInt("Periodo"));
-                // Você pode adicionar os sets de Endereço e Turma aqui, caso existam na classe Aluno
+                aluno.Turma = rs.getLong("Codigo_Turma");
                 
                 listaAlunos.add(aluno);       
             }
         } catch (SQLException e) {
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao recuperar Alunos: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao recuperar dados: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         } finally {
             desconectaMySQL(conexao); 
@@ -162,131 +207,187 @@ public class ConexoesMySQL {
         return listaAlunos;
     }
 
-    public Aluno buscaAluno(long matricula) {
+    public Aluno buscaAlunoPorMatricula(long matricula) {
         Connection conexao = realizaConexaoMySQL();
-        Aluno aluno = null;
         if (conexao == null) return null;
-        
+
         String sql = "SELECT * FROM Pessoa p INNER JOIN Aluno a ON p.CPF = a.CPF_Pessoa WHERE a.Matricula = ?";
-        
         try (PreparedStatement ps = conexao.prepareStatement(sql)) {
             ps.setLong(1, matricula);
-            
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    aluno = new Aluno();
+                    Aluno aluno = new Aluno();
                     aluno.CPF = rs.getLong("CPF");
                     aluno.Nome = rs.getString("Nome");
                     aluno.DataNascimento = rs.getString("DataNascimento");
                     aluno.Telefone = rs.getString("Telefone");
+                    aluno.Rua = rs.getString("Rua");
+                    aluno.Bairro = rs.getString("Bairro");
+                    aluno.Cidade = rs.getString("Cidade");
+                    aluno.Estado = rs.getString("Estado");
                     aluno.setMatricula(rs.getLong("Matricula"));
                     aluno.setPeriodo(rs.getInt("Periodo"));
+                    aluno.Turma = rs.getLong("Codigo_Turma");
+                    return aluno;
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao buscar aluno: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            desconectaMySQL(conexao); 
-        }
-        return aluno;
-    }
-
-    // ========================================================================
-    // PROFESSOR
-
-
-    public void insereProfessor(Professor professor) {
-        Connection conexao = realizaConexaoMySQL();
-        if (conexao == null) return;
-
-        String sqlPessoa = "INSERT INTO Pessoa (CPF, Nome, DataNascimento, Telefone, Rua, Bairro, Cidade, Estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        String sqlProfessor = "INSERT INTO Professor (DataAdmissao, Chefia, Coordenacao, SalarioBruto, CPF_Pessoa) VALUES (?, ?, ?, ?, ?)";
-        
-        try {
-            conexao.setAutoCommit(false); // Inicia transação
-            
-            try (PreparedStatement psPessoa = conexao.prepareStatement(sqlPessoa);
-                 PreparedStatement psProf = conexao.prepareStatement(sqlProfessor)) {
-                
-                // Setando dados da Pessoa (que vieram dentro do objeto professor)
-                psPessoa.setLong(1, professor.CPF);
-                psPessoa.setString(2, professor.Nome);
-                psPessoa.setString(3, professor.DataNascimento);
-                psPessoa.setString(4, professor.Telefone);
-                psPessoa.setString(5, professor.getRua());
-                psPessoa.setString(6, professor.getBairro());
-                psPessoa.setString(7, professor.getCidade());
-                psPessoa.setString(8, professor.getEstado());
-                psPessoa.executeUpdate(); 
-                
-                // Setando dados específicos do Professor
-                psProf.setString(1, professor.getDataAdmissao());
-                psProf.setBoolean(2, professor.isChefia());
-                psProf.setBoolean(3, professor.isCoordenacao());
-                psProf.setDouble(4, professor.getSalarioBruto());
-                psProf.setLong(5, professor.CPF); // A chave estrangeira ligando à Pessoa
-                psProf.executeUpdate();
-                
-                conexao.commit(); // Salva tudo
-                JOptionPane.showMessageDialog(null, "Professor cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            }
-        } catch (SQLException e) {
-            try { conexao.rollback(); } catch (SQLException ex) {}
-            JOptionPane.showMessageDialog(null, "Erro ao inserir Professor: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao buscar Aluno por matrícula: " + e.getMessage());
         } finally {
             desconectaMySQL(conexao);
         }
+        return null;
     }
 
     // ========================================================================
-    // NOTAS
-
-    public void insereNota(Nota nota) {
-        Connection conexao = realizaConexaoMySQL();
-        if (conexao == null) return;
-
-        String sql = "INSERT INTO Notas (DataLancamento, Valor, Matricula_Aluno) VALUES (?, ?, ?)";
-        
-        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
-            // Pegando os dados de dentro do objeto 'nota'
-            ps.setString(1, nota.getDataLancamento()); 
-            ps.setDouble(2, nota.getValor());
-            ps.setLong(3, nota.getMatriculaAluno());
-            
-            ps.executeUpdate();
-            
-            JOptionPane.showMessageDialog(null, "Nota lançada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao lançar nota: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            desconectaMySQL(conexao);
-        }
-    }
-
-    // ========================================================================
-    // EGRESSO
+    // EGRESSO - GRAVAR E ALTERAR
 
     public void insereEgresso(Egresso egresso) {
         Connection conexao = realizaConexaoMySQL();
         if (conexao == null) return;
 
-        String sql = "INSERT INTO Egresso (ProfissaoAtual, FaixaSalarial, CursoAnterior, CursoAtual) VALUES (?, ?, ?, ?)";
+        String sqlPessoa = "INSERT INTO Pessoa (CPF, Nome, DataNascimento, Telefone, Rua, Bairro, Cidade, Estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sqlAluno = "INSERT INTO Aluno (Matricula, Periodo, CPF_Pessoa, Codigo_Turma) VALUES (?, ?, ?, ?)";
+        String sqlEgresso = "INSERT INTO Egresso (Matricula_Aluno, ProfissaoAtual, FaixaSalarial, CursoAnterior, CursoAtual) VALUES (?, ?, ?, ?, ?)";
         
-        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
-            // Pegando os dados de dentro do objeto 'egresso'
-            ps.setString(1, egresso.getProfissaoAtual());
-            ps.setString(2, egresso.getFaixaSalarial());
-            ps.setString(3, egresso.getCursoAnterior());
-            ps.setString(4, egresso.getCursoAtual());
+        try {
+            conexao.setAutoCommit(false); 
             
-            ps.executeUpdate();
-            
-            JOptionPane.showMessageDialog(null, "Egresso cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            try (PreparedStatement psPessoa = conexao.prepareStatement(sqlPessoa);
+                 PreparedStatement psAluno = conexao.prepareStatement(sqlAluno);
+                 PreparedStatement psEgresso = conexao.prepareStatement(sqlEgresso)) {
+                
+                psPessoa.setLong(1, egresso.CPF);
+                psPessoa.setString(2, egresso.Nome);
+                psPessoa.setString(3, egresso.DataNascimento);
+                psPessoa.setString(4, egresso.Telefone);
+                psPessoa.setString(5, egresso.getRua());
+                psPessoa.setString(6, egresso.getBairro());
+                psPessoa.setString(7, egresso.getCidade());
+                psPessoa.setString(8, egresso.getEstado());
+                psPessoa.executeUpdate();
+                
+                psAluno.setLong(1, egresso.getMatricula());
+                psAluno.setInt(2, egresso.getPeriodo());
+                psAluno.setLong(3, egresso.CPF);
+                psAluno.setLong(4, egresso.Turma);
+                psAluno.executeUpdate();
+                
+                psEgresso.setLong(1, egresso.getMatricula()); 
+                psEgresso.setString(2, egresso.getProfissaoAtual());
+                psEgresso.setString(3, egresso.getFaixaSalarial());
+                psEgresso.setString(4, egresso.getCursoAnterior());
+                psEgresso.setString(5, egresso.getCursoAtual());
+                psEgresso.executeUpdate();
+                
+                conexao.commit(); 
+                JOptionPane.showMessageDialog(null, "Egresso cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (SQLException e) {
+            try { conexao.rollback(); } catch (SQLException ex) {}
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao inserir Egresso: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar egresso: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         } finally {
             desconectaMySQL(conexao);
         }
     }
-}
 
+    public void alteraEgresso(Egresso egresso) {
+        Connection conexao = realizaConexaoMySQL();
+        if (conexao == null) return;
+
+        String sqlPessoa = "UPDATE Pessoa SET Nome = ?, DataNascimento = ?, Telefone = ?, Rua = ?, Bairro = ?, Cidade = ?, Estado = ? WHERE CPF = ?";
+        String sqlAluno = "UPDATE Aluno SET Periodo = ?, Codigo_Turma = ? WHERE Matricula = ?";
+        String sqlEgresso = "UPDATE Egresso SET ProfissaoAtual = ?, FaixaSalarial = ?, CursoAnterior = ?, CursoAtual = ? WHERE Matricula_Aluno = ?";
+
+        try {
+            conexao.setAutoCommit(false);
+
+            try (PreparedStatement psPessoa = conexao.prepareStatement(sqlPessoa);
+                 PreparedStatement psAluno = conexao.prepareStatement(sqlAluno);
+                 PreparedStatement psEgresso = conexao.prepareStatement(sqlEgresso)) {
+
+                psPessoa.setString(1, egresso.Nome);
+                psPessoa.setString(2, egresso.DataNascimento);
+                psPessoa.setString(3, egresso.Telefone);
+                psPessoa.setString(4, egresso.getRua());
+                psPessoa.setString(5, egresso.getBairro());
+                psPessoa.setString(6, egresso.getCidade());
+                psPessoa.setString(7, egresso.getEstado());
+                psPessoa.setLong(8, egresso.CPF);
+                psPessoa.executeUpdate();
+
+                psAluno.setInt(1, egresso.getPeriodo());
+                psAluno.setLong(2, egresso.Turma);
+                psAluno.setLong(3, egresso.getMatricula());
+                psAluno.executeUpdate();
+
+                psEgresso.setString(1, egresso.getProfissaoAtual());
+                psEgresso.setString(2, egresso.getFaixaSalarial());
+                psEgresso.setString(3, egresso.getCursoAnterior());
+                psEgresso.setString(4, egresso.getCursoAtual());
+                psEgresso.setLong(5, egresso.getMatricula());
+                psEgresso.executeUpdate();
+
+                conexao.commit();
+                JOptionPane.showMessageDialog(null, "Dados do Egresso alterados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLException e) {
+            try { conexao.rollback(); } catch (SQLException ex) {}
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao alterar Egresso: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao alterar Egresso: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            desconectaMySQL(conexao);
+        }
+    }
+
+    // ========================================================================
+    // TURMA - GRAVAR
+
+    public void insereTurma(Turma turma) {
+        Connection conexao = realizaConexaoMySQL();
+        if (conexao == null) return;
+
+        String sql = "INSERT INTO Turma (CodigoTurma, NomeTurma) VALUES (?, ?)";
+        
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setLong(1, turma.getCodigoTurma());
+            ps.setString(2, turma.getNomeTurma());
+            
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Turma criada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException e) {
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao inserir Turma: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao criar turma: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            desconectaMySQL(conexao);
+        }
+    }
+
+    // ========================================================================
+    // USUÁRIO - AUTENTICAÇÃO
+
+    public boolean autenticaUsuario(String nomeUsuario, String senhaFornecida) {
+        Connection conexao = realizaConexaoMySQL();
+        if (conexao == null) return false;
+
+        String sql = "SELECT * FROM Usuario WHERE NomeUsuario = ? AND Senha = ?";
+        
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setString(1, nomeUsuario);
+            ps.setString(2, senhaFornecida);
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao autenticar Usuário: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao autenticar usuário: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            desconectaMySQL(conexao);
+        }
+        return false; 
+    }
+}

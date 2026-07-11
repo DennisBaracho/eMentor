@@ -52,6 +52,22 @@ public class Professor extends Pessoa implements Serializable {
         return this.SalarioBruto;
     }
    
+    public void setDataAdmissao(String dataAdmissao){
+    this.DataAdmissao = dataAdmissao;
+}
+
+    public void setSalarioBruto(double salarioBruto){
+        this.SalarioBruto = salarioBruto;
+    }
+
+    public void setChefia(boolean chefia){
+        this.isChefia = chefia;
+    }
+
+    public void setCoordenacao(boolean coordenacao){
+        this.isCoordenacao = coordenacao;
+    }
+
     public boolean isChefia() {
         return this.isChefia;
     }
@@ -60,36 +76,39 @@ public class Professor extends Pessoa implements Serializable {
         return this.isCoordenacao;
     }
     
-    public double SalBruto(double salBruto, boolean isChefia, boolean isCoordenacao){
-        if(isChefia)
-            salBruto += salBruto * 0.1;
-        
-        if(isCoordenacao)
-            salBruto += salBruto * 0.2;
-        
-        return salBruto;
+    public double calcularSalarioBruto() {
+
+        double salario = this.SalarioBruto;
+
+        if (this.isChefia)
+            salario *= 1.10;
+
+        if (this.isCoordenacao)
+            salario *= 1.20;
+
+        return salario;
     }
     
-    public double SalarioLiquido(double salBruto){
-        if (salBruto >= 5000.00)
-            return (salBruto-(salBruto*0.14+salBruto*0.225));
-        else 
-            return (salBruto-(salBruto*0.14));
+    public double calcularSalarioLiquido() {
+        double salario = calcularSalarioBruto();
+        double inss = salario * 0.14;
+
+        if (salario >= 5000) {
+            double ir = salario * 0.225;
+            return salario - inss - ir;
+        }
+
+        return salario - inss;
     }
     
-     public void imprimeDados(){
-        System.out.println("Nome: "+this.Nome);
-        System.out.println("CPF: "+this.CPF);
-        System.out.println("Data Nascimento: "+this.DataNascimento);
-        System.out.println("Rua: "+this.Rua);
-        System.out.println("Bairro: "+this.Bairro);
-        System.out.println("Cidade: "+this.Cidade);
-        System.out.println("Estado: "+this.Estado);
+    @Override
+    public void imprimeDados(){
+        super.imprimeDados();
         System.out.println("Data de Admissão: "+this.DataAdmissao);
-        System.out.println("Salario Bruto : R$"+this.SalarioBruto);
+        System.out.println("Salário Bruto: R$ "+ calcularSalarioBruto());
+        System.out.println("Salário Líquido: R$ "+ calcularSalarioLiquido());
         System.out.println(this.isChefia ? "É Chefia" : "Não é Chefia");
         System.out.println(this.isCoordenacao ? "É Coordenador(a)" : "Não é Coordenador(a)");
-        System.out.println("Salario Líquido: R$"+this.SalarioLiquido(SalarioBruto));
     }
 }
 
