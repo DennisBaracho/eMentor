@@ -83,6 +83,7 @@ public class ListaEgressos extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         jButton4.setBackground(new java.awt.Color(45, 60, 135));
         jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -101,10 +102,10 @@ public class ListaEgressos extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("Egressos");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(0, 10, 800, 16);
+        jLabel1.setBounds(20, 5, 220, 25);
 
         jTable1.setBackground(new java.awt.Color(30, 30, 30));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -122,6 +123,14 @@ public class ListaEgressos extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(0, 40, 800, 560);
+
+        jButton1.setBackground(new java.awt.Color(45, 60, 135));
+        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Gerar PDF");
+        jButton1.setBorderPainted(false);
+        jPanel1.add(jButton1);
+        jButton1.setBounds(690, 10, 100, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -171,6 +180,7 @@ public class ListaEgressos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

@@ -8,14 +8,14 @@ package ementor;
  *
  * @author Anderson
  */
-public class AutenticarAlterar extends javax.swing.JFrame {
+public class MenuCadastrarEgresso extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AutenticarAlterar.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuCadastrarEgresso.class.getName());
 
     /**
      * Creates new form Cadastros
      */
-    public AutenticarAlterar() {
+    public MenuCadastrarEgresso() {
         initComponents();
         
         this.setResizable(false); 
@@ -24,49 +24,6 @@ public class AutenticarAlterar extends javax.swing.JFrame {
     
         this.setLocationRelativeTo(null);
         
-        esconderCamposEspecificos();
-    }
-    
-    private void esconderCamposEspecificos() {
-        lblDataAdmissao.setVisible(false);
-        txtDataAdmissao.setVisible(false);
-        lblSalarioBruto.setVisible(false);
-        txtSalarioBruto.setVisible(false);
-        lblProfissaoAtual.setVisible(false);
-        txtProfissaoAtual.setVisible(false);
-        lblFaixaSalarial.setVisible(false);
-        txtFaixaSalarial.setVisible(false);
-        lblNome.setVisible(false);
-        txtNome.setVisible(false);
-        lblDataNascimento.setVisible(false);
-        txtDataNascimento.setVisible(false);
-        lblCPF.setVisible(false);
-        txtCPF.setVisible(false);
-        lblTelefone.setVisible(false);
-        txtTelefone.setVisible(false);
-        lblRua.setVisible(false);
-        txtRua.setVisible(false);
-        lblBairro.setVisible(false);
-        txtBairro.setVisible(false);
-        lblCidade.setVisible(false);
-        txtCidade.setVisible(false);
-        lblEstado.setVisible(false);
-        txtEstado.setVisible(false);
-        
-        lblMatricula.setVisible(false);
-        txtMatricula.setVisible(false);
-        lblPeriodo.setVisible(false);
-        txtPeriodo.setVisible(false);
-        lblTurma.setVisible(false);
-        txtTurma.setVisible(false);
-        lblCursoAnterior.setVisible(false);
-        txtCursoAnterior.setVisible(false);
-        lblCursoAtual.setVisible(false);
-        txtCursoAtual.setVisible(false);
-        lblNomeTurma.setVisible(false);
-        txtNomeTurma.setVisible(false);
-        lblCodigoTurma.setVisible(false);
-        txtCodigoTurma.setVisible(false);
     }
 
     /**
@@ -83,7 +40,6 @@ public class AutenticarAlterar extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel6 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         lblNome = new javax.swing.JTextField();
         txtNome = new javax.swing.JLabel();
         lblDataNascimento = new javax.swing.JTextField();
@@ -100,19 +56,13 @@ public class AutenticarAlterar extends javax.swing.JFrame {
         lblCidade = new javax.swing.JTextField();
         lblEstado = new javax.swing.JTextField();
         txtEstado = new javax.swing.JLabel();
-        txtDataAdmissao = new javax.swing.JLabel();
-        lblDataAdmissao = new javax.swing.JTextField();
-        txtSalarioBruto = new javax.swing.JLabel();
-        lblSalarioBruto = new javax.swing.JTextField();
         lblProfissaoAtual = new javax.swing.JTextField();
         txtProfissaoAtual = new javax.swing.JLabel();
         txtFaixaSalarial = new javax.swing.JLabel();
         lblFaixaSalarial = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
-        jComboBox2 = new javax.swing.JComboBox<>();
         lblMatricula = new javax.swing.JTextField();
         txtMatricula = new javax.swing.JLabel();
         txtPeriodo = new javax.swing.JLabel();
@@ -123,21 +73,11 @@ public class AutenticarAlterar extends javax.swing.JFrame {
         txtCursoAnterior = new javax.swing.JLabel();
         lblCursoAtual = new javax.swing.JTextField();
         txtCursoAtual = new javax.swing.JLabel();
-        lblNomeTurma = new javax.swing.JTextField();
-        txtNomeTurma = new javax.swing.JLabel();
-        lblCodigoTurma = new javax.swing.JTextField();
-        txtCodigoTurma = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
         jTextField4 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
@@ -156,6 +96,8 @@ public class AutenticarAlterar extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jTextField14 = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         jButton4.setBackground(new java.awt.Color(45, 60, 135));
@@ -187,255 +129,202 @@ public class AutenticarAlterar extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel5);
-        jPanel5.setBounds(794, 606, 0, 0);
+        jPanel5.setBounds(794, 606, 0, 606);
 
         jPanel6.setBackground(new java.awt.Color(30, 30, 30));
         jPanel6.setPreferredSize(new java.awt.Dimension(800, 600));
         jPanel6.setLayout(null);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione uma Opção", "Aluno", "Egresso", "Professor", "Turma", " " }));
-        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
-        jPanel6.add(jComboBox1);
-        jComboBox1.setBounds(34, 47, 150, 22);
-
         lblNome.addActionListener(this::lblNomeActionPerformed);
         jPanel6.add(lblNome);
-        lblNome.setBounds(34, 103, 125, 22);
+        lblNome.setBounds(30, 60, 125, 22);
 
         txtNome.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtNome.setForeground(new java.awt.Color(255, 255, 255));
         txtNome.setText("Nome");
         jPanel6.add(txtNome);
-        txtNome.setBounds(34, 81, 37, 16);
+        txtNome.setBounds(30, 40, 37, 16);
 
         lblDataNascimento.addActionListener(this::lblDataNascimentoActionPerformed);
         jPanel6.add(lblDataNascimento);
-        lblDataNascimento.setBounds(34, 159, 125, 22);
+        lblDataNascimento.setBounds(30, 110, 125, 22);
 
         txtDataNascimento.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtDataNascimento.setForeground(new java.awt.Color(255, 255, 255));
         txtDataNascimento.setText("Data de Nascimento");
         jPanel6.add(txtDataNascimento);
-        txtDataNascimento.setBounds(34, 137, 110, 16);
+        txtDataNascimento.setBounds(30, 90, 108, 16);
 
         txtCPF.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtCPF.setForeground(new java.awt.Color(255, 255, 255));
         txtCPF.setText("CPF");
         jPanel6.add(txtCPF);
-        txtCPF.setBounds(34, 193, 37, 16);
+        txtCPF.setBounds(30, 150, 37, 16);
 
         lblCPF.addActionListener(this::lblCPFActionPerformed);
         jPanel6.add(lblCPF);
-        lblCPF.setBounds(34, 215, 125, 22);
+        lblCPF.setBounds(30, 170, 125, 22);
 
         txtTelefone.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtTelefone.setForeground(new java.awt.Color(255, 255, 255));
         txtTelefone.setText("Telefone");
         jPanel6.add(txtTelefone);
-        txtTelefone.setBounds(34, 249, 47, 16);
+        txtTelefone.setBounds(30, 200, 46, 16);
 
         lblTelefone.addActionListener(this::lblTelefoneActionPerformed);
         jPanel6.add(lblTelefone);
-        lblTelefone.setBounds(34, 271, 125, 22);
+        lblTelefone.setBounds(30, 220, 125, 22);
 
         txtRua.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtRua.setForeground(new java.awt.Color(255, 255, 255));
         txtRua.setText("Rua");
         jPanel6.add(txtRua);
-        txtRua.setBounds(34, 305, 37, 16);
+        txtRua.setBounds(30, 260, 37, 16);
 
         lblRua.addActionListener(this::lblRuaActionPerformed);
         jPanel6.add(lblRua);
-        lblRua.setBounds(34, 327, 125, 22);
+        lblRua.setBounds(30, 280, 125, 22);
 
         txtBairro.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtBairro.setForeground(new java.awt.Color(255, 255, 255));
         txtBairro.setText("Bairro");
         jPanel6.add(txtBairro);
-        txtBairro.setBounds(34, 361, 37, 16);
+        txtBairro.setBounds(30, 310, 37, 16);
 
         lblBairro.addActionListener(this::lblBairroActionPerformed);
         jPanel6.add(lblBairro);
-        lblBairro.setBounds(34, 383, 125, 22);
+        lblBairro.setBounds(30, 340, 125, 22);
 
         txtCidade.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtCidade.setForeground(new java.awt.Color(255, 255, 255));
         txtCidade.setText("Cidade");
         jPanel6.add(txtCidade);
-        txtCidade.setBounds(34, 417, 38, 16);
+        txtCidade.setBounds(30, 370, 36, 16);
 
         lblCidade.addActionListener(this::lblCidadeActionPerformed);
         jPanel6.add(lblCidade);
-        lblCidade.setBounds(34, 439, 125, 22);
+        lblCidade.setBounds(30, 390, 125, 22);
 
         lblEstado.addActionListener(this::lblEstadoActionPerformed);
         jPanel6.add(lblEstado);
-        lblEstado.setBounds(34, 495, 125, 22);
+        lblEstado.setBounds(30, 450, 125, 22);
 
         txtEstado.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtEstado.setForeground(new java.awt.Color(255, 255, 255));
         txtEstado.setText("Estado");
         jPanel6.add(txtEstado);
-        txtEstado.setBounds(34, 473, 37, 16);
-
-        txtDataAdmissao.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        txtDataAdmissao.setForeground(new java.awt.Color(255, 255, 255));
-        txtDataAdmissao.setText("Data de Admissão");
-        jPanel6.add(txtDataAdmissao);
-        txtDataAdmissao.setBounds(177, 81, 100, 16);
-
-        lblDataAdmissao.addActionListener(this::lblDataAdmissaoActionPerformed);
-        jPanel6.add(lblDataAdmissao);
-        lblDataAdmissao.setBounds(177, 103, 125, 22);
-
-        txtSalarioBruto.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        txtSalarioBruto.setForeground(new java.awt.Color(255, 255, 255));
-        txtSalarioBruto.setText("Salario Bruto");
-        jPanel6.add(txtSalarioBruto);
-        txtSalarioBruto.setBounds(177, 137, 80, 16);
-
-        lblSalarioBruto.addActionListener(this::lblSalarioBrutoActionPerformed);
-        jPanel6.add(lblSalarioBruto);
-        lblSalarioBruto.setBounds(177, 159, 125, 22);
+        txtEstado.setBounds(30, 430, 37, 16);
 
         lblProfissaoAtual.addActionListener(this::lblProfissaoAtualActionPerformed);
         jPanel6.add(lblProfissaoAtual);
-        lblProfissaoAtual.setBounds(177, 215, 125, 22);
+        lblProfissaoAtual.setBounds(180, 60, 125, 22);
 
         txtProfissaoAtual.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtProfissaoAtual.setForeground(new java.awt.Color(255, 255, 255));
         txtProfissaoAtual.setText("Profissão Atual");
         jPanel6.add(txtProfissaoAtual);
-        txtProfissaoAtual.setBounds(177, 193, 90, 16);
+        txtProfissaoAtual.setBounds(180, 40, 90, 16);
 
         txtFaixaSalarial.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtFaixaSalarial.setForeground(new java.awt.Color(255, 255, 255));
         txtFaixaSalarial.setText("Faixa Salarial");
         jPanel6.add(txtFaixaSalarial);
-        txtFaixaSalarial.setBounds(177, 249, 70, 16);
+        txtFaixaSalarial.setBounds(180, 90, 70, 16);
 
         lblFaixaSalarial.addActionListener(this::lblFaixaSalarialActionPerformed);
         jPanel6.add(lblFaixaSalarial);
-        lblFaixaSalarial.setBounds(177, 271, 125, 22);
+        lblFaixaSalarial.setBounds(180, 110, 125, 22);
 
         jButton1.setBackground(new java.awt.Color(45, 60, 135));
+        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Alterar");
+        jButton1.setText("Voltar");
         jButton1.setBorderPainted(false);
         jButton1.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton1.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton1.addActionListener(this::jButton1ActionPerformed);
         jPanel6.add(jButton1);
-        jButton1.setBounds(670, 480, 100, 25);
-
-        jButton2.setBackground(new java.awt.Color(45, 60, 135));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Cadastrar");
-        jButton2.setBorderPainted(false);
-        jButton2.setMaximumSize(new java.awt.Dimension(100, 22));
-        jButton2.setMinimumSize(new java.awt.Dimension(100, 22));
-        jPanel6.add(jButton2);
-        jButton2.setBounds(450, 480, 100, 25);
+        jButton1.setBounds(550, 480, 100, 25);
 
         jButton3.setBackground(new java.awt.Color(45, 60, 135));
+        jButton3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Listar");
+        jButton3.setText("Cadastrar");
         jButton3.setBorderPainted(false);
         jButton3.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton3.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton3.addActionListener(this::jButton3ActionPerformed);
         jPanel6.add(jButton3);
-        jButton3.setBounds(560, 480, 100, 25);
+        jButton3.setBounds(670, 480, 100, 25);
 
         jTabbedPane2.addTab("Dados Pessoais", jPanel6);
 
         jPanel7.setBackground(new java.awt.Color(30, 30, 30));
         jPanel7.setLayout(null);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione uma Opção", "Aluno", "Egresso", "Professor", "Turma", " " }));
-        jComboBox2.addActionListener(this::jComboBox2ActionPerformed);
-        jPanel7.add(jComboBox2);
-        jComboBox2.setBounds(34, 47, 150, 22);
-
         lblMatricula.addActionListener(this::lblMatriculaActionPerformed);
         jPanel7.add(lblMatricula);
-        lblMatricula.setBounds(34, 103, 125, 22);
+        lblMatricula.setBounds(30, 50, 125, 22);
 
         txtMatricula.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtMatricula.setForeground(new java.awt.Color(255, 255, 255));
         txtMatricula.setText("Matricula");
         jPanel7.add(txtMatricula);
-        txtMatricula.setBounds(34, 81, 52, 16);
+        txtMatricula.setBounds(30, 30, 50, 16);
 
         txtPeriodo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtPeriodo.setForeground(new java.awt.Color(255, 255, 255));
         txtPeriodo.setText("Período");
         jPanel7.add(txtPeriodo);
-        txtPeriodo.setBounds(34, 137, 43, 16);
+        txtPeriodo.setBounds(30, 80, 41, 16);
 
         lblPeriodo.addActionListener(this::lblPeriodoActionPerformed);
         jPanel7.add(lblPeriodo);
-        lblPeriodo.setBounds(34, 159, 125, 22);
+        lblPeriodo.setBounds(30, 100, 125, 22);
 
         txtTurma.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtTurma.setForeground(new java.awt.Color(255, 255, 255));
         txtTurma.setText("Turma");
         jPanel7.add(txtTurma);
-        txtTurma.setBounds(34, 193, 37, 16);
+        txtTurma.setBounds(30, 140, 37, 16);
 
         lblTurma.addActionListener(this::lblTurmaActionPerformed);
         jPanel7.add(lblTurma);
-        lblTurma.setBounds(34, 215, 125, 22);
+        lblTurma.setBounds(30, 160, 125, 22);
 
         lblCursoAnterior.addActionListener(this::lblCursoAnteriorActionPerformed);
         jPanel7.add(lblCursoAnterior);
-        lblCursoAnterior.setBounds(177, 103, 125, 22);
+        lblCursoAnterior.setBounds(180, 50, 125, 22);
 
         txtCursoAnterior.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtCursoAnterior.setForeground(new java.awt.Color(255, 255, 255));
         txtCursoAnterior.setText("Curso Anterior");
         jPanel7.add(txtCursoAnterior);
-        txtCursoAnterior.setBounds(177, 81, 80, 16);
+        txtCursoAnterior.setBounds(180, 30, 80, 16);
 
         lblCursoAtual.addActionListener(this::lblCursoAtualActionPerformed);
         jPanel7.add(lblCursoAtual);
-        lblCursoAtual.setBounds(177, 159, 125, 22);
+        lblCursoAtual.setBounds(180, 100, 125, 22);
 
         txtCursoAtual.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtCursoAtual.setForeground(new java.awt.Color(255, 255, 255));
         txtCursoAtual.setText("Curso Atual");
         jPanel7.add(txtCursoAtual);
-        txtCursoAtual.setBounds(177, 137, 70, 16);
-
-        lblNomeTurma.addActionListener(this::lblNomeTurmaActionPerformed);
-        jPanel7.add(lblNomeTurma);
-        lblNomeTurma.setBounds(314, 159, 125, 22);
-
-        txtNomeTurma.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        txtNomeTurma.setForeground(new java.awt.Color(255, 255, 255));
-        txtNomeTurma.setText("Nome da Turma");
-        jPanel7.add(txtNomeTurma);
-        txtNomeTurma.setBounds(314, 137, 90, 16);
-
-        lblCodigoTurma.addActionListener(this::lblCodigoTurmaActionPerformed);
-        jPanel7.add(lblCodigoTurma);
-        lblCodigoTurma.setBounds(314, 103, 125, 22);
-
-        txtCodigoTurma.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        txtCodigoTurma.setForeground(new java.awt.Color(255, 255, 255));
-        txtCodigoTurma.setText("Codigo da Turma");
-        jPanel7.add(txtCodigoTurma);
-        txtCodigoTurma.setBounds(314, 81, 100, 16);
+        txtCursoAtual.setBounds(180, 80, 70, 16);
 
         jButton6.setBackground(new java.awt.Color(45, 60, 135));
+        jButton6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Alterar");
+        jButton6.setText("Voltar");
         jButton6.setBorderPainted(false);
         jButton6.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton6.setMinimumSize(new java.awt.Dimension(100, 22));
         jButton6.setPreferredSize(new java.awt.Dimension(100, 22));
         jPanel7.add(jButton6);
-        jButton6.setBounds(670, 480, 100, 25);
+        jButton6.setBounds(550, 480, 100, 25);
 
         jButton7.setBackground(new java.awt.Color(45, 60, 135));
+        jButton7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setText("Cadastrar");
         jButton7.setBorderPainted(false);
@@ -443,39 +332,15 @@ public class AutenticarAlterar extends javax.swing.JFrame {
         jButton7.setMinimumSize(new java.awt.Dimension(100, 22));
         jButton7.setPreferredSize(new java.awt.Dimension(100, 22));
         jPanel7.add(jButton7);
-        jButton7.setBounds(450, 480, 100, 25);
-
-        jButton8.setBackground(new java.awt.Color(45, 60, 135));
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Listar");
-        jButton8.setBorderPainted(false);
-        jButton8.setMaximumSize(new java.awt.Dimension(100, 22));
-        jButton8.setMinimumSize(new java.awt.Dimension(100, 22));
-        jButton8.setPreferredSize(new java.awt.Dimension(100, 22));
-        jPanel7.add(jButton8);
-        jButton8.setBounds(560, 480, 100, 25);
+        jButton7.setBounds(670, 480, 100, 25);
 
         jTabbedPane2.addTab("Dados Acadêmicos", jPanel7);
 
         jPanel8.setBackground(new java.awt.Color(30, 30, 30));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Matricula ou CPF");
-
-        jButton5.setBackground(new java.awt.Color(45, 60, 135));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Pesquisar");
-        jButton5.setBorderPainted(false);
-        jButton5.addActionListener(this::jButton5ActionPerformed);
-
         jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Nota 1");
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Código da Turma");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -513,66 +378,61 @@ public class AutenticarAlterar extends javax.swing.JFrame {
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Nota 2");
 
+        jButton2.setBackground(new java.awt.Color(45, 60, 135));
+        jButton2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Cadastrar");
+        jButton2.setBorderPainted(false);
+
+        jButton5.setBackground(new java.awt.Color(45, 60, 135));
+        jButton5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jButton5.setText("Voltar");
+        jButton5.setBorderPainted(false);
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField9, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                    .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                    .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                    .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                    .addComponent(jTextField4)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField5)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
-                        .addGap(0, 547, Short.MAX_VALUE))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-                            .addComponent(jTextField4)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(0, 0, 0))
+                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 547, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton5)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel5)
@@ -614,10 +474,14 @@ public class AutenticarAlterar extends javax.swing.JFrame {
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(61, 61, 61))
         );
 
-        jTabbedPane2.addTab("Notas", jPanel8);
+        jTabbedPane2.addTab("Histórico de Notas", jPanel8);
 
         jPanel1.add(jTabbedPane2);
         jTabbedPane2.setBounds(0, 30, 800, 600);
@@ -625,9 +489,9 @@ public class AutenticarAlterar extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("eMentor");
+        jLabel1.setText("eMentor Plus - Egresso");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(0, 10, 800, 16);
+        jLabel1.setBounds(0, 5, 800, 25);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -651,186 +515,73 @@ public class AutenticarAlterar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void lblNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblNomeActionPerformed
+    private void lblFaixaSalarialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblFaixaSalarialActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lblNomeActionPerformed
-
-    private void lblDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblDataNascimentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblDataNascimentoActionPerformed
-
-    private void lblCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblCPFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblCPFActionPerformed
-
-    private void lblTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTelefoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblTelefoneActionPerformed
-
-    private void lblRuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblRuaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblRuaActionPerformed
-
-    private void lblBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblBairroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblBairroActionPerformed
-
-    private void lblCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblCidadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblCidadeActionPerformed
-
-    private void lblEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblEstadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblEstadoActionPerformed
-
-    private void lblDataAdmissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblDataAdmissaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblDataAdmissaoActionPerformed
-
-    private void lblSalarioBrutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblSalarioBrutoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblSalarioBrutoActionPerformed
+    }//GEN-LAST:event_lblFaixaSalarialActionPerformed
 
     private void lblProfissaoAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblProfissaoAtualActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lblProfissaoAtualActionPerformed
 
-    private void lblFaixaSalarialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblFaixaSalarialActionPerformed
+    private void lblEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblEstadoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lblFaixaSalarialActionPerformed
+    }//GEN-LAST:event_lblEstadoActionPerformed
 
-    private void lblMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblMatriculaActionPerformed
+    private void lblCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblCidadeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lblMatriculaActionPerformed
+    }//GEN-LAST:event_lblCidadeActionPerformed
 
-    private void lblPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblPeriodoActionPerformed
+    private void lblBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblBairroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lblPeriodoActionPerformed
+    }//GEN-LAST:event_lblBairroActionPerformed
 
-    private void lblTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTurmaActionPerformed
+    private void lblRuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblRuaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lblTurmaActionPerformed
+    }//GEN-LAST:event_lblRuaActionPerformed
 
-    private void lblCursoAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblCursoAnteriorActionPerformed
+    private void lblTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTelefoneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lblCursoAnteriorActionPerformed
+    }//GEN-LAST:event_lblTelefoneActionPerformed
+
+    private void lblCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblCPFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblCPFActionPerformed
+
+    private void lblDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblDataNascimentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblDataNascimentoActionPerformed
+
+    private void lblNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblNomeActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void lblCursoAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblCursoAtualActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lblCursoAtualActionPerformed
 
-    private void lblNomeTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblNomeTurmaActionPerformed
+    private void lblCursoAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblCursoAnteriorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lblNomeTurmaActionPerformed
+    }//GEN-LAST:event_lblCursoAnteriorActionPerformed
 
-    private void lblCodigoTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblCodigoTurmaActionPerformed
+    private void lblTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTurmaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lblCodigoTurmaActionPerformed
+    }//GEN-LAST:event_lblTurmaActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        String opcao = jComboBox1.getSelectedItem().toString();
-        esconderCamposEspecificos();
-
-        if (opcao.equals("Professor")) {
-            // Aba 1
-            lblNome.setVisible(true);
-            txtNome.setVisible(true);
-            lblDataNascimento.setVisible(true);
-            txtDataNascimento.setVisible(true);
-            lblCPF.setVisible(true);
-            txtCPF.setVisible(true);
-            lblTelefone.setVisible(true);
-            txtTelefone.setVisible(true);
-            lblRua.setVisible(true);
-            txtRua.setVisible(true);
-            lblBairro.setVisible(true);
-            txtBairro.setVisible(true);
-            lblCidade.setVisible(true);
-            txtCidade.setVisible(true);
-            lblEstado.setVisible(true);
-            txtEstado.setVisible(true);
-            lblDataAdmissao.setVisible(true);
-            txtDataAdmissao.setVisible(true);
-            lblSalarioBruto.setVisible(true);
-            txtSalarioBruto.setVisible(true);
-
-        } else if (opcao.equals("Aluno")){
-            // Aba 1
-            lblNome.setVisible(true);
-            txtNome.setVisible(true);
-            lblDataNascimento.setVisible(true);
-            txtDataNascimento.setVisible(true);
-            lblCPF.setVisible(true);
-            txtCPF.setVisible(true);
-            lblTelefone.setVisible(true);
-            txtTelefone.setVisible(true);
-            lblRua.setVisible(true);
-            txtRua.setVisible(true);
-            lblBairro.setVisible(true);
-            txtBairro.setVisible(true);
-            lblCidade.setVisible(true);
-            txtCidade.setVisible(true);
-            lblEstado.setVisible(true);
-            txtEstado.setVisible(true);
-            
-        } else if (opcao.equals("Egresso")) {
-            // Aba 1
-            lblNome.setVisible(true);
-            txtNome.setVisible(true);
-            lblDataNascimento.setVisible(true);
-            txtDataNascimento.setVisible(true);
-            lblCPF.setVisible(true);
-            txtCPF.setVisible(true);
-            lblTelefone.setVisible(true);
-            txtTelefone.setVisible(true);
-            lblRua.setVisible(true);
-            txtRua.setVisible(true);
-            lblBairro.setVisible(true);
-            txtBairro.setVisible(true);
-            lblCidade.setVisible(true);
-            txtCidade.setVisible(true);
-            lblEstado.setVisible(true);
-            txtEstado.setVisible(true);
-            lblProfissaoAtual.setVisible(true);
-            txtProfissaoAtual.setVisible(true);
-            lblFaixaSalarial.setVisible(true);
-            txtFaixaSalarial.setVisible(true);
-        }
-        
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        String opcao = jComboBox2.getSelectedItem().toString();
-        esconderCamposEspecificos();
-
-        if (opcao.equals("Egresso")) {
-            // Aba 2
-            lblCursoAnterior.setVisible(true);
-            txtCursoAnterior.setVisible(true);
-            lblCursoAtual.setVisible(true);
-            txtCursoAtual.setVisible(true);
-
-        } else if (opcao.equals("Aluno")) {
-            // Aba 2
-            lblMatricula.setVisible(true);
-            txtMatricula.setVisible(true);
-            lblPeriodo.setVisible(true);
-            txtPeriodo.setVisible(true);
-            lblTurma.setVisible(true);
-            txtTurma.setVisible(true);
-
-        } else if (opcao.equals("Turma")) {
-            // Aba 2
-            lblCodigoTurma.setVisible(true);
-            txtCodigoTurma.setVisible(true);
-            lblNomeTurma.setVisible(true);
-            txtNomeTurma.setVisible(true);
-        }
-    }//GEN-LAST:event_jComboBox2ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void lblPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblPeriodoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_lblPeriodoActionPerformed
+
+    private void lblMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblMatriculaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblMatriculaActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -854,7 +605,7 @@ public class AutenticarAlterar extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AutenticarAlterar().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new MenuCadastrarEgresso().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -865,9 +616,6 @@ public class AutenticarAlterar extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -875,9 +623,7 @@ public class AutenticarAlterar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -887,14 +633,12 @@ public class AutenticarAlterar extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
@@ -902,39 +646,31 @@ public class AutenticarAlterar extends javax.swing.JFrame {
     private javax.swing.JTextField lblBairro;
     private javax.swing.JTextField lblCPF;
     private javax.swing.JTextField lblCidade;
-    private javax.swing.JTextField lblCodigoTurma;
     private javax.swing.JTextField lblCursoAnterior;
     private javax.swing.JTextField lblCursoAtual;
-    private javax.swing.JTextField lblDataAdmissao;
     private javax.swing.JTextField lblDataNascimento;
     private javax.swing.JTextField lblEstado;
     private javax.swing.JTextField lblFaixaSalarial;
     private javax.swing.JTextField lblMatricula;
     private javax.swing.JTextField lblNome;
-    private javax.swing.JTextField lblNomeTurma;
     private javax.swing.JTextField lblPeriodo;
     private javax.swing.JTextField lblProfissaoAtual;
     private javax.swing.JTextField lblRua;
-    private javax.swing.JTextField lblSalarioBruto;
     private javax.swing.JTextField lblTelefone;
     private javax.swing.JTextField lblTurma;
     private javax.swing.JLabel txtBairro;
     private javax.swing.JLabel txtCPF;
     private javax.swing.JLabel txtCidade;
-    private javax.swing.JLabel txtCodigoTurma;
     private javax.swing.JLabel txtCursoAnterior;
     private javax.swing.JLabel txtCursoAtual;
-    private javax.swing.JLabel txtDataAdmissao;
     private javax.swing.JLabel txtDataNascimento;
     private javax.swing.JLabel txtEstado;
     private javax.swing.JLabel txtFaixaSalarial;
     private javax.swing.JLabel txtMatricula;
     private javax.swing.JLabel txtNome;
-    private javax.swing.JLabel txtNomeTurma;
     private javax.swing.JLabel txtPeriodo;
     private javax.swing.JLabel txtProfissaoAtual;
     private javax.swing.JLabel txtRua;
-    private javax.swing.JLabel txtSalarioBruto;
     private javax.swing.JLabel txtTelefone;
     private javax.swing.JLabel txtTurma;
     // End of variables declaration//GEN-END:variables
