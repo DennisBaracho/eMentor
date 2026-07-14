@@ -16,7 +16,6 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
      * Creates new form Cadastros
      */
 
-// Esse método usa o ButtonGroup nativo do Swing para deixar os CheckBoxes exclusivos
     private void agruparCheckBoxes() {
         javax.swing.ButtonGroup grupoChefia = new javax.swing.ButtonGroup();
         grupoChefia.add(jCheckBox2); // Sim (Chefia)
@@ -101,6 +100,7 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
         }
     }
     public MenuAlterarProfessor() {
+        
         initComponents();
         
         this.setResizable(false); 
@@ -123,6 +123,8 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton4 = new javax.swing.JButton();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
@@ -328,6 +330,7 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
         jPanel6.add(txtDataAdmissao1);
         txtDataAdmissao1.setBounds(640, 40, 100, 16);
 
+        buttonGroup1.add(jCheckBox1);
         jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox1.setText("Não");
         jPanel6.add(jCheckBox1);
@@ -339,16 +342,20 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
         jPanel6.add(txtSalarioBruto2);
         txtSalarioBruto2.setBounds(180, 140, 90, 16);
 
+        buttonGroup1.add(jCheckBox2);
         jCheckBox2.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox2.setText("Sim");
+        jCheckBox2.addActionListener(this::jCheckBox2ActionPerformed);
         jPanel6.add(jCheckBox2);
         jCheckBox2.setBounds(180, 230, 84, 20);
 
+        buttonGroup2.add(jCheckBox3);
         jCheckBox3.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox3.setText("Não");
         jPanel6.add(jCheckBox3);
         jCheckBox3.setBounds(180, 350, 84, 20);
 
+        buttonGroup2.add(jCheckBox4);
         jCheckBox4.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox4.setText("Sim");
         jPanel6.add(jCheckBox4);
@@ -527,6 +534,10 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
         salvarTodasAlteracoes();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -553,6 +564,8 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

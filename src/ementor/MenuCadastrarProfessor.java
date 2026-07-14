@@ -36,6 +36,8 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton4 = new javax.swing.JButton();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
@@ -217,6 +219,7 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         jPanel6.add(txtSalarioBruto1);
         txtSalarioBruto1.setBounds(180, 200, 90, 16);
 
+        buttonGroup1.add(jCheckBox1);
         jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox1.setText("Não");
         jPanel6.add(jCheckBox1);
@@ -228,17 +231,20 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         jPanel6.add(txtSalarioBruto2);
         txtSalarioBruto2.setBounds(180, 140, 90, 16);
 
+        buttonGroup1.add(jCheckBox2);
         jCheckBox2.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox2.setText("Sim");
         jCheckBox2.addActionListener(this::jCheckBox2ActionPerformed);
         jPanel6.add(jCheckBox2);
         jCheckBox2.setBounds(180, 220, 84, 20);
 
+        buttonGroup2.add(jCheckBox3);
         jCheckBox3.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox3.setText("Não");
         jPanel6.add(jCheckBox3);
         jCheckBox3.setBounds(180, 340, 84, 20);
 
+        buttonGroup2.add(jCheckBox4);
         jCheckBox4.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox4.setText("Sim");
         jPanel6.add(jCheckBox4);
@@ -385,6 +391,8 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
