@@ -15,6 +15,91 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
     /**
      * Creates new form Cadastros
      */
+
+// Esse método usa o ButtonGroup nativo do Swing para deixar os CheckBoxes exclusivos
+    private void agruparCheckBoxes() {
+        javax.swing.ButtonGroup grupoChefia = new javax.swing.ButtonGroup();
+        grupoChefia.add(jCheckBox2); // Sim (Chefia)
+        grupoChefia.add(jCheckBox1); // Não (Chefia)
+    
+        javax.swing.ButtonGroup grupoCoordenacao = new javax.swing.ButtonGroup();
+        grupoCoordenacao.add(jCheckBox4); // Sim (Coordenação)
+        grupoCoordenacao.add(jCheckBox3); // Não (Coordenação)
+    }
+
+    private void bloquearCampos() {
+        lblNome.setEditable(false);
+        lblDataNascimento.setEditable(false);
+        lblCPF.setEditable(false);
+        lblTelefone.setEditable(false);
+        lblRua.setEditable(false);
+        lblBairro.setEditable(false);
+        lblCidade.setEditable(false);
+        lblEstado.setEditable(false);
+    
+        lblDataAdmissao.setEditable(false);
+        lblSalarioBruto.setEditable(false);
+        lblSalarioBruto1.setEditable(false); 
+
+        jCheckBox1.setEnabled(false);
+        jCheckBox2.setEnabled(false);
+        jCheckBox3.setEnabled(false);
+        jCheckBox4.setEnabled(false);
+    
+        jButton3.setEnabled(false);
+    }
+
+    private void liberarCampos() {
+        lblNome.setEditable(true);
+        lblDataNascimento.setEditable(true);
+        lblTelefone.setEditable(true);
+        lblRua.setEditable(true);
+        lblBairro.setEditable(true);
+        lblCidade.setEditable(true);
+        lblEstado.setEditable(true);
+    
+        lblDataAdmissao.setEditable(true);
+        lblSalarioBruto.setEditable(true);
+    
+        jCheckBox1.setEnabled(true);
+        jCheckBox2.setEnabled(true);
+        jCheckBox3.setEnabled(true);
+        jCheckBox4.setEnabled(true);
+    
+        jButton3.setEnabled(true);
+    }
+
+    private void salvarTodasAlteracoes() {
+        try {
+            Professor profAlterado = new Professor();
+            
+            profAlterado.setNome(lblNome.getText());
+            profAlterado.setDataNascimento(lblDataNascimento.getText());
+            profAlterado.setCPF(Long.parseLong(lblCPF.getText()));
+            profAlterado.setTelefone(lblTelefone.getText());
+            profAlterado.setRua(lblRua.getText());
+            profAlterado.setBairro(lblBairro.getText());
+            profAlterado.setCidade(lblCidade.getText());
+            profAlterado.setEstado(lblEstado.getText());
+            
+            profAlterado.setDataAdmissao(lblDataAdmissao.getText());
+            profAlterado.setSalarioBruto(Double.parseDouble(lblSalarioBruto.getText().replace(",", ".")));
+            
+            profAlterado.setChefia(jCheckBox2.isSelected());   
+            profAlterado.setCoordenacao(jCheckBox4.isSelected()); 
+        
+            ConexoesMySQL conexao = new ConexoesMySQL();
+            conexao.alteraProfessor(profAlterado);
+        
+            lblSalarioBruto1.setText(String.format("%.2f", profAlterado.calcularSalarioLiquido()));
+
+            bloquearCampos();
+            lblDataAdmissao1.setEditable(true);
+        
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao preparar dados para alterar: " + e.getMessage(), "Erro de Validação", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
     public MenuAlterarProfessor() {
         initComponents();
         
@@ -23,6 +108,8 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
         this.setSize(800, 640); 
     
         this.setLocationRelativeTo(null);
+        
+        bloquearCampos();
         
     }
 
@@ -217,6 +304,7 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
         jButton1.setBorderPainted(false);
         jButton1.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton1.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton1.addActionListener(this::jButton1ActionPerformed);
         jPanel6.add(jButton1);
         jButton1.setBounds(640, 90, 120, 25);
 
@@ -302,6 +390,7 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
         jButton3.setBorderPainted(false);
         jButton3.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton3.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton3.addActionListener(this::jButton3ActionPerformed);
         jPanel1.add(jButton3);
         jButton3.setBounds(610, 550, 150, 25);
 
@@ -380,6 +469,63 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
         MinhaJanela.setVisible(true);
         this.dispose(); 
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String cpfStr = lblDataAdmissao1.getText().trim();
+    
+        if (cpfStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, digite um CPF para buscar.");
+            return;
+        }
+    
+        try {
+            long cpf = Long.parseLong(cpfStr);
+            ConexoesMySQL conexao = new ConexoesMySQL();
+        
+            Professor prof = conexao.buscaProfessorPorCPF(cpf);
+        
+            if (prof != null) {
+                lblNome.setText(prof.getNome());
+                lblDataNascimento.setText(prof.getDataNascimento());
+                lblCPF.setText(String.valueOf(prof.getCPF()));
+                lblTelefone.setText(prof.getTelefone());
+                lblRua.setText(prof.getRua());
+                lblBairro.setText(prof.getBairro());
+                lblCidade.setText(prof.getCidade());
+                lblEstado.setText(prof.getEstado());
+            
+                lblDataAdmissao.setText(prof.getDataAdmissao());
+                lblSalarioBruto.setText(String.format("%.2f", prof.getSalarioBruto()));
+                lblSalarioBruto1.setText(String.format("%.2f", prof.calcularSalarioLiquido()));
+            
+                if (prof.isChefia()) {
+                    jCheckBox2.setSelected(true);
+                } else {
+                    jCheckBox1.setSelected(true);
+                }
+
+                if (prof.isCoordenacao()) {
+                    jCheckBox4.setSelected(true);
+                } else {
+                    jCheckBox3.setSelected(true);
+                }
+                liberarCampos();
+                lblDataAdmissao1.setEditable(false); 
+                lblCPF.setEditable(false);
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Nenhum professor encontrado com o CPF: " + cpf, "Não encontrado", javax.swing.JOptionPane.WARNING_MESSAGE);
+            }
+        
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O CPF deve conter apenas números!", "Erro de formatação", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        salvarTodasAlteracoes();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

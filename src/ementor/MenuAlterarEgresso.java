@@ -15,15 +15,124 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
     /**
      * Creates new form Cadastros
      */
+    
+    private void bloquearCampos() {
+        lblNome.setEditable(false);
+        lblDataNascimento.setEditable(false);
+        lblCPF.setEditable(false);
+        lblTelefone.setEditable(false);
+        lblRua.setEditable(false);
+        lblBairro.setEditable(false);
+        lblCidade.setEditable(false);
+        lblEstado.setEditable(false);
+        lblProfissaoAtual.setEditable(false);
+        lblFaixaSalarial.setEditable(false);
+    
+        lblMatricula.setEditable(false);
+        lblPeriodo.setEditable(false);
+        lblTurma.setEditable(false);
+        lblCursoAnterior.setEditable(false);
+        lblCursoAtual.setEditable(false);
+    
+        jTextField4.setEditable(false);
+        jTextField6.setEditable(false);
+        jTextField7.setEditable(false);
+        jTextField8.setEditable(false);
+        jTextField9.setEditable(false);
+        jTextField14.setEditable(false);
+        jTextField13.setEditable(false);
+        jTextField12.setEditable(false);
+        jTextField11.setEditable(false);
+        jTextField10.setEditable(false);
+    
+        jButton5.setEnabled(false);
+    }
+
+    private void liberarCampos() {
+        lblNome.setEditable(true);
+        lblDataNascimento.setEditable(true);
+        lblTelefone.setEditable(true);
+        lblRua.setEditable(true);
+        lblBairro.setEditable(true);
+        lblCidade.setEditable(true);
+        lblEstado.setEditable(true);
+        lblProfissaoAtual.setEditable(true);
+        lblFaixaSalarial.setEditable(true);
+    
+        lblPeriodo.setEditable(true);
+        lblTurma.setEditable(true);
+        lblCursoAnterior.setEditable(true);
+        lblCursoAtual.setEditable(true);
+    
+        jTextField4.setEditable(true);
+        jTextField6.setEditable(true);
+        jTextField7.setEditable(true);
+        jTextField8.setEditable(true);
+        jTextField9.setEditable(true);
+        jTextField14.setEditable(true);
+        jTextField13.setEditable(true);
+        jTextField12.setEditable(true);
+        jTextField11.setEditable(true);
+        jTextField10.setEditable(true);
+    
+        jButton5.setEnabled(true);
+    }
+
+    private void salvarTodasAlteracoes() {
+        try {
+            Egresso egressoAlterado = new Egresso();
+        
+            egressoAlterado.setNome(lblNome.getText());
+            egressoAlterado.setDataNascimento(lblDataNascimento.getText());
+            egressoAlterado.setCPF(Long.parseLong(lblCPF.getText()));
+            egressoAlterado.setTelefone(lblTelefone.getText());
+            egressoAlterado.setRua(lblRua.getText());
+            egressoAlterado.setBairro(lblBairro.getText());
+            egressoAlterado.setCidade(lblCidade.getText());
+            egressoAlterado.setEstado(lblEstado.getText());
+            egressoAlterado.setProfissaoAtual(lblProfissaoAtual.getText());
+            egressoAlterado.setFaixaSalarial(lblFaixaSalarial.getText());
+            
+            egressoAlterado.setMatricula(Long.parseLong(lblMatricula.getText()));
+            egressoAlterado.setPeriodo(Integer.parseInt(lblPeriodo.getText()));
+            egressoAlterado.setTurma(Long.parseLong(lblTurma.getText()));
+            egressoAlterado.setCursoAnterior(lblCursoAnterior.getText());
+            egressoAlterado.setCursoAtual(lblCursoAtual.getText());
+            
+            float[] notas = new float[10];
+            notas[0] = Float.parseFloat(jTextField4.getText());
+            notas[1] = Float.parseFloat(jTextField14.getText());
+            notas[2] = Float.parseFloat(jTextField6.getText());
+            notas[3] = Float.parseFloat(jTextField13.getText());
+            notas[4] = Float.parseFloat(jTextField7.getText());
+            notas[5] = Float.parseFloat(jTextField12.getText());
+            notas[6] = Float.parseFloat(jTextField8.getText());
+            notas[7] = Float.parseFloat(jTextField11.getText());
+            notas[8] = Float.parseFloat(jTextField9.getText());
+            notas[9] = Float.parseFloat(jTextField10.getText());
+            egressoAlterado.setNotas(notas);
+            
+            ConexoesMySQL conexao = new ConexoesMySQL();
+            conexao.alteraEgresso(egressoAlterado);
+        
+            bloquearCampos();
+            lblProfissaoAtual1.setEditable(true); // Esse é o seu campo de digitação da busca
+        
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao preparar dados para alterar: " + e.getMessage(), "Erro de Validação", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     public MenuAlterarEgresso() {
-        initComponents();
-        
-        this.setResizable(false); 
+    initComponents();
     
-        this.setSize(800, 640); 
+    this.setResizable(false); 
     
-        this.setLocationRelativeTo(null);
-        
+    this.setSize(800, 640); 
+    
+    this.setLocationRelativeTo(null);
+    
+    bloquearCampos();
     }
 
     /**
@@ -533,6 +642,62 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String cpfStr = lblProfissaoAtual1.getText().trim();
+    
+        if (cpfStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, digite um CPF para buscar.");
+            return;
+        }
+
+        try {
+            long cpf = Long.parseLong(cpfStr);
+            ConexoesMySQL conexao = new ConexoesMySQL();
+
+            Egresso egresso = conexao.buscaEgressoPorCPF(cpf);
+
+            if (egresso != null) {
+                lblNome.setText(egresso.getNome());
+                lblDataNascimento.setText(egresso.getDataNascimento());
+                lblCPF.setText(String.valueOf(egresso.getCPF()));
+                lblTelefone.setText(egresso.getTelefone());
+                lblRua.setText(egresso.getRua());
+                lblBairro.setText(egresso.getBairro());
+                lblCidade.setText(egresso.getCidade());
+                lblEstado.setText(egresso.getEstado());
+                lblProfissaoAtual.setText(egresso.getProfissaoAtual());
+                lblFaixaSalarial.setText(egresso.getFaixaSalarial());
+
+                lblMatricula.setText(String.valueOf(egresso.getMatricula()));
+                lblPeriodo.setText(String.valueOf(egresso.getPeriodo()));
+                lblTurma.setText(String.valueOf(egresso.getTurma()));
+                lblCursoAnterior.setText(egresso.getCursoAnterior());
+                lblCursoAtual.setText(egresso.getCursoAtual());
+
+                float[] notas = egresso.getNotas();
+                if (notas != null && notas.length >= 10) {
+                    jTextField4.setText(String.valueOf(notas[0]));
+                    jTextField14.setText(String.valueOf(notas[1]));
+                    jTextField6.setText(String.valueOf(notas[2]));
+                    jTextField13.setText(String.valueOf(notas[3]));
+                    jTextField7.setText(String.valueOf(notas[4]));
+                    jTextField12.setText(String.valueOf(notas[5]));
+                    jTextField8.setText(String.valueOf(notas[6]));
+                    jTextField11.setText(String.valueOf(notas[7]));
+                    jTextField9.setText(String.valueOf(notas[8]));
+                    jTextField10.setText(String.valueOf(notas[9]));
+                }
+
+                liberarCampos();
+                lblProfissaoAtual1.setEditable(false); 
+                lblCPF.setEditable(false);
+
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Nenhum egresso encontrado com o CPF: " + cpf, "Não encontrado", javax.swing.JOptionPane.WARNING_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O CPF deve conter apenas números (sem pontos ou traços)!", "Erro de formatação", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void lblCursoAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblCursoAtualActionPerformed
@@ -567,6 +732,7 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        salvarTodasAlteracoes();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
