@@ -4,6 +4,8 @@
  */
 package ementor;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Anderson
@@ -198,7 +200,27 @@ public class LoginInterface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        //    String nomeDigitado = jTextFieldUsuario.getText();
+        //    String senhaDigitada = new String(jPasswordFieldSenha.getPassword());
+        //    ConexaoDAO conexao = new ConexaoDAO(); 
+        
+        //    Usuario usuarioLogado = conexao.autenticaUsuario(nomeDigitado, senhaDigitada);
+        //    if (usuarioLogado != null) {
+        //        JOptionPane.showMessageDialog(this, "Bem-vindo(a), " + usuarioLogado.getNomeUsuario() + "!");
+        //        MenuInterface menu = new MenuInterface(usuarioLogado);
+        //        menu.setVisible(true);
+        //        this.dispose();
+        //    } else {
+        //        JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!", "Erro de Acesso", JOptionPane.ERROR_MESSAGE);
+        //    }
+        //}
+        if (jTextField2.getText().equals("root") && new String(jPasswordField1.getPassword()).equals("admin")){
+           MenuTipoUsuário MinhaJanela = new MenuTipoUsuário();
+           MinhaJanela.setVisible(true);
+           this.dispose();
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Usuario/Senha invalido!","Informação",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed

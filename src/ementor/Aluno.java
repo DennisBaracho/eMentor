@@ -8,10 +8,10 @@ outro método para imprimir os dados (preferencialmente utilizar mensagens gráf
 package ementor;
 
 public class Aluno extends Pessoa {
-    private long Matricula;
-    private int Periodo;  
-    private float Notas[];
-    private long Turma;
+    protected long Matricula;
+    protected int Periodo;  
+    protected float Notas[];
+    protected long Turma;
     
     public Aluno (){
         super();

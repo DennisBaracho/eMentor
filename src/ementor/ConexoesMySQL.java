@@ -69,10 +69,10 @@ public class ConexoesMySQL {
         String sql = "INSERT INTO Pessoa (CPF, Nome, DataNascimento, Telefone, Rua, Bairro, Cidade, Estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         
         try (PreparedStatement ps = conexao.prepareStatement(sql)) {
-            ps.setLong(1, pessoa.CPF);
-            ps.setString(2, pessoa.Nome);
-            ps.setString(3, pessoa.DataNascimento); 
-            ps.setString(4, pessoa.Telefone);
+            ps.setLong(1, pessoa.getCPF());
+            ps.setString(2, pessoa.getNome());
+            ps.setString(3, pessoa.getDataNascimento()); 
+            ps.setString(4, pessoa.getTelefone());
             ps.setString(5, pessoa.getRua());
             ps.setString(6, pessoa.getBairro());
             ps.setString(7, pessoa.getCidade());
@@ -104,10 +104,10 @@ public class ConexoesMySQL {
             try (PreparedStatement psPessoa = conexao.prepareStatement(sqlPessoa);
                  PreparedStatement psAluno = conexao.prepareStatement(sqlAluno)) {
                 
-                psPessoa.setLong(1, aluno.CPF);
-                psPessoa.setString(2, aluno.Nome);
-                psPessoa.setString(3, aluno.DataNascimento); 
-                psPessoa.setString(4, aluno.Telefone);
+                psPessoa.setLong(1, aluno.getCPF());
+                psPessoa.setString(2, aluno.getNome());
+                psPessoa.setString(3, aluno.getDataNascimento()); 
+                psPessoa.setString(4, aluno.getTelefone());
                 psPessoa.setString(5, aluno.getRua());
                 psPessoa.setString(6, aluno.getBairro());
                 psPessoa.setString(7, aluno.getCidade());
@@ -116,8 +116,8 @@ public class ConexoesMySQL {
                 
                 psAluno.setLong(1, aluno.getMatricula());
                 psAluno.setInt(2, aluno.getPeriodo());
-                psAluno.setLong(3, aluno.CPF); 
-                psAluno.setLong(4, aluno.Turma); 
+                psAluno.setLong(3, aluno.getCPF()); 
+                psAluno.setLong(4, aluno.getTurma()); 
                 psAluno.executeUpdate();
                 
                 conexao.commit(); 
@@ -145,18 +145,18 @@ public class ConexoesMySQL {
             try (PreparedStatement psPessoa = conexao.prepareStatement(sqlPessoa);
                  PreparedStatement psAluno = conexao.prepareStatement(sqlAluno)) {
 
-                psPessoa.setString(1, aluno.Nome);
-                psPessoa.setString(2, aluno.DataNascimento);
-                psPessoa.setString(3, aluno.Telefone);
+                psPessoa.setString(1, aluno.getNome());
+                psPessoa.setString(2, aluno.getDataNascimento());
+                psPessoa.setString(3, aluno.getTelefone());
                 psPessoa.setString(4, aluno.getRua());
                 psPessoa.setString(5, aluno.getBairro());
                 psPessoa.setString(6, aluno.getCidade());
                 psPessoa.setString(7, aluno.getEstado());
-                psPessoa.setLong(8, aluno.CPF);
+                psPessoa.setLong(8, aluno.getCPF());
                 psPessoa.executeUpdate();
 
                 psAluno.setInt(1, aluno.getPeriodo());
-                psAluno.setLong(2, aluno.Turma);
+                psAluno.setLong(2, aluno.getTurma());
                 psAluno.setLong(3, aluno.getMatricula());
                 psAluno.executeUpdate();
 
@@ -184,17 +184,17 @@ public class ConexoesMySQL {
             
             while (rs.next()) {
                 Aluno aluno = new Aluno();
-                aluno.CPF = rs.getLong("CPF");
-                aluno.Nome = rs.getString("Nome");
-                aluno.DataNascimento = rs.getString("DataNascimento");
-                aluno.Telefone = rs.getString("Telefone");
-                aluno.Rua = rs.getString("Rua");
-                aluno.Bairro = rs.getString("Bairro");
-                aluno.Cidade = rs.getString("Cidade");
-                aluno.Estado = rs.getString("Estado");
+                aluno.setCPF(rs.getLong("CPF"));
+                aluno.setNome(rs.getString("Nome"));
+                aluno.setDataNascimento(rs.getString("DataNascimento"));
+                aluno.setTelefone(rs.getString("Telefone"));
+                aluno.setRua(rs.getString("Rua"));
+                aluno.setBairro(rs.getString("Bairro"));
+                aluno.setCidade(rs.getString("Cidade"));
+                aluno.setEstado(rs.getString("Estado"));
                 aluno.setMatricula(rs.getLong("Matricula"));
                 aluno.setPeriodo(rs.getInt("Periodo"));
-                aluno.Turma = rs.getLong("Codigo_Turma");
+                aluno.setTurma(rs.getLong("Codigo_Turma"));
                 
                 listaAlunos.add(aluno);       
             }
@@ -217,17 +217,17 @@ public class ConexoesMySQL {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Aluno aluno = new Aluno();
-                    aluno.CPF = rs.getLong("CPF");
-                    aluno.Nome = rs.getString("Nome");
-                    aluno.DataNascimento = rs.getString("DataNascimento");
-                    aluno.Telefone = rs.getString("Telefone");
-                    aluno.Rua = rs.getString("Rua");
-                    aluno.Bairro = rs.getString("Bairro");
-                    aluno.Cidade = rs.getString("Cidade");
-                    aluno.Estado = rs.getString("Estado");
+                    aluno.setCPF(rs.getLong("CPF"));
+                    aluno.setNome(rs.getString("Nome"));
+                    aluno.setDataNascimento(rs.getString("DataNascimento"));
+                    aluno.setTelefone(rs.getString("Telefone"));
+                    aluno.setRua(rs.getString("Rua"));
+                    aluno.setBairro(rs.getString("Bairro"));
+                    aluno.setCidade(rs.getString("Cidade"));
+                    aluno.setEstado(rs.getString("Estado"));
                     aluno.setMatricula(rs.getLong("Matricula"));
                     aluno.setPeriodo(rs.getInt("Periodo"));
-                    aluno.Turma = rs.getLong("Codigo_Turma");
+                    aluno.setTurma(rs.getLong("Codigo_Turma"));
                     return aluno;
                 }
             }
@@ -257,10 +257,10 @@ public class ConexoesMySQL {
                  PreparedStatement psAluno = conexao.prepareStatement(sqlAluno);
                  PreparedStatement psEgresso = conexao.prepareStatement(sqlEgresso)) {
                 
-                psPessoa.setLong(1, egresso.CPF);
-                psPessoa.setString(2, egresso.Nome);
-                psPessoa.setString(3, egresso.DataNascimento);
-                psPessoa.setString(4, egresso.Telefone);
+                psPessoa.setLong(1, egresso.getCPF());
+                psPessoa.setString(2, egresso.getNome());
+                psPessoa.setString(3, egresso.getDataNascimento());
+                psPessoa.setString(4, egresso.getTelefone());
                 psPessoa.setString(5, egresso.getRua());
                 psPessoa.setString(6, egresso.getBairro());
                 psPessoa.setString(7, egresso.getCidade());
@@ -269,8 +269,8 @@ public class ConexoesMySQL {
                 
                 psAluno.setLong(1, egresso.getMatricula());
                 psAluno.setInt(2, egresso.getPeriodo());
-                psAluno.setLong(3, egresso.CPF);
-                psAluno.setLong(4, egresso.Turma);
+                psAluno.setLong(3, egresso.getCPF());
+                psAluno.setLong(4, egresso.getTurma());
                 psAluno.executeUpdate();
                 
                 psEgresso.setLong(1, egresso.getMatricula()); 
@@ -307,18 +307,18 @@ public class ConexoesMySQL {
                  PreparedStatement psAluno = conexao.prepareStatement(sqlAluno);
                  PreparedStatement psEgresso = conexao.prepareStatement(sqlEgresso)) {
 
-                psPessoa.setString(1, egresso.Nome);
-                psPessoa.setString(2, egresso.DataNascimento);
-                psPessoa.setString(3, egresso.Telefone);
+                psPessoa.setString(1, egresso.getNome());
+                psPessoa.setString(2, egresso.getDataNascimento());
+                psPessoa.setString(3, egresso.getTelefone());
                 psPessoa.setString(4, egresso.getRua());
                 psPessoa.setString(5, egresso.getBairro());
                 psPessoa.setString(6, egresso.getCidade());
                 psPessoa.setString(7, egresso.getEstado());
-                psPessoa.setLong(8, egresso.CPF);
+                psPessoa.setLong(8, egresso.getCPF());
                 psPessoa.executeUpdate();
 
                 psAluno.setInt(1, egresso.getPeriodo());
-                psAluno.setLong(2, egresso.Turma);
+                psAluno.setLong(2, egresso.getTurma());
                 psAluno.setLong(3, egresso.getMatricula());
                 psAluno.executeUpdate();
 
@@ -367,27 +367,32 @@ public class ConexoesMySQL {
     // ========================================================================
     // USUÁRIO - AUTENTICAÇÃO
 
-    public boolean autenticaUsuario(String nomeUsuario, String senhaFornecida) {
-        Connection conexao = realizaConexaoMySQL();
-        if (conexao == null) return false;
+    public Usuario autenticaUsuario(String nomeUsuario, String senhaFornecida) {
+    Connection conexao = realizaConexaoMySQL();
+    if (conexao == null) return null;
 
-        String sql = "SELECT * FROM Usuario WHERE NomeUsuario = ? AND Senha = ?";
-        
-        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
-            ps.setString(1, nomeUsuario);
-            ps.setString(2, senhaFornecida);
-            
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return true;
-                }
+    String sql = "SELECT * FROM Usuario WHERE NomeUsuario = ? AND Senha = ?";
+
+    try (PreparedStatement ps = conexao.prepareStatement(sql)) {
+        ps.setString(1, nomeUsuario);
+        ps.setString(2, senhaFornecida);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                String nomeBanco = rs.getString("NomeUsuario");
+                String senhaBanco = rs.getString("Senha");
+                int nivelBanco = rs.getInt("NivelAcesso");
+
+                return new Usuario(nomeBanco, senhaBanco, nivelBanco);
             }
-        } catch (SQLException e) {
-            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao autenticar Usuário: " + e.getMessage());
-            JOptionPane.showMessageDialog(null, "Erro ao autenticar usuário: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            desconectaMySQL(conexao);
         }
-        return false; 
+    } catch (SQLException e) {
+        registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao autenticar Usuário: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Erro ao autenticar usuário: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        desconectaMySQL(conexao);
     }
+
+    return null;
+}
 }
