@@ -69,13 +69,13 @@ public class ListaProfessores extends javax.swing.JFrame {
         jTable1.setBackground(new java.awt.Color(30, 30, 30));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Data Nascimento", "CPF", "Telefone", "Rua", "Bairro", "Cidade", "Estado", "DataAdmissao", "SalarioBruto"
+                "Nome", "Data Nascimento", "CPF", "Telefone", "Rua", "Bairro", "Cidade", "Estado", "DataAdmissao", "SalarioBruto", "Chefia", "Coordenação"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

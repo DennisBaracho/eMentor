@@ -62,6 +62,12 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         lblSalarioBruto = new javax.swing.JTextField();
         lblSalarioBruto1 = new javax.swing.JTextField();
         txtSalarioBruto1 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        txtSalarioBruto2 = new javax.swing.JLabel();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        txtSalarioBruto3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -207,9 +213,42 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
 
         txtSalarioBruto1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtSalarioBruto1.setForeground(new java.awt.Color(255, 255, 255));
-        txtSalarioBruto1.setText("Salario Líquido");
+        txtSalarioBruto1.setText("Chefia");
         jPanel6.add(txtSalarioBruto1);
-        txtSalarioBruto1.setBounds(180, 140, 90, 16);
+        txtSalarioBruto1.setBounds(180, 200, 90, 16);
+
+        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
+        jCheckBox1.setText("Não");
+        jPanel6.add(jCheckBox1);
+        jCheckBox1.setBounds(180, 250, 84, 20);
+
+        txtSalarioBruto2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        txtSalarioBruto2.setForeground(new java.awt.Color(255, 255, 255));
+        txtSalarioBruto2.setText("Salario Líquido");
+        jPanel6.add(txtSalarioBruto2);
+        txtSalarioBruto2.setBounds(180, 140, 90, 16);
+
+        jCheckBox2.setForeground(new java.awt.Color(255, 255, 255));
+        jCheckBox2.setText("Sim");
+        jCheckBox2.addActionListener(this::jCheckBox2ActionPerformed);
+        jPanel6.add(jCheckBox2);
+        jCheckBox2.setBounds(180, 220, 84, 20);
+
+        jCheckBox3.setForeground(new java.awt.Color(255, 255, 255));
+        jCheckBox3.setText("Não");
+        jPanel6.add(jCheckBox3);
+        jCheckBox3.setBounds(180, 340, 84, 20);
+
+        jCheckBox4.setForeground(new java.awt.Color(255, 255, 255));
+        jCheckBox4.setText("Sim");
+        jPanel6.add(jCheckBox4);
+        jCheckBox4.setBounds(180, 310, 84, 20);
+
+        txtSalarioBruto3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        txtSalarioBruto3.setForeground(new java.awt.Color(255, 255, 255));
+        txtSalarioBruto3.setText("Coordenação");
+        jPanel6.add(txtSalarioBruto3);
+        txtSalarioBruto3.setBounds(180, 290, 90, 16);
 
         jTabbedPane2.addTab("Dados Pessoais", jPanel6);
 
@@ -316,6 +355,10 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -345,6 +388,10 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox jCheckBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
@@ -371,6 +418,8 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
     private javax.swing.JLabel txtRua;
     private javax.swing.JLabel txtSalarioBruto;
     private javax.swing.JLabel txtSalarioBruto1;
+    private javax.swing.JLabel txtSalarioBruto2;
+    private javax.swing.JLabel txtSalarioBruto3;
     private javax.swing.JLabel txtTelefone;
     // End of variables declaration//GEN-END:variables
 }
