@@ -39,7 +39,8 @@ public class ListaNotas extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         jButton4.setBackground(new java.awt.Color(45, 60, 135));
         jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -80,13 +81,21 @@ public class ListaNotas extends javax.swing.JFrame {
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(0, 40, 800, 560);
 
-        jButton1.setBackground(new java.awt.Color(45, 60, 135));
-        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Gerar PDF");
-        jButton1.setBorderPainted(false);
-        jPanel1.add(jButton1);
-        jButton1.setBounds(690, 10, 100, 23);
+        jButton5.setBackground(new java.awt.Color(45, 60, 135));
+        jButton5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jButton5.setText("Voltar");
+        jButton5.setBorderPainted(false);
+        jPanel1.add(jButton5);
+        jButton5.setBounds(580, 10, 100, 23);
+
+        jButton6.setBackground(new java.awt.Color(45, 60, 135));
+        jButton6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(255, 255, 255));
+        jButton6.setText("Gerar PDF");
+        jButton6.setBorderPainted(false);
+        jPanel1.add(jButton6);
+        jButton6.setBounds(690, 10, 100, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,8 +145,9 @@ public class ListaNotas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

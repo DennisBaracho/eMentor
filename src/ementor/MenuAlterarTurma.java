@@ -47,9 +47,9 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         lblMatricula1 = new javax.swing.JTextField();
         txtMatricula1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
         jButton4.setBackground(new java.awt.Color(45, 60, 135));
         jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -126,6 +126,18 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
         jPanel7.add(txtMatricula1);
         txtMatricula1.setBounds(640, 30, 100, 16);
 
+        jTabbedPane2.addTab("Dados Acadêmicos", jPanel7);
+
+        jPanel1.add(jTabbedPane2);
+        jTabbedPane2.setBounds(0, 30, 800, 500);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("eMentor Plus - Turma");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(0, 10, 800, 16);
+
         jButton7.setBackground(new java.awt.Color(45, 60, 135));
         jButton7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
@@ -135,8 +147,8 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
         jButton7.setMinimumSize(new java.awt.Dimension(100, 22));
         jButton7.setPreferredSize(new java.awt.Dimension(100, 22));
         jButton7.addActionListener(this::jButton7ActionPerformed);
-        jPanel7.add(jButton7);
-        jButton7.setBounds(440, 480, 150, 25);
+        jPanel1.add(jButton7);
+        jButton7.setBounds(440, 540, 150, 25);
 
         jButton8.setBackground(new java.awt.Color(45, 60, 135));
         jButton8.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
@@ -147,20 +159,8 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
         jButton8.setMinimumSize(new java.awt.Dimension(100, 22));
         jButton8.setPreferredSize(new java.awt.Dimension(100, 22));
         jButton8.addActionListener(this::jButton8ActionPerformed);
-        jPanel7.add(jButton8);
-        jButton8.setBounds(610, 480, 150, 25);
-
-        jTabbedPane2.addTab("Dados Acadêmicos", jPanel7);
-
-        jPanel1.add(jTabbedPane2);
-        jTabbedPane2.setBounds(0, 30, 800, 600);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("eMentor Plus - Turma");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(0, 10, 800, 16);
+        jPanel1.add(jButton8);
+        jButton8.setBounds(610, 540, 150, 25);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

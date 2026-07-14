@@ -65,9 +65,9 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
         txtSalarioBruto1 = new javax.swing.JLabel();
         lblDataAdmissao1 = new javax.swing.JTextField();
         txtDataAdmissao1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
         jButton4.setBackground(new java.awt.Color(45, 60, 135));
         jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -234,6 +234,18 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
         jPanel6.add(txtDataAdmissao1);
         txtDataAdmissao1.setBounds(640, 40, 100, 16);
 
+        jTabbedPane2.addTab("Dados Pessoais", jPanel6);
+
+        jPanel1.add(jTabbedPane2);
+        jTabbedPane2.setBounds(0, 30, 800, 510);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("eMentor Plus - Professor");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(0, 10, 800, 16);
+
         jButton2.setBackground(new java.awt.Color(45, 60, 135));
         jButton2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
@@ -242,8 +254,8 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
         jButton2.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton2.setMinimumSize(new java.awt.Dimension(100, 22));
         jButton2.addActionListener(this::jButton2ActionPerformed);
-        jPanel6.add(jButton2);
-        jButton2.setBounds(430, 480, 150, 25);
+        jPanel1.add(jButton2);
+        jButton2.setBounds(440, 550, 150, 25);
 
         jButton3.setBackground(new java.awt.Color(45, 60, 135));
         jButton3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
@@ -252,20 +264,8 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
         jButton3.setBorderPainted(false);
         jButton3.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton3.setMinimumSize(new java.awt.Dimension(100, 22));
-        jPanel6.add(jButton3);
-        jButton3.setBounds(600, 480, 150, 25);
-
-        jTabbedPane2.addTab("Dados Pessoais", jPanel6);
-
-        jPanel1.add(jTabbedPane2);
-        jTabbedPane2.setBounds(0, 30, 800, 600);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("eMentor Plus - Professor");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(0, 10, 800, 16);
+        jPanel1.add(jButton3);
+        jButton3.setBounds(610, 550, 150, 25);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

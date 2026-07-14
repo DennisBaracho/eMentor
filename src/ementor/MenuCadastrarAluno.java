@@ -56,8 +56,6 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         lblCidade = new javax.swing.JTextField();
         lblEstado = new javax.swing.JTextField();
         txtEstado = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         lblMatricula = new javax.swing.JTextField();
         txtMatricula = new javax.swing.JLabel();
@@ -65,8 +63,6 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         lblPeriodo = new javax.swing.JTextField();
         txtTurma = new javax.swing.JLabel();
         lblTurma = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jTextField4 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -88,9 +84,9 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jTextField14 = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jButton4.setBackground(new java.awt.Color(45, 60, 135));
         jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -207,28 +203,6 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         jPanel6.add(txtEstado);
         txtEstado.setBounds(40, 420, 37, 16);
 
-        jButton1.setBackground(new java.awt.Color(45, 60, 135));
-        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Voltar");
-        jButton1.setBorderPainted(false);
-        jButton1.setMaximumSize(new java.awt.Dimension(100, 22));
-        jButton1.setMinimumSize(new java.awt.Dimension(100, 22));
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-        jPanel6.add(jButton1);
-        jButton1.setBounds(550, 480, 100, 25);
-
-        jButton3.setBackground(new java.awt.Color(45, 60, 135));
-        jButton3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Cadastrar");
-        jButton3.setBorderPainted(false);
-        jButton3.setMaximumSize(new java.awt.Dimension(100, 22));
-        jButton3.setMinimumSize(new java.awt.Dimension(100, 22));
-        jButton3.addActionListener(this::jButton3ActionPerformed);
-        jPanel6.add(jButton3);
-        jButton3.setBounds(670, 480, 100, 25);
-
         jTabbedPane2.addTab("Dados Pessoais", jPanel6);
 
         jPanel7.setBackground(new java.awt.Color(30, 30, 30));
@@ -263,30 +237,6 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         lblTurma.addActionListener(this::lblTurmaActionPerformed);
         jPanel7.add(lblTurma);
         lblTurma.setBounds(40, 160, 125, 22);
-
-        jButton6.setBackground(new java.awt.Color(45, 60, 135));
-        jButton6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Voltar");
-        jButton6.setBorderPainted(false);
-        jButton6.setMaximumSize(new java.awt.Dimension(100, 22));
-        jButton6.setMinimumSize(new java.awt.Dimension(100, 22));
-        jButton6.setPreferredSize(new java.awt.Dimension(100, 22));
-        jButton6.addActionListener(this::jButton6ActionPerformed);
-        jPanel7.add(jButton6);
-        jButton6.setBounds(550, 480, 100, 25);
-
-        jButton7.setBackground(new java.awt.Color(45, 60, 135));
-        jButton7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Cadastrar");
-        jButton7.setBorderPainted(false);
-        jButton7.setMaximumSize(new java.awt.Dimension(100, 22));
-        jButton7.setMinimumSize(new java.awt.Dimension(100, 22));
-        jButton7.setPreferredSize(new java.awt.Dimension(100, 22));
-        jButton7.addActionListener(this::jButton7ActionPerformed);
-        jPanel7.add(jButton7);
-        jButton7.setBounds(670, 480, 100, 25);
 
         jTabbedPane2.addTab("Dados Acadêmicos", jPanel7);
 
@@ -332,18 +282,6 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Nota 2");
 
-        jButton2.setBackground(new java.awt.Color(45, 60, 135));
-        jButton2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Cadastrar");
-        jButton2.setBorderPainted(false);
-
-        jButton5.setBackground(new java.awt.Color(45, 60, 135));
-        jButton5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Voltar");
-        jButton5.setBorderPainted(false);
-
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -377,12 +315,6 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
                             .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 531, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -429,17 +361,13 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57))
+                .addContainerGap(182, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Notas", jPanel8);
 
         jPanel1.add(jTabbedPane2);
-        jTabbedPane2.setBounds(0, 30, 800, 600);
+        jTabbedPane2.setBounds(0, 30, 800, 510);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -448,21 +376,43 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 10, 800, 16);
 
+        jButton3.setBackground(new java.awt.Color(45, 60, 135));
+        jButton3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Cadastrar");
+        jButton3.setBorderPainted(false);
+        jButton3.setMaximumSize(new java.awt.Dimension(100, 22));
+        jButton3.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton3.addActionListener(this::jButton3ActionPerformed);
+        jPanel1.add(jButton3);
+        jButton3.setBounds(670, 550, 100, 25);
+
+        jButton1.setBackground(new java.awt.Color(45, 60, 135));
+        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Voltar");
+        jButton1.setBorderPainted(false);
+        jButton1.setMaximumSize(new java.awt.Dimension(100, 22));
+        jButton1.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+        jPanel1.add(jButton1);
+        jButton1.setBounds(550, 550, 100, 25);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -514,14 +464,6 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblTurmaActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -559,12 +501,8 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

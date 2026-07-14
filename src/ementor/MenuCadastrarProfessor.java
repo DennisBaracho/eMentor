@@ -60,11 +60,11 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         lblDataAdmissao = new javax.swing.JTextField();
         txtSalarioBruto = new javax.swing.JLabel();
         lblSalarioBruto = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         lblSalarioBruto1 = new javax.swing.JTextField();
         txtSalarioBruto1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         jButton4.setBackground(new java.awt.Color(45, 60, 135));
         jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -201,17 +201,6 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         jPanel6.add(lblSalarioBruto);
         lblSalarioBruto.setBounds(180, 110, 125, 22);
 
-        jButton1.setBackground(new java.awt.Color(45, 60, 135));
-        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Voltar");
-        jButton1.setBorderPainted(false);
-        jButton1.setMaximumSize(new java.awt.Dimension(100, 22));
-        jButton1.setMinimumSize(new java.awt.Dimension(100, 22));
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-        jPanel6.add(jButton1);
-        jButton1.setBounds(550, 480, 100, 25);
-
         lblSalarioBruto1.addActionListener(this::lblSalarioBruto1ActionPerformed);
         jPanel6.add(lblSalarioBruto1);
         lblSalarioBruto1.setBounds(180, 160, 125, 22);
@@ -222,20 +211,10 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         jPanel6.add(txtSalarioBruto1);
         txtSalarioBruto1.setBounds(180, 140, 90, 16);
 
-        jButton2.setBackground(new java.awt.Color(45, 60, 135));
-        jButton2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Cadastrar");
-        jButton2.setBorderPainted(false);
-        jButton2.setMaximumSize(new java.awt.Dimension(100, 22));
-        jButton2.setMinimumSize(new java.awt.Dimension(100, 22));
-        jPanel6.add(jButton2);
-        jButton2.setBounds(670, 480, 100, 25);
-
         jTabbedPane2.addTab("Dados Pessoais", jPanel6);
 
         jPanel1.add(jTabbedPane2);
-        jTabbedPane2.setBounds(0, 30, 800, 600);
+        jTabbedPane2.setBounds(0, 30, 800, 510);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -243,6 +222,27 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         jLabel1.setText("eMentor Plus - Professor");
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 10, 800, 16);
+
+        jButton1.setBackground(new java.awt.Color(45, 60, 135));
+        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Voltar");
+        jButton1.setBorderPainted(false);
+        jButton1.setMaximumSize(new java.awt.Dimension(100, 22));
+        jButton1.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+        jPanel1.add(jButton1);
+        jButton1.setBounds(550, 550, 100, 25);
+
+        jButton2.setBackground(new java.awt.Color(45, 60, 135));
+        jButton2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Cadastrar");
+        jButton2.setBorderPainted(false);
+        jButton2.setMaximumSize(new java.awt.Dimension(100, 22));
+        jButton2.setMinimumSize(new java.awt.Dimension(100, 22));
+        jPanel1.add(jButton2);
+        jButton2.setBounds(670, 550, 100, 25);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
