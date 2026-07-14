@@ -110,6 +110,7 @@ public class MenuCadastrarTurma extends javax.swing.JFrame {
         jButton6.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton6.setMinimumSize(new java.awt.Dimension(100, 22));
         jButton6.setPreferredSize(new java.awt.Dimension(100, 22));
+        jButton6.addActionListener(this::jButton6ActionPerformed);
         jPanel7.add(jButton6);
         jButton6.setBounds(550, 480, 100, 25);
 
@@ -165,6 +166,12 @@ public class MenuCadastrarTurma extends javax.swing.JFrame {
     private void lblPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblPeriodoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lblPeriodoActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        MenuOpçõesProfessor MinhaJanela = new MenuOpçõesProfessor();
+        MinhaJanela.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -556,7 +556,9 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
     }//GEN-LAST:event_lblNomeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        MenuOpçõesEgresso MinhaJanela = new MenuOpçõesEgresso();
+        MinhaJanela.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void lblCursoAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblCursoAtualActionPerformed

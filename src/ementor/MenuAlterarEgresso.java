@@ -261,7 +261,8 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(45, 60, 135));
         jButton3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Salvar Alterações");
+        jButton3.setText("Voltar");
+        jButton3.setActionCommand("Voltar");
         jButton3.setBorderPainted(false);
         jButton3.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton3.setMinimumSize(new java.awt.Dimension(100, 22));
@@ -597,7 +598,9 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
     }//GEN-LAST:event_lblProfissaoAtual1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        MenuOpçõesEgresso MinhaJanela = new MenuOpçõesEgresso();
+        MinhaJanela.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed

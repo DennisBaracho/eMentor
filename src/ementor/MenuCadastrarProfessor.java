@@ -208,6 +208,7 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         jButton1.setBorderPainted(false);
         jButton1.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton1.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton1.addActionListener(this::jButton1ActionPerformed);
         jPanel6.add(jButton1);
         jButton1.setBounds(550, 480, 100, 25);
 
@@ -308,6 +309,12 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
     private void lblSalarioBruto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblSalarioBruto1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lblSalarioBruto1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        MenuOpçõesProfessor MinhaJanela = new MenuOpçõesProfessor();
+        MinhaJanela.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

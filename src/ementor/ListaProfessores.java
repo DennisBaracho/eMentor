@@ -24,50 +24,8 @@ public class ListaProfessores extends javax.swing.JFrame {
     
         this.setLocationRelativeTo(null);
         
-        esconderCamposEspecificos();
     }
     
-    private void esconderCamposEspecificos() {
-        lblDataAdmissao.setVisible(false);
-        txtDataAdmissao.setVisible(false);
-        lblSalarioBruto.setVisible(false);
-        txtSalarioBruto.setVisible(false);
-        lblProfissaoAtual.setVisible(false);
-        txtProfissaoAtual.setVisible(false);
-        lblFaixaSalarial.setVisible(false);
-        txtFaixaSalarial.setVisible(false);
-        lblNome.setVisible(false);
-        txtNome.setVisible(false);
-        lblDataNascimento.setVisible(false);
-        txtDataNascimento.setVisible(false);
-        lblCPF.setVisible(false);
-        txtCPF.setVisible(false);
-        lblTelefone.setVisible(false);
-        txtTelefone.setVisible(false);
-        lblRua.setVisible(false);
-        txtRua.setVisible(false);
-        lblBairro.setVisible(false);
-        txtBairro.setVisible(false);
-        lblCidade.setVisible(false);
-        txtCidade.setVisible(false);
-        lblEstado.setVisible(false);
-        txtEstado.setVisible(false);
-        
-        lblMatricula.setVisible(false);
-        txtMatricula.setVisible(false);
-        lblPeriodo.setVisible(false);
-        txtPeriodo.setVisible(false);
-        lblTurma.setVisible(false);
-        txtTurma.setVisible(false);
-        lblCursoAnterior.setVisible(false);
-        txtCursoAnterior.setVisible(false);
-        lblCursoAtual.setVisible(false);
-        txtCursoAtual.setVisible(false);
-        lblNomeTurma.setVisible(false);
-        txtNomeTurma.setVisible(false);
-        lblCodigoTurma.setVisible(false);
-        txtCodigoTurma.setVisible(false);
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.

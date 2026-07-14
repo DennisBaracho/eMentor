@@ -238,6 +238,7 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
         jButton3.setBorderPainted(false);
         jButton3.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton3.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton3.addActionListener(this::jButton3ActionPerformed);
         jPanel6.add(jButton3);
         jButton3.setBounds(440, 480, 150, 25);
 
@@ -551,6 +552,12 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        MenuOpçõesAluno MinhaJanela = new MenuOpçõesAluno();
+        MinhaJanela.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

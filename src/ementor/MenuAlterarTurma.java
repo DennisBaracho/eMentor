@@ -134,6 +134,7 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
         jButton7.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton7.setMinimumSize(new java.awt.Dimension(100, 22));
         jButton7.setPreferredSize(new java.awt.Dimension(100, 22));
+        jButton7.addActionListener(this::jButton7ActionPerformed);
         jPanel7.add(jButton7);
         jButton7.setBounds(440, 480, 150, 25);
 
@@ -145,6 +146,7 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
         jButton8.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton8.setMinimumSize(new java.awt.Dimension(100, 22));
         jButton8.setPreferredSize(new java.awt.Dimension(100, 22));
+        jButton8.addActionListener(this::jButton8ActionPerformed);
         jPanel7.add(jButton8);
         jButton8.setBounds(610, 480, 150, 25);
 
@@ -193,6 +195,16 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
     private void lblMatricula1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblMatricula1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lblMatricula1ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        MenuOpçõesTurma MinhaJanela = new MenuOpçõesTurma();
+        MinhaJanela.setVisible(true);
+        this.dispose(); 
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments

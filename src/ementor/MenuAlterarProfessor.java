@@ -241,6 +241,7 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
         jButton2.setBorderPainted(false);
         jButton2.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton2.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton2.addActionListener(this::jButton2ActionPerformed);
         jPanel6.add(jButton2);
         jButton2.setBounds(430, 480, 150, 25);
 
@@ -335,6 +336,12 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
     private void lblDataAdmissao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblDataAdmissao1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lblDataAdmissao1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        MenuOpçõesProfessor MinhaJanela = new MenuOpçõesProfessor();
+        MinhaJanela.setVisible(true);
+        this.dispose(); 
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

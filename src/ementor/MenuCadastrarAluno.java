@@ -214,6 +214,7 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         jButton1.setBorderPainted(false);
         jButton1.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton1.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton1.addActionListener(this::jButton1ActionPerformed);
         jPanel6.add(jButton1);
         jButton1.setBounds(550, 480, 100, 25);
 
@@ -224,6 +225,7 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         jButton3.setBorderPainted(false);
         jButton3.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton3.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton3.addActionListener(this::jButton3ActionPerformed);
         jPanel6.add(jButton3);
         jButton3.setBounds(670, 480, 100, 25);
 
@@ -519,6 +521,16 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        MenuOpçõesAluno MinhaJanela = new MenuOpçõesAluno();
+        MinhaJanela.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

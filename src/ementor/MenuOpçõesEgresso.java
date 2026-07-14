@@ -104,7 +104,7 @@ public class MenuOpçõesEgresso extends javax.swing.JFrame {
         jButton7.setBackground(new java.awt.Color(45, 60, 135));
         jButton7.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Listar Notas");
+        jButton7.setText("Listar Histórico de Notas");
         jButton7.setBorderPainted(false);
         jButton7.addActionListener(this::jButton7ActionPerformed);
 
@@ -180,23 +180,33 @@ public class MenuOpçõesEgresso extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        ListaEgressos MinhaJanela = new ListaEgressos();
+        MinhaJanela.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        MenuAlterarEgresso MinhaJanela = new MenuAlterarEgresso();
+        MinhaJanela.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        MenuCadastrarEgresso MinhaJanela = new MenuCadastrarEgresso();
+        MinhaJanela.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        ListaNotas MinhaJanela = new ListaNotas();
+        MinhaJanela.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        MenuTipoUsuário MinhaJanela = new MenuTipoUsuário();
+        MinhaJanela.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
