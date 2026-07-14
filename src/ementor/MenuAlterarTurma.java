@@ -12,20 +12,52 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuAlterarTurma.class.getName());
 
-    /**
-     * Creates new form Cadastros
-     */
-    public MenuAlterarTurma() {
-        initComponents();
-        
-        this.setResizable(false); 
+    private void bloquearCampos() {
+    lblMatricula.setEditable(false);
+    lblPeriodo.setEditable(false);  
     
-        this.setSize(800, 640); 
-    
-        this.setLocationRelativeTo(null);
-        
+    jButton8.setEnabled(false);
     }
 
+    private void liberarCampos() {
+        lblPeriodo.setEditable(true); 
+
+        jButton8.setEnabled(true);
+    }
+
+    private void salvarTodasAlteracoes() {
+        try {
+            Turma turmaAlterada = new Turma();
+
+            turmaAlterada.setCodigoTurma(Long.parseLong(lblMatricula.getText()));
+            turmaAlterada.setNomeTurma(lblPeriodo.getText());
+
+            ConexoesMySQL conexao = new ConexoesMySQL();
+            conexao.alteraTurma(turmaAlterada);
+
+            lblMatricula.setText("");
+            lblPeriodo.setText("");
+
+            bloquearCampos();
+            lblMatricula1.setEditable(true);
+            lblMatricula1.setText("");       
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao preparar dados para alterar: " + e.getMessage(), "Erro de Validação", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public MenuAlterarTurma() {
+        initComponents();
+
+        this.setResizable(false); 
+
+        this.setSize(800, 640); 
+
+        this.setLocationRelativeTo(null);
+
+        bloquearCampos();   
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -113,6 +145,7 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
         jButton6.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton6.setMinimumSize(new java.awt.Dimension(100, 22));
         jButton6.setPreferredSize(new java.awt.Dimension(100, 22));
+        jButton6.addActionListener(this::jButton6ActionPerformed);
         jPanel7.add(jButton6);
         jButton6.setBounds(640, 80, 120, 25);
 
@@ -203,8 +236,39 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        salvarTodasAlteracoes(); 
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        String codigoStr = lblMatricula1.getText().trim();
+    
+        if (codigoStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, digite o Código da Turma para buscar.");
+            return;
+        }
+
+        try {
+            long codigo = Long.parseLong(codigoStr);
+            ConexoesMySQL conexao = new ConexoesMySQL();
+
+            Turma turma = conexao.buscaTurmaPorCodigo(codigo);
+
+            if (turma != null) {
+                lblMatricula.setText(String.valueOf(turma.getCodigoTurma()));
+                lblPeriodo.setText(turma.getNomeTurma());
+
+                liberarCampos();
+
+                lblMatricula1.setEditable(false);
+
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Nenhuma turma encontrada com o código: " + codigo, "Não encontrado", javax.swing.JOptionPane.WARNING_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O Código da Turma deve conter apenas números!", "Erro de formatação", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }                                        
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments

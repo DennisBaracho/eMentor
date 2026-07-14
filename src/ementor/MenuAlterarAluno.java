@@ -12,9 +12,99 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuAlterarAluno.class.getName());
 
-    /**
-     * Creates new form Cadastros
-     */
+        private void salvarTodasAlteracoes() {
+        try {
+            Aluno alunoAlterado = new Aluno();
+        
+            alunoAlterado.setNome(lblNome.getText());
+            alunoAlterado.setDataNascimento(lblDataNascimento.getText());
+            alunoAlterado.setCPF(Long.parseLong(lblCPF.getText()));
+            alunoAlterado.setTelefone(lblTelefone.getText());
+            alunoAlterado.setRua(lblRua.getText());
+            alunoAlterado.setBairro(lblBairro.getText());
+            alunoAlterado.setCidade(lblCidade.getText());
+            alunoAlterado.setEstado(lblEstado.getText());
+        
+            alunoAlterado.setMatricula(Long.parseLong(lblMatricula.getText()));
+            alunoAlterado.setPeriodo(Integer.parseInt(lblPeriodo.getText()));
+            alunoAlterado.setTurma(Long.parseLong(lblTurma.getText()));
+        
+            float[] notas = new float[10];
+            notas[0] = Float.parseFloat(jTextField4.getText());
+            notas[1] = Float.parseFloat(jTextField14.getText());
+            notas[2] = Float.parseFloat(jTextField6.getText());
+            notas[3] = Float.parseFloat(jTextField13.getText());
+            notas[4] = Float.parseFloat(jTextField7.getText());
+            notas[5] = Float.parseFloat(jTextField12.getText());
+            notas[6] = Float.parseFloat(jTextField8.getText());
+            notas[7] = Float.parseFloat(jTextField11.getText());
+            notas[8] = Float.parseFloat(jTextField9.getText());
+            notas[9] = Float.parseFloat(jTextField10.getText());
+            alunoAlterado.setNotas(notas);
+        
+            ConexoesMySQL conexao = new ConexoesMySQL();
+            conexao.alteraAluno(alunoAlterado);
+            bloquearCampos();
+            lblNome1.setEditable(true);
+        
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao preparar dados para alterar: " + e.getMessage(), "Erro de Validação", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    private void bloquearCampos() {
+        lblNome.setEditable(false);
+        lblDataNascimento.setEditable(false);
+        lblCPF.setEditable(false);
+        lblTelefone.setEditable(false);
+        lblRua.setEditable(false);
+        lblBairro.setEditable(false);
+        lblCidade.setEditable(false);
+        lblEstado.setEditable(false);
+        lblPeriodo.setEditable(false);
+        lblTurma.setEditable(false);
+        lblMatricula.setEditable(false);
+    
+        jTextField4.setEditable(false);
+        jTextField6.setEditable(false);
+        jTextField7.setEditable(false);
+        jTextField8.setEditable(false);
+        jTextField9.setEditable(false);
+        jTextField14.setEditable(false);
+        jTextField13.setEditable(false);
+        jTextField12.setEditable(false);
+        jTextField11.setEditable(false);
+        jTextField10.setEditable(false);
+        
+        //botão de salvar bloqueado alterar para o novo
+        jButton7.setEnabled(false);
+    }
+
+    private void liberarCampos() {
+        lblNome.setEditable(true);
+        lblDataNascimento.setEditable(true);
+        lblTelefone.setEditable(true);
+        lblRua.setEditable(true);
+        lblBairro.setEditable(true);
+        lblCidade.setEditable(true);
+        lblEstado.setEditable(true);
+    
+        lblPeriodo.setEditable(true);
+        lblTurma.setEditable(true);
+    
+        jTextField4.setEditable(true);
+        jTextField6.setEditable(true);
+        jTextField7.setEditable(true);
+        jTextField8.setEditable(true);
+        jTextField9.setEditable(true);
+        jTextField14.setEditable(true);
+        jTextField13.setEditable(true);
+        jTextField12.setEditable(true);
+        jTextField11.setEditable(true);
+        jTextField10.setEditable(true);
+    
+
+        jButton7.setEnabled(true);
+}
     public MenuAlterarAluno() {
         initComponents();
         
@@ -23,6 +113,7 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
         this.setSize(800, 640); 
     
         this.setLocationRelativeTo(null);
+        bloquearCampos();
         
     }
 
@@ -479,7 +570,9 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_lblTurmaActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        MenuOpçõesAluno MinhaJanela = new MenuOpçõesAluno();
+        MinhaJanela.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void lblNome1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblNome1ActionPerformed
@@ -487,11 +580,59 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_lblNome1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String matriculaStr = lblNome1.getText().trim();
+    
+        if (matriculaStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, digite uma matrícula para buscar.");
+            return;
+        }
+    
+        try {
+            long matricula = Long.parseLong(matriculaStr);
+            ConexoesMySQL conexao = new ConexoesMySQL();
+            
+            Aluno aluno = conexao.buscaAlunoPorMatricula(matricula);
+            
+            if (aluno != null) {
+                lblNome.setText(aluno.getNome());
+                lblDataNascimento.setText(aluno.getDataNascimento());
+                lblCPF.setText(String.valueOf(aluno.getCPF()));
+                lblTelefone.setText(aluno.getTelefone());
+                lblRua.setText(aluno.getRua());
+                lblBairro.setText(aluno.getBairro());
+                lblCidade.setText(aluno.getCidade());
+                lblEstado.setText(aluno.getEstado());
+            
+                lblMatricula.setText(String.valueOf(aluno.getMatricula()));
+                lblPeriodo.setText(String.valueOf(aluno.getPeriodo()));
+                lblTurma.setText(String.valueOf(aluno.getTurma()));
+            
+                float[] notas = aluno.getNotas();
+                if (notas != null && notas.length >= 10) {
+                    jTextField4.setText(String.valueOf(notas[0]));
+                    jTextField14.setText(String.valueOf(notas[1]));
+                    jTextField6.setText(String.valueOf(notas[2]));
+                    jTextField13.setText(String.valueOf(notas[3]));
+                    jTextField7.setText(String.valueOf(notas[4]));
+                    jTextField12.setText(String.valueOf(notas[5]));
+                    jTextField8.setText(String.valueOf(notas[6]));
+                    jTextField11.setText(String.valueOf(notas[7]));
+                    jTextField9.setText(String.valueOf(notas[8]));
+                    jTextField10.setText(String.valueOf(notas[9]));
+                }
+                
+                liberarCampos();
+                lblNome1.setEditable(false);
+                } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Nenhum aluno encontrado com a matrícula: " + matricula, "Não encontrado", javax.swing.JOptionPane.WARNING_MESSAGE);
+                }    
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "A matrícula deve conter apenas números!", "Erro de formatação", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        salvarTodasAlteracoes();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     /**

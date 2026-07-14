@@ -4,6 +4,8 @@
  */
 package ementor;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Anderson
@@ -417,55 +419,104 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void lblNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblNomeActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_lblNomeActionPerformed
 
     private void lblDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblDataNascimentoActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_lblDataNascimentoActionPerformed
 
     private void lblCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblCPFActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_lblCPFActionPerformed
 
     private void lblTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTelefoneActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_lblTelefoneActionPerformed
 
     private void lblRuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblRuaActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_lblRuaActionPerformed
 
     private void lblBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblBairroActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_lblBairroActionPerformed
 
     private void lblCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblCidadeActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_lblCidadeActionPerformed
 
     private void lblEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblEstadoActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_lblEstadoActionPerformed
 
     private void lblMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblMatriculaActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_lblMatriculaActionPerformed
 
     private void lblPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblPeriodoActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_lblPeriodoActionPerformed
 
     private void lblTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblTurmaActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_lblTurmaActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+
+        if (lblNome.getText().isBlank() || lblCPF.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha nome e CPF na aba Dados Pessoais.");
+            return;
+        }
+        if (lblMatricula.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha a matrícula na aba Dados Acadêmicos.");
+            return;
+        }
+
+        try {
+            float[] notas = new float[10];
+            notas[0] = Float.parseFloat(jTextField4.getText());   // Nota 1
+            notas[1] = Float.parseFloat(jTextField14.getText());  // Nota 2
+            notas[2] = Float.parseFloat(jTextField6.getText());   // Nota 3
+            notas[3] = Float.parseFloat(jTextField13.getText());  // Nota 4
+            notas[4] = Float.parseFloat(jTextField7.getText());   // Nota 5
+            notas[5] = Float.parseFloat(jTextField12.getText());  // Nota 6
+            notas[6] = Float.parseFloat(jTextField8.getText());   // Nota 7
+            notas[7] = Float.parseFloat(jTextField11.getText());  // Nota 8
+            notas[8] = Float.parseFloat(jTextField9.getText());   // Nota 9
+            notas[9] = Float.parseFloat(jTextField10.getText());  // Nota 10
+
+            Aluno aluno = new Aluno();
+
+            aluno.setDados(
+                lblNome.getText(),
+                lblDataNascimento.getText(),
+                Long.parseLong(lblCPF.getText()),
+                lblTelefone.getText(),
+                lblRua.getText(),
+                lblBairro.getText(),
+                lblCidade.getText(),
+                lblEstado.getText(),
+                Long.parseLong(lblMatricula.getText()),
+                Integer.parseInt(lblPeriodo.getText()),
+                notas,
+                Long.parseLong(lblTurma.getText())
+            );
+
+            ConexoesMySQL banco = new ConexoesMySQL();
+            banco.insereAluno(aluno);
+
+            this.dispose();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+            "Verifique se CPF, telefone, matrícula, período, turma e notas foram preenchidos com números válidos.",
+            "Erro de formato", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

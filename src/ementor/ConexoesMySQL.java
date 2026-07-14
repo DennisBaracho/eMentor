@@ -97,34 +97,45 @@ public class ConexoesMySQL {
 
         String sqlPessoa = "INSERT INTO Pessoa (CPF, Nome, DataNascimento, Telefone, Rua, Bairro, Cidade, Estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         String sqlAluno = "INSERT INTO Aluno (Matricula, Periodo, CPF_Pessoa, Codigo_Turma) VALUES (?, ?, ?, ?)";
-        
+        String sqlNota = "INSERT INTO Nota (Matricula_Aluno, NumeroNota, Valor) VALUES (?, ?, ?)";
+
         try {
-            conexao.setAutoCommit(false); 
-            
+            conexao.setAutoCommit(false);
+
             try (PreparedStatement psPessoa = conexao.prepareStatement(sqlPessoa);
-                 PreparedStatement psAluno = conexao.prepareStatement(sqlAluno)) {
-                
+                PreparedStatement psAluno = conexao.prepareStatement(sqlAluno);
+                PreparedStatement psNota = conexao.prepareStatement(sqlNota)) {
+
                 psPessoa.setLong(1, aluno.getCPF());
                 psPessoa.setString(2, aluno.getNome());
-                psPessoa.setString(3, aluno.getDataNascimento()); 
+                psPessoa.setString(3, aluno.getDataNascimento());
                 psPessoa.setString(4, aluno.getTelefone());
                 psPessoa.setString(5, aluno.getRua());
                 psPessoa.setString(6, aluno.getBairro());
                 psPessoa.setString(7, aluno.getCidade());
                 psPessoa.setString(8, aluno.getEstado());
-                psPessoa.executeUpdate(); 
-                
+                psPessoa.executeUpdate();
+
                 psAluno.setLong(1, aluno.getMatricula());
                 psAluno.setInt(2, aluno.getPeriodo());
-                psAluno.setLong(3, aluno.getCPF()); 
-                psAluno.setLong(4, aluno.getTurma()); 
+                psAluno.setLong(3, aluno.getCPF());
+                psAluno.setLong(4, aluno.getTurma());
                 psAluno.executeUpdate();
-                
-                conexao.commit(); 
+
+                float[] notas = aluno.getNotas();
+                for (int i = 0; i < notas.length; i++) {
+                    psNota.setLong(1, aluno.getMatricula());
+                    psNota.setInt(2, i + 1);        // Nota 1 a Nota 10
+                    psNota.setFloat(3, notas[i]);
+                    psNota.addBatch();
+                }
+                psNota.executeBatch();
+
+                conexao.commit();
                 JOptionPane.showMessageDialog(null, "Aluno cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException e) {
-            try { conexao.rollback(); } catch (SQLException ex) {} 
+            try { conexao.rollback(); } catch (SQLException ex) {}
             registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao inserir Aluno: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao inserir Aluno: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         } finally {
@@ -341,6 +352,50 @@ public class ConexoesMySQL {
         }
     }
 
+    public Egresso buscaEgressoPorCPF(long cpf) {
+        java.sql.Connection conexao = realizaConexaoMySQL();
+        if (conexao == null) return null;
+
+        // Faz o JOIN ligando as 3 tabelas e filtra pelo CPF da Pessoa!
+        String sql = "SELECT * FROM Pessoa p "
+                   + "INNER JOIN Aluno a ON p.CPF = a.CPF_Pessoa "
+                   + "INNER JOIN Egresso e ON a.Matricula = e.Matricula_Aluno "
+                   + "WHERE p.CPF = ?";
+
+        try (java.sql.PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setLong(1, cpf);
+            try (java.sql.ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Egresso egresso = new Egresso();
+                    // Dados de Pessoa
+                    egresso.setCPF(rs.getLong("CPF"));
+                    egresso.setNome(rs.getString("Nome"));
+                    egresso.setDataNascimento(rs.getString("DataNascimento"));
+                    egresso.setTelefone(rs.getString("Telefone"));
+                    egresso.setRua(rs.getString("Rua"));
+                    egresso.setBairro(rs.getString("Bairro"));
+                    egresso.setCidade(rs.getString("Cidade"));
+                    egresso.setEstado(rs.getString("Estado"));
+                    // Dados de Aluno
+                    egresso.setMatricula(rs.getLong("Matricula"));
+                    egresso.setPeriodo(rs.getInt("Periodo"));
+                    egresso.setTurma(rs.getLong("Codigo_Turma"));
+                    // Dados de Egresso
+                    egresso.setProfissaoAtual(rs.getString("ProfissaoAtual"));
+                    egresso.setFaixaSalarial(rs.getString("FaixaSalarial"));
+                    egresso.setCursoAnterior(rs.getString("CursoAnterior"));
+                    egresso.setCursoAtual(rs.getString("CursoAtual"));
+                    return egresso;
+                }
+            }
+        } catch (java.sql.SQLException e) {
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao buscar Egresso por CPF: " + e.getMessage());
+        } finally {
+            desconectaMySQL(conexao);
+        }
+        return null;
+    }
+    
     // ========================================================================
     // TURMA - GRAVAR
 
@@ -364,6 +419,145 @@ public class ConexoesMySQL {
         }
     }
 
+    // ========================================================================
+    // TURMA - RECUPERAR POR CÓDIGO E ALTERAR
+
+    public Turma buscaTurmaPorCodigo(long codigoTurma) {
+        java.sql.Connection conexao = realizaConexaoMySQL();
+        if (conexao == null) return null;
+
+        String sql = "SELECT * FROM Turma WHERE CodigoTurma = ?";
+
+        try (java.sql.PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setLong(1, codigoTurma);
+            try (java.sql.ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Turma turma = new Turma();
+                    turma.setCodigoTurma(rs.getLong("CodigoTurma"));
+                    turma.setNomeTurma(rs.getString("NomeTurma"));
+                    return turma;
+                }
+            }
+        } catch (java.sql.SQLException e) {
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao buscar Turma por código: " + e.getMessage());
+        } finally {
+            desconectaMySQL(conexao);
+        }
+        return null;
+    }
+
+    public void alteraTurma(Turma turma) {
+        java.sql.Connection conexao = realizaConexaoMySQL();
+        if (conexao == null) return;
+
+        // Atualiza apenas o nome da turma onde o código for igual ao informado
+        String sql = "UPDATE Turma SET NomeTurma = ? WHERE CodigoTurma = ?";
+
+        try (java.sql.PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setString(1, turma.getNomeTurma());
+            ps.setLong(2, turma.getCodigoTurma());
+
+            int linhas = ps.executeUpdate();
+            if (linhas > 0) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Turma alterada com sucesso!", "Sucesso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(null, "Nenhuma turma foi alterada.", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (java.sql.SQLException e) {
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao alterar Turma: " + e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(null, "Erro ao alterar Turma: " + e.getMessage(), "ERRO", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } finally {
+            desconectaMySQL(conexao);
+        }
+    }
+    
+    // ========================================================================
+// PROFESSOR - RECUPERAR POR CPF E ALTERAR
+
+    public Professor buscaProfessorPorCPF(long cpf) {
+        java.sql.Connection conexao = realizaConexaoMySQL();
+        if (conexao == null) return null;
+
+        // Faz o JOIN entre Pessoa e Professor usando o CPF
+        String sql = "SELECT * FROM Pessoa p "
+                   + "INNER JOIN Professor prof ON p.CPF = prof.CPF_Pessoa "
+                   + "WHERE p.CPF = ?";
+
+        try (java.sql.PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setLong(1, cpf);
+            try (java.sql.ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Professor prof = new Professor();
+                    // Dados de Pessoa
+                    prof.setCPF(rs.getLong("CPF"));
+                    prof.setNome(rs.getString("Nome"));
+                    prof.setDataNascimento(rs.getString("DataNascimento"));
+                    prof.setTelefone(rs.getString("Telefone"));
+                    prof.setRua(rs.getString("Rua"));
+                    prof.setBairro(rs.getString("Bairro"));
+                    prof.setCidade(rs.getString("Cidade"));
+                    prof.setEstado(rs.getString("Estado"));
+
+                    // Dados de Professor (verifique se os nomes das colunas no seu MySQL sÃ£o esses mesmos)
+                    prof.setDataAdmissao(rs.getString("DataAdmissao"));
+                    prof.setSalarioBruto(rs.getDouble("SalarioBruto"));
+                    prof.setChefia(rs.getBoolean("isChefia"));
+                    prof.setCoordenacao(rs.getBoolean("isCoordenacao"));
+
+                    return prof;
+                }
+            }
+        } catch (java.sql.SQLException e) {
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao buscar Professor por CPF: " + e.getMessage());
+        } finally {
+            desconectaMySQL(conexao);
+        }
+        return null;
+    }
+
+    public void alteraProfessor(Professor professor) {
+        java.sql.Connection conexao = realizaConexaoMySQL();
+        if (conexao == null) return;
+
+        String sqlPessoa = "UPDATE Pessoa SET Nome = ?, DataNascimento = ?, Telefone = ?, Rua = ?, Bairro = ?, Cidade = ?, Estado = ? WHERE CPF = ?";
+        String sqlProfessor = "UPDATE Professor SET DataAdmissao = ?, SalarioBruto = ?, isChefia = ?, isCoordenacao = ? WHERE CPF_Pessoa = ?";
+
+        try {
+            conexao.setAutoCommit(false);
+
+            try (java.sql.PreparedStatement psPessoa = conexao.prepareStatement(sqlPessoa);
+                 java.sql.PreparedStatement psProfessor = conexao.prepareStatement(sqlProfessor)) {
+
+                // Atualiza tabela Pessoa
+                psPessoa.setString(1, professor.getNome());
+                psPessoa.setString(2, professor.getDataNascimento());
+                psPessoa.setString(3, professor.getTelefone());
+                psPessoa.setString(4, professor.getRua());
+                psPessoa.setString(5, professor.getBairro());
+                psPessoa.setString(6, professor.getCidade());
+                psPessoa.setString(7, professor.getEstado());
+                psPessoa.setLong(8, professor.getCPF());
+                psPessoa.executeUpdate();
+
+                // Atualiza tabela Professor
+                psProfessor.setString(1, professor.getDataAdmissao());
+                psProfessor.setDouble(2, professor.getSalarioBruto());
+                psProfessor.setBoolean(3, professor.isChefia());
+                psProfessor.setBoolean(4, professor.isCoordenacao());
+                psProfessor.setLong(5, professor.getCPF());
+                psProfessor.executeUpdate();
+
+                conexao.commit();
+                javax.swing.JOptionPane.showMessageDialog(null, "Dados do Professor alterados com sucesso!", "Sucesso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (java.sql.SQLException e) {
+            try { conexao.rollback(); } catch (java.sql.SQLException ex) {}
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao alterar Professor: " + e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(null, "Erro ao alterar Professor: " + e.getMessage(), "ERRO", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } finally {
+            desconectaMySQL(conexao);
+        }
+    }
     // ========================================================================
     // USUÁRIO - AUTENTICAÇÃO
 
