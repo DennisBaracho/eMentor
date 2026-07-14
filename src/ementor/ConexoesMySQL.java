@@ -472,8 +472,50 @@ public class ConexoesMySQL {
     }
     
     // ========================================================================
-// PROFESSOR - RECUPERAR POR CPF E ALTERAR
+    // PROFESSOR - GRAVER, RECUPERAR POR CPF e ALTERAR
+    public void insereProfessor(Professor professor) {
+        Connection conexao = realizaConexaoMySQL();
+        if (conexao == null) return;
 
+        String sqlPessoa = "INSERT INTO Pessoa (CPF, Nome, DataNascimento, Telefone, Rua, Bairro, Cidade, Estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sqlProfessor = "INSERT INTO Professor (CPF_Pessoa, DataAdmissao, SalarioBruto, isChefia, isCoordenacao) VALUES (?, ?, ?, ?, ?)";
+    
+        try {
+            conexao.setAutoCommit(false); 
+        
+            try (PreparedStatement psPessoa = conexao.prepareStatement(sqlPessoa);
+                PreparedStatement psProfessor = conexao.prepareStatement(sqlProfessor)) {
+            
+            // 1. Insere os dados básicos na tabela Pessoa
+                psPessoa.setLong(1, professor.getCPF());
+                psPessoa.setString(2, professor.getNome());
+                psPessoa.setString(3, professor.getDataNascimento()); 
+                psPessoa.setString(4, professor.getTelefone());
+                psPessoa.setString(5, professor.getRua());
+                psPessoa.setString(6, professor.getBairro());
+                psPessoa.setString(7, professor.getCidade());
+                psPessoa.setString(8, professor.getEstado());
+                psPessoa.executeUpdate(); 
+            
+            // 2. Insere os dados específicos na tabela Professor vinculando pelo CPF
+                psProfessor.setLong(1, professor.getCPF());
+                psProfessor.setString(2, professor.getDataAdmissao());
+                psProfessor.setDouble(3, professor.getSalarioBruto());
+                psProfessor.setBoolean(4, professor.isChefia());
+                psProfessor.setBoolean(5, professor.isCoordenacao());
+                psProfessor.executeUpdate();
+            
+                conexao.commit(); 
+                JOptionPane.showMessageDialog(null, "Professor cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLException e) {
+            try { conexao.rollback(); } catch (SQLException ex) {} 
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao inserir Professor: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar Professor: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            desconectaMySQL(conexao);
+        }
+    }
     public Professor buscaProfessorPorCPF(long cpf) {
         java.sql.Connection conexao = realizaConexaoMySQL();
         if (conexao == null) return null;
