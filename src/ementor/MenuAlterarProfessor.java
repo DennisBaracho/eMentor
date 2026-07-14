@@ -16,16 +16,6 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
      * Creates new form Cadastros
      */
 
-    private void agruparCheckBoxes() {
-        javax.swing.ButtonGroup grupoChefia = new javax.swing.ButtonGroup();
-        grupoChefia.add(jCheckBox2); // Sim (Chefia)
-        grupoChefia.add(jCheckBox1); // Não (Chefia)
-    
-        javax.swing.ButtonGroup grupoCoordenacao = new javax.swing.ButtonGroup();
-        grupoCoordenacao.add(jCheckBox4); // Sim (Coordenação)
-        grupoCoordenacao.add(jCheckBox3); // Não (Coordenação)
-    }
-
     private void bloquearCampos() {
         lblNome.setEditable(false);
         lblDataNascimento.setEditable(false);
