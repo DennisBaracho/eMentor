@@ -115,22 +115,28 @@
                   <Color blue="1e" green="1e" red="1e" type="rgb"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="11" rowCount="4">
+                  <Table columnCount="12" rowCount="4">
                     <Column editable="true" title="Nome" type="java.lang.Object"/>
-                    <Column editable="true" title="Data Nascimento" type="java.lang.Object"/>
-                    <Column editable="true" title="CPF" type="java.lang.Object"/>
-                    <Column editable="true" title="Telefone" type="java.lang.Object"/>
-                    <Column editable="true" title="Rua" type="java.lang.Object"/>
-                    <Column editable="true" title="Bairro" type="java.lang.Object"/>
-                    <Column editable="true" title="Cidade" type="java.lang.Object"/>
-                    <Column editable="true" title="Estado" type="java.lang.Object"/>
-                    <Column editable="true" title="Matricula" type="java.lang.Object"/>
-                    <Column editable="true" title="Per&#xed;odo" type="java.lang.Object"/>
-                    <Column editable="true" title="Turma" type="java.lang.Object"/>
+                    <Column editable="true" title="Nota 1" type="java.lang.Object"/>
+                    <Column editable="true" title="Nota 2 " type="java.lang.Object"/>
+                    <Column editable="true" title="Nota 3" type="java.lang.Object"/>
+                    <Column editable="true" title="Nota 4 " type="java.lang.Object"/>
+                    <Column editable="true" title="Nota 5" type="java.lang.Object"/>
+                    <Column editable="true" title="Nota 6" type="java.lang.Object"/>
+                    <Column editable="true" title="Nota 7" type="java.lang.Object"/>
+                    <Column editable="true" title="Nota 8" type="java.lang.Object"/>
+                    <Column editable="true" title="Nota 9" type="java.lang.Object"/>
+                    <Column editable="true" title="Nota 10" type="java.lang.Object"/>
+                    <Column editable="true" title="M&#xe9;dia" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>

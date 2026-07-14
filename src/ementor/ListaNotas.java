@@ -110,13 +110,13 @@ public class ListaNotas extends javax.swing.JFrame {
         jTable1.setBackground(new java.awt.Color(30, 30, 30));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Data Nascimento", "CPF", "Telefone", "Rua", "Bairro", "Cidade", "Estado", "Matricula", "Período", "Turma"
+                "Nome", "Nota 1", "Nota 2 ", "Nota 3", "Nota 4 ", "Nota 5", "Nota 6", "Nota 7", "Nota 8", "Nota 9", "Nota 10", "Média"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

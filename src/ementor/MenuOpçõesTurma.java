@@ -8,14 +8,14 @@ package ementor;
  *
  * @author Anderson
  */
-public class MenuOpçõesProfessor extends javax.swing.JFrame {
+public class MenuOpçõesTurma extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Cadastros.class.getName());
 
     /**
      * Creates new form Cadastros
      */
-    public MenuOpçõesProfessor() {
+    public MenuOpçõesTurma() {
         initComponents();
         
         this.setResizable(false); 
