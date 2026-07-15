@@ -4,6 +4,8 @@
  */
 package ementor;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Anderson
@@ -286,6 +288,7 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         jButton2.setBorderPainted(false);
         jButton2.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton2.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton2.addActionListener(this::jButton2ActionPerformed);
         jPanel1.add(jButton2);
         jButton2.setBounds(670, 550, 100, 25);
 
@@ -364,6 +367,98 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox2ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        if (lblNome.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o nome.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblDataNascimento.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha a data de nascimento.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblCPF.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o CPF.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblTelefone.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o telefone.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblRua.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha a rua.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblBairro.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o bairro.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblCidade.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha a cidade.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblEstado.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o estado.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (lblDataAdmissao.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha a data de admissão.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblSalarioBruto.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o salário bruto.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (!jCheckBox1.isSelected() && !jCheckBox2.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Selecione se é Chefia (Sim/Não).", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (!jCheckBox3.isSelected() && !jCheckBox4.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Selecione se é Coordenação (Sim/Não).", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            long cpf = Long.parseLong(lblCPF.getText());
+            double salarioBruto = Double.parseDouble(lblSalarioBruto.getText());
+
+            if (salarioBruto < 0) {
+                JOptionPane.showMessageDialog(this, "O salário bruto não pode ser negativo.", "Valor inválido", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            boolean isChefia = jCheckBox2.isSelected();       // "Sim"
+            boolean isCoordenacao = jCheckBox4.isSelected();  // "Sim"
+
+            Professor professor = new Professor();
+            professor.SetDados(
+                lblNome.getText(),
+                lblDataNascimento.getText(),
+                cpf,
+                lblTelefone.getText(),
+                lblRua.getText(),
+                lblBairro.getText(),
+                lblCidade.getText(),
+                lblEstado.getText(),
+                lblDataAdmissao.getText(),
+                salarioBruto,
+                isChefia,
+                isCoordenacao
+            );
+
+            ConexoesMySQL banco = new ConexoesMySQL();
+            banco.insereProfessor(professor);
+
+            this.dispose();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                "Verifique se CPF e salário bruto foram preenchidos com números válidos.",
+                "Erro de formato", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

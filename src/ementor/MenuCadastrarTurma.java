@@ -4,6 +4,8 @@
  */
 package ementor;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Anderson
@@ -134,6 +136,7 @@ public class MenuCadastrarTurma extends javax.swing.JFrame {
         jButton7.setMaximumSize(new java.awt.Dimension(100, 22));
         jButton7.setMinimumSize(new java.awt.Dimension(100, 22));
         jButton7.setPreferredSize(new java.awt.Dimension(100, 22));
+        jButton7.addActionListener(this::jButton7ActionPerformed);
         jPanel1.add(jButton7);
         jButton7.setBounds(670, 540, 100, 25);
 
@@ -172,6 +175,36 @@ public class MenuCadastrarTurma extends javax.swing.JFrame {
         MinhaJanela.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+
+        if (lblMatricula.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o código da turma.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblPeriodo.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o nome da turma.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            long codigoTurma = Long.parseLong(lblMatricula.getText());
+
+            Turma turma = new Turma();
+            turma.setCodigoTurma(codigoTurma);
+            turma.setNomeTurma(lblPeriodo.getText());
+
+            ConexoesMySQL banco = new ConexoesMySQL();
+            banco.insereTurma(turma);
+
+            this.dispose();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                "O código da turma deve ser um número válido.",
+                "Erro de formato", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments

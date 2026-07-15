@@ -19,11 +19,12 @@ public class Turma {
         this.NomeTurma = "";
     }
 
-    public Turma(long codigoTurma, String nomeTurma, Aluno aluno){
-        this.CodigoTurma = codigoTurma;
-        this.NomeTurma = nomeTurma;
-        this.aluno = new ArrayList<>();
-    }
+   public Turma(long codigoTurma, String nomeTurma, Aluno aluno){
+    this.CodigoTurma = codigoTurma;
+    this.NomeTurma = nomeTurma;
+    this.aluno = new ArrayList<>();
+    this.aluno.add(aluno);
+}
     
     public String getNomeTurma(){
         return this.NomeTurma;

@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ementor;
-
+import java.util.ArrayList;
 /**
  *
  * @author Anderson
@@ -16,15 +16,50 @@ public class ListaAlunos extends javax.swing.JFrame {
      * Creates new form Cadastros
      */
     public ListaAlunos() {
-        initComponents();
-        
-        this.setResizable(false); 
-    
-        this.setSize(800, 640); 
-    
-        this.setLocationRelativeTo(null);
+    initComponents();
+
+    this.setResizable(false);
+    this.setSize(800, 640);
+    this.setLocationRelativeTo(null);
+
+    carregarAlunos();
+}
+
+    private void carregarAlunos() {
+        ConexoesMySQL banco = new ConexoesMySQL();
+        ArrayList<Aluno> listaAlunos = banco.recuperaTodosAlunos("Nome");
+
+        javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0); // limpa as linhas fixas de exemplo
+
+        for (Aluno aluno : listaAlunos) {
+            float[] notas = aluno.getNotas();
+            float soma = 0;
+            int quantidadeNotas = 0;
+            if (notas != null) {
+                for (float nota : notas) {
+                    soma += nota;
+                    quantidadeNotas++;
+                }
+            }
+            String turmaTexto = String.valueOf(aluno.getTurma());
+
+            modelo.addRow(new Object[]{
+                aluno.getNome(),
+                aluno.getDataNascimento(),
+                aluno.getCPF(),
+                aluno.getTelefone(),
+                aluno.getRua(),
+                aluno.getBairro(),
+                aluno.getCidade(),
+                aluno.getEstado(),
+                aluno.getMatricula(),
+                aluno.getPeriodo(),
+                turmaTexto
+            });
+        }
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -87,6 +122,7 @@ public class ListaAlunos extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Voltar");
         jButton2.setBorderPainted(false);
+        jButton2.addActionListener(this::jButton2ActionPerformed);
         jPanel1.add(jButton2);
         jButton2.setBounds(580, 10, 100, 23);
 
@@ -95,6 +131,7 @@ public class ListaAlunos extends javax.swing.JFrame {
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Gerar PDF");
         jButton3.setBorderPainted(false);
+        jButton3.addActionListener(this::jButton3ActionPerformed);
         jPanel1.add(jButton3);
         jButton3.setBounds(690, 10, 100, 23);
 
@@ -119,6 +156,34 @@ public class ListaAlunos extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        MenuOpçõesAluno MinhaJanela = new MenuOpçõesAluno();
+        MinhaJanela.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        javax.swing.JFileChooser seletor = new javax.swing.JFileChooser();
+        seletor.setDialogTitle("Salvar Relatório de Alunos");
+        seletor.setSelectedFile(new java.io.File("relatorio_alunos.pdf"));
+
+        int opcao = seletor.showSaveDialog(this);
+        if (opcao != javax.swing.JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+
+        String caminhoArquivo = seletor.getSelectedFile().getAbsolutePath();
+        if (!caminhoArquivo.toLowerCase().endsWith(".pdf")) {
+            caminhoArquivo += ".pdf";
+        }
+
+        ConexoesMySQL banco = new ConexoesMySQL();
+        ArrayList<Aluno> listaAlunos = banco.recuperaTodosAlunos("Nome");
+
+        GerarRelatorioPDF gerador = new GerarRelatorioPDF();
+        gerador.gerarRelatorioAlunos(listaAlunos, caminhoArquivo);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

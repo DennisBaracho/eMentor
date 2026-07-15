@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ementor;
-
+import java.util.ArrayList;
 /**
  *
  * @author Anderson
@@ -24,8 +24,34 @@ public class ListaProfessores extends javax.swing.JFrame {
     
         this.setLocationRelativeTo(null);
         
+        carregarProfessores();
     }
-    
+       
+    private void carregarProfessores() {
+        ConexoesMySQL banco = new ConexoesMySQL();
+        ArrayList<Professor> listaProfessores = banco.recuperaTodosProfessores();
+
+        javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
+
+        for (Professor professor : listaProfessores) {
+            modelo.addRow(new Object[]{
+                professor.getNome(),
+                professor.getDataNascimento(),
+                professor.getCPF(),
+                professor.getTelefone(),
+                professor.getRua(),
+                professor.getBairro(),
+                professor.getCidade(),
+                professor.getEstado(),
+                professor.getDataAdmissao(),
+                String.format("R$ %.2f", professor.calcularSalarioBruto()),
+                professor.isChefia() ? "Sim" : "Não",
+                professor.isCoordenacao() ? "Sim" : "Não"
+            });
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -88,6 +114,7 @@ public class ListaProfessores extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Voltar");
         jButton2.setBorderPainted(false);
+        jButton2.addActionListener(this::jButton2ActionPerformed);
         jPanel1.add(jButton2);
         jButton2.setBounds(580, 10, 100, 23);
 
@@ -96,6 +123,7 @@ public class ListaProfessores extends javax.swing.JFrame {
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Gerar PDF");
         jButton3.setBorderPainted(false);
+        jButton3.addActionListener(this::jButton3ActionPerformed);
         jPanel1.add(jButton3);
         jButton3.setBounds(690, 10, 100, 23);
 
@@ -120,6 +148,34 @@ public class ListaProfessores extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        MenuOpçõesProfessor MinhaJanela = new MenuOpçõesProfessor();
+        MinhaJanela.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       javax.swing.JFileChooser seletor = new javax.swing.JFileChooser();
+       seletor.setDialogTitle("Salvar Relatório de Professores");
+       seletor.setSelectedFile(new java.io.File("relatorio_professores.pdf"));
+
+       int opcao = seletor.showSaveDialog(this);
+       if (opcao != javax.swing.JFileChooser.APPROVE_OPTION) {
+           return;
+       }
+
+       String caminhoArquivo = seletor.getSelectedFile().getAbsolutePath();
+       if (!caminhoArquivo.toLowerCase().endsWith(".pdf")) {
+           caminhoArquivo += ".pdf";
+       }
+
+       ConexoesMySQL banco = new ConexoesMySQL();
+       ArrayList<Professor> listaProfessores = banco.recuperaTodosProfessores();
+
+       GerarRelatorioPDF gerador = new GerarRelatorioPDF();
+       gerador.gerarRelatorioProfessores(listaProfessores, caminhoArquivo);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

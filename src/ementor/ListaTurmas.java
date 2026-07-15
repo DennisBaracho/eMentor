@@ -87,6 +87,7 @@ public class ListaTurmas extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Voltar");
         jButton2.setBorderPainted(false);
+        jButton2.addActionListener(this::jButton2ActionPerformed);
         jPanel1.add(jButton2);
         jButton2.setBounds(580, 10, 100, 23);
 
@@ -95,6 +96,7 @@ public class ListaTurmas extends javax.swing.JFrame {
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Gerar PDF");
         jButton3.setBorderPainted(false);
+        jButton3.addActionListener(this::jButton3ActionPerformed);
         jPanel1.add(jButton3);
         jButton3.setBounds(690, 10, 100, 23);
 
@@ -119,6 +121,16 @@ public class ListaTurmas extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        MenuOpçõesTurma MinhaJanela = new MenuOpçõesTurma();
+        MinhaJanela.setVisible(true);
+        this.dispose(); 
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

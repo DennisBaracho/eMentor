@@ -4,6 +4,8 @@
  */
 package ementor;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Anderson
@@ -534,7 +536,130 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMatriculaActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+
+        if (lblNome.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o nome.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblDataNascimento.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha a data de nascimento.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblCPF.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o CPF.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblTelefone.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o telefone.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblRua.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha a rua.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblBairro.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o bairro.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblCidade.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha a cidade.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblEstado.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o estado.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblProfissaoAtual.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha a profissão atual.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblFaixaSalarial.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha a faixa salarial.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (lblMatricula.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha a matrícula.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblPeriodo.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o período.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblTurma.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha a turma.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblCursoAnterior.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o curso anterior.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (lblCursoAtual.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Preencha o curso atual.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        javax.swing.JTextField[] camposNotas = {
+            jTextField4, jTextField14, jTextField6, jTextField13, jTextField7,
+            jTextField12, jTextField8, jTextField11, jTextField9, jTextField10
+        };
+        for (int i = 0; i < camposNotas.length; i++) {
+            if (camposNotas[i].getText().isBlank()) {
+                JOptionPane.showMessageDialog(this,
+                    "Preencha a Nota " + (i + 1) + ".",
+                    "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
+
+        try {
+            float[] notas = new float[10];
+            for (int i = 0; i < camposNotas.length; i++) {
+                float nota = Float.parseFloat(camposNotas[i].getText());
+                if (nota < 0 || nota > 10) {
+                    JOptionPane.showMessageDialog(this,
+                        "A Nota " + (i + 1) + " deve estar entre 0 e 10.",
+                        "Valor inválido", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                notas[i] = nota;
+            }
+
+            long cpf = Long.parseLong(lblCPF.getText());
+            long matricula = Long.parseLong(lblMatricula.getText());
+            int periodo = Integer.parseInt(lblPeriodo.getText());
+            long turma = Long.parseLong(lblTurma.getText());
+
+            Egresso egresso = new Egresso();
+            egresso.setDados(
+                lblNome.getText(),
+                lblDataNascimento.getText(),
+                cpf,
+                lblTelefone.getText(),
+                lblRua.getText(),
+                lblBairro.getText(),
+                lblCidade.getText(),
+                lblEstado.getText(),
+                matricula,
+                periodo,
+                notas,
+                turma,
+                lblProfissaoAtual.getText(),
+                lblFaixaSalarial.getText(),
+                lblCursoAnterior.getText(),
+                lblCursoAtual.getText()
+            );
+
+            ConexoesMySQL banco = new ConexoesMySQL();
+            banco.insereEgresso(egresso); 
+
+            this.dispose();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                "Verifique se CPF, telefone, matrícula, período, turma e notas foram preenchidos com números válidos.",
+                "Erro de formato", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

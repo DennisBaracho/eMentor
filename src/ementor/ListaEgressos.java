@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ementor;
-
+import java.util.ArrayList;
 /**
  *
  * @author Anderson
@@ -24,6 +24,33 @@ public class ListaEgressos extends javax.swing.JFrame {
     
         this.setLocationRelativeTo(null);
         
+        carregarEgressos();
+    }
+    
+    private void carregarEgressos() {
+        ConexoesMySQL banco = new ConexoesMySQL();
+        ArrayList<Egresso> listaEgressos = banco.recuperaTodosEgressos();
+
+        javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
+
+        for (Egresso egresso : listaEgressos) {
+            modelo.addRow(new Object[]{
+                egresso.getNome(),
+                egresso.getDataNascimento(),
+                egresso.getCPF(),
+                egresso.getTelefone(),
+                egresso.getRua(),
+                egresso.getBairro(),
+                egresso.getCidade(),
+                egresso.getEstado(),
+                egresso.getCursoAnterior(),
+                egresso.getCursoAtual(),
+                egresso.getProfissaoAtual(),
+                egresso.getFaixaSalarial()
+            });
+        }
     }
 
     /**
@@ -87,6 +114,7 @@ public class ListaEgressos extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Voltar");
         jButton2.setBorderPainted(false);
+        jButton2.addActionListener(this::jButton2ActionPerformed);
         jPanel1.add(jButton2);
         jButton2.setBounds(580, 10, 100, 23);
 
@@ -95,6 +123,7 @@ public class ListaEgressos extends javax.swing.JFrame {
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Gerar PDF");
         jButton3.setBorderPainted(false);
+        jButton3.addActionListener(this::jButton3ActionPerformed);
         jPanel1.add(jButton3);
         jButton3.setBounds(690, 10, 100, 23);
 
@@ -119,6 +148,34 @@ public class ListaEgressos extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        MenuOpçõesEgresso MinhaJanela = new MenuOpçõesEgresso();
+        MinhaJanela.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       javax.swing.JFileChooser seletor = new javax.swing.JFileChooser();
+       seletor.setDialogTitle("Salvar Relatório de Egressos");
+       seletor.setSelectedFile(new java.io.File("relatorio_egressos.pdf"));
+
+       int opcao = seletor.showSaveDialog(this);
+       if (opcao != javax.swing.JFileChooser.APPROVE_OPTION) {
+           return;
+       }
+
+       String caminhoArquivo = seletor.getSelectedFile().getAbsolutePath();
+       if (!caminhoArquivo.toLowerCase().endsWith(".pdf")) {
+           caminhoArquivo += ".pdf";
+       }
+
+       ConexoesMySQL banco = new ConexoesMySQL();
+       ArrayList<Egresso> listaEgressos = banco.recuperaTodosEgressos();
+
+       GerarRelatorioPDF gerador = new GerarRelatorioPDF();
+       gerador.gerarRelatorioEgressos(listaEgressos, caminhoArquivo);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

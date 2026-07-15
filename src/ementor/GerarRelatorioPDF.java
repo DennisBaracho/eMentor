@@ -210,5 +210,203 @@ public class GerarRelatorioPDF {
         }
 
     }
+    public void gerarRelatorioTurmas(ArrayList<Turma> listaTurmas, String caminhoArquivo) {
+    Document documento = new Document(PageSize.A4, 85f, 57f, 85f, 57f);
 
+    try {
+        PdfWriter.getInstance(documento, new FileOutputStream(caminhoArquivo));
+        documento.open();
+
+        Font fonteTitulo = new Font(Font.HELVETICA, 16, Font.BOLD);
+        Font fonteTexto = new Font(Font.HELVETICA, 12, Font.NORMAL);
+        Font fonteCabecalho = new Font(Font.HELVETICA, 12, Font.BOLD);
+        Font fonteSubtitulo = new Font(Font.HELVETICA, 12, Font.ITALIC);
+
+        Paragraph titulo = new Paragraph("eMentor-Plus - Relatório de Turmas", fonteTitulo);
+        titulo.setAlignment(Element.ALIGN_CENTER);
+        titulo.setSpacingAfter(20);
+        documento.add(titulo);
+
+        String dataAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
+        Paragraph subtitulo = new Paragraph("Gerado em: " + dataAtual + "\n\n", fonteSubtitulo);
+        subtitulo.setAlignment(Element.ALIGN_CENTER);
+        subtitulo.setSpacingAfter(25);
+        documento.add(subtitulo);
+
+        if (listaTurmas == null || listaTurmas.isEmpty()) {
+            documento.add(new Paragraph("Nenhuma turma cadastrada.", fonteTexto));
+            JOptionPane.showMessageDialog(null, "Relatório gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        PdfPTable tabela = new PdfPTable(3);
+        tabela.setWidthPercentage(100);
+        tabela.setWidths(new float[]{2f, 4f, 2f});
+
+        String[] cabecalhos = {"Código", "Nome da Turma", "Qtd. Alunos"};
+        for (String cabecalho : cabecalhos) {
+            PdfPCell celula = new PdfPCell(new Phrase(cabecalho, fonteCabecalho));
+            celula.setHorizontalAlignment(Element.ALIGN_CENTER);
+            celula.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            tabela.addCell(celula);
+        }
+
+        for (Turma turma : listaTurmas) {
+            tabela.addCell(new Phrase(String.valueOf(turma.getCodigoTurma()), fonteTexto));
+            tabela.addCell(new Phrase(turma.getNomeTurma(), fonteTexto));
+            tabela.addCell(new Phrase(String.valueOf(turma.getAlunos().size()), fonteTexto));
+        }
+
+        tabela.setSpacingBefore(10);
+        tabela.setSpacingAfter(10);
+        documento.add(tabela);
+
+        JOptionPane.showMessageDialog(null, "Relatório PDF gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+    } catch (DocumentException | IOException e) {
+        registrarErroLog("OPENPDF_ERROR", e.getMessage());
+        JOptionPane.showMessageDialog(null, "Erro ao gerar PDF:\n" + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        if (documento.isOpen()) {
+            documento.close();
+        }
+    }
+    }
+    
+    public void gerarRelatorioEgressos(ArrayList<Egresso> listaEgressos, String caminhoArquivo) {
+    Document documento = new Document(PageSize.A4, 85f, 57f, 85f, 57f);
+
+    try {
+        PdfWriter.getInstance(documento, new FileOutputStream(caminhoArquivo));
+        documento.open();
+
+        Font fonteTitulo = new Font(Font.HELVETICA, 16, Font.BOLD);
+        Font fonteTexto = new Font(Font.HELVETICA, 12, Font.NORMAL);
+        Font fonteCabecalho = new Font(Font.HELVETICA, 12, Font.BOLD);
+        Font fonteSubtitulo = new Font(Font.HELVETICA, 12, Font.ITALIC);
+
+        Paragraph titulo = new Paragraph("eMentor-Plus - Relatório de Egressos", fonteTitulo);
+        titulo.setAlignment(Element.ALIGN_CENTER);
+        titulo.setSpacingAfter(20);
+        documento.add(titulo);
+
+        String dataAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
+        Paragraph subtitulo = new Paragraph("Gerado em: " + dataAtual + "\n\n", fonteSubtitulo);
+        subtitulo.setAlignment(Element.ALIGN_CENTER);
+        subtitulo.setSpacingAfter(25);
+        documento.add(subtitulo);
+
+        if (listaEgressos == null || listaEgressos.isEmpty()) {
+            documento.add(new Paragraph("Nenhum egresso cadastrado.", fonteTexto));
+            JOptionPane.showMessageDialog(null, "Relatório gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        PdfPTable tabela = new PdfPTable(6);
+        tabela.setWidthPercentage(100);
+        tabela.setWidths(new float[]{2.5f, 1.5f, 1.8f, 1.8f, 1.8f, 1.5f});
+
+        String[] cabecalhos = {
+            "Nome", "Matrícula", "Curso Anterior", "Curso Atual", "Profissão Atual", "Faixa Salarial"
+        };
+        for (String cabecalho : cabecalhos) {
+            PdfPCell celula = new PdfPCell(new Phrase(cabecalho, fonteCabecalho));
+            celula.setHorizontalAlignment(Element.ALIGN_CENTER);
+            celula.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            tabela.addCell(celula);
+        }
+
+        for (Egresso egresso : listaEgressos) {
+            tabela.addCell(new Phrase(egresso.getNome(), fonteTexto));
+            tabela.addCell(new Phrase(String.valueOf(egresso.getMatricula()), fonteTexto));
+            tabela.addCell(new Phrase(egresso.getCursoAnterior(), fonteTexto));
+            tabela.addCell(new Phrase(egresso.getCursoAtual(), fonteTexto));
+            tabela.addCell(new Phrase(egresso.getProfissaoAtual(), fonteTexto));
+            tabela.addCell(new Phrase(egresso.getFaixaSalarial(), fonteTexto));
+        }
+
+        tabela.setSpacingBefore(10);
+        tabela.setSpacingAfter(10);
+        documento.add(tabela);
+
+        JOptionPane.showMessageDialog(null, "Relatório PDF gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+    } catch (DocumentException | IOException e) {
+        registrarErroLog("OPENPDF_ERROR", e.getMessage());
+        JOptionPane.showMessageDialog(null, "Erro ao gerar PDF:\n" + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        if (documento.isOpen()) {
+            documento.close();
+        }
+    }
+}
+    public void gerarRelatorioProfessores(ArrayList<Professor> listaProfessores, String caminhoArquivo) {
+        Document documento = new Document(PageSize.A4, 85f, 57f, 85f, 57f);
+
+        try {
+            PdfWriter.getInstance(documento, new FileOutputStream(caminhoArquivo));
+            documento.open();
+
+            Font fonteTitulo = new Font(Font.HELVETICA, 16, Font.BOLD);
+            Font fonteTexto = new Font(Font.HELVETICA, 12, Font.NORMAL);
+            Font fonteCabecalho = new Font(Font.HELVETICA, 12, Font.BOLD);
+            Font fonteSubtitulo = new Font(Font.HELVETICA, 12, Font.ITALIC);
+
+            Paragraph titulo = new Paragraph("eMentor-Plus - Relatório de Professores", fonteTitulo);
+            titulo.setAlignment(Element.ALIGN_CENTER);
+            titulo.setSpacingAfter(20);
+            documento.add(titulo);
+
+            String dataAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
+            Paragraph subtitulo = new Paragraph("Gerado em: " + dataAtual + "\n\n", fonteSubtitulo);
+            subtitulo.setAlignment(Element.ALIGN_CENTER);
+            subtitulo.setSpacingAfter(25);
+            documento.add(subtitulo);
+
+            if (listaProfessores == null || listaProfessores.isEmpty()) {
+                documento.add(new Paragraph("Nenhum professor cadastrado.", fonteTexto));
+                JOptionPane.showMessageDialog(null, "Relatório gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            PdfPTable tabela = new PdfPTable(6);
+            tabela.setWidthPercentage(100);
+            tabela.setWidths(new float[]{2.5f, 1.8f, 1.8f, 1.8f, 1.3f, 1.6f});
+
+            String[] cabecalhos = {
+                "Nome", "Data Admissão", "Salário Bruto", "Salário Líquido", "Chefia", "Coordenação"
+            };
+            for (String cabecalho : cabecalhos) {
+                PdfPCell celula = new PdfPCell(new Phrase(cabecalho, fonteCabecalho));
+                celula.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celula.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                tabela.addCell(celula);
+            }
+
+            for (Professor professor : listaProfessores) {
+                tabela.addCell(new Phrase(professor.getNome(), fonteTexto));
+                tabela.addCell(new Phrase(professor.getDataAdmissao(), fonteTexto));
+                tabela.addCell(new Phrase(
+                        String.format("R$ %.2f", professor.calcularSalarioBruto()), fonteTexto));
+                tabela.addCell(new Phrase(
+                        String.format("R$ %.2f", professor.calcularSalarioLiquido()), fonteTexto));
+                tabela.addCell(new Phrase(professor.isChefia() ? "Sim" : "Não", fonteTexto));
+                tabela.addCell(new Phrase(professor.isCoordenacao() ? "Sim" : "Não", fonteTexto));
+            }
+
+            tabela.setSpacingBefore(10);
+            tabela.setSpacingAfter(10);
+            documento.add(tabela);
+
+            JOptionPane.showMessageDialog(null, "Relatório PDF gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (DocumentException | IOException e) {
+            registrarErroLog("OPENPDF_ERROR", e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao gerar PDF:\n" + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            if (documento.isOpen()) {
+                documento.close();
+            }
+        }
+    }
 }

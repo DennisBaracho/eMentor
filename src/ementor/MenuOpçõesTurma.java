@@ -10,7 +10,7 @@ package ementor;
  */
 public class MenuOpçõesTurma extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Cadastros.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuOpçõesTurma.class.getName());
 
     /**
      * Creates new form Cadastros
@@ -98,7 +98,7 @@ public class MenuOpçõesTurma extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("  Professor");
+        jLabel6.setText("Turma");
 
         jButton4.setBackground(new java.awt.Color(45, 60, 135));
         jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -214,7 +214,7 @@ public class MenuOpçõesTurma extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Cadastros().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new MenuOpçõesTurma().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

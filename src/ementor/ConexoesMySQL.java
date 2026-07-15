@@ -146,15 +146,14 @@ public class ConexoesMySQL {
     public void alteraAluno(Aluno aluno) {
         Connection conexao = realizaConexaoMySQL();
         if (conexao == null) return;
-
         String sqlPessoa = "UPDATE Pessoa SET Nome = ?, DataNascimento = ?, Telefone = ?, Rua = ?, Bairro = ?, Cidade = ?, Estado = ? WHERE CPF = ?";
         String sqlAluno = "UPDATE Aluno SET Periodo = ?, Codigo_Turma = ? WHERE Matricula = ?";
-
+        String sqlNota = "UPDATE Nota SET Valor = ? WHERE Matricula_Aluno = ? AND NumeroNota = ?";
         try {
             conexao.setAutoCommit(false);
-
             try (PreparedStatement psPessoa = conexao.prepareStatement(sqlPessoa);
-                 PreparedStatement psAluno = conexao.prepareStatement(sqlAluno)) {
+                 PreparedStatement psAluno = conexao.prepareStatement(sqlAluno);
+                 PreparedStatement psNota = conexao.prepareStatement(sqlNota)) {
 
                 psPessoa.setString(1, aluno.getNome());
                 psPessoa.setString(2, aluno.getDataNascimento());
@@ -170,6 +169,17 @@ public class ConexoesMySQL {
                 psAluno.setLong(2, aluno.getTurma());
                 psAluno.setLong(3, aluno.getMatricula());
                 psAluno.executeUpdate();
+
+                float[] notas = aluno.getNotas();
+                if (notas != null) {
+                    for (int i = 0; i < notas.length; i++) {
+                        psNota.setFloat(1, notas[i]);
+                        psNota.setLong(2, aluno.getMatricula());
+                        psNota.setInt(3, i + 1);
+                        psNota.addBatch();
+                    }
+                    psNota.executeBatch();
+                }
 
                 conexao.commit();
                 JOptionPane.showMessageDialog(null, "Dados do Aluno alterados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
@@ -306,17 +316,16 @@ public class ConexoesMySQL {
     public void alteraEgresso(Egresso egresso) {
         Connection conexao = realizaConexaoMySQL();
         if (conexao == null) return;
-
         String sqlPessoa = "UPDATE Pessoa SET Nome = ?, DataNascimento = ?, Telefone = ?, Rua = ?, Bairro = ?, Cidade = ?, Estado = ? WHERE CPF = ?";
         String sqlAluno = "UPDATE Aluno SET Periodo = ?, Codigo_Turma = ? WHERE Matricula = ?";
         String sqlEgresso = "UPDATE Egresso SET ProfissaoAtual = ?, FaixaSalarial = ?, CursoAnterior = ?, CursoAtual = ? WHERE Matricula_Aluno = ?";
-
+        String sqlNota = "UPDATE Nota SET Valor = ? WHERE Matricula_Aluno = ? AND NumeroNota = ?";
         try {
             conexao.setAutoCommit(false);
-
             try (PreparedStatement psPessoa = conexao.prepareStatement(sqlPessoa);
                  PreparedStatement psAluno = conexao.prepareStatement(sqlAluno);
-                 PreparedStatement psEgresso = conexao.prepareStatement(sqlEgresso)) {
+                 PreparedStatement psEgresso = conexao.prepareStatement(sqlEgresso);
+                 PreparedStatement psNota = conexao.prepareStatement(sqlNota)) {
 
                 psPessoa.setString(1, egresso.getNome());
                 psPessoa.setString(2, egresso.getDataNascimento());
@@ -339,6 +348,17 @@ public class ConexoesMySQL {
                 psEgresso.setString(4, egresso.getCursoAtual());
                 psEgresso.setLong(5, egresso.getMatricula());
                 psEgresso.executeUpdate();
+
+                float[] notas = egresso.getNotas();
+                if (notas != null) {
+                    for (int i = 0; i < notas.length; i++) {
+                        psNota.setFloat(1, notas[i]);
+                        psNota.setLong(2, egresso.getMatricula());
+                        psNota.setInt(3, i + 1); // Nota 1 a Nota 10
+                        psNota.addBatch();
+                    }
+                    psNota.executeBatch();
+                }
 
                 conexao.commit();
                 JOptionPane.showMessageDialog(null, "Dados do Egresso alterados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
@@ -396,6 +416,7 @@ public class ConexoesMySQL {
         return null;
     }
     
+    
     // ========================================================================
     // TURMA - GRAVAR
 
@@ -444,6 +465,31 @@ public class ConexoesMySQL {
             desconectaMySQL(conexao);
         }
         return null;
+    }
+
+    public ArrayList<Turma> recuperaTodasTurmas() {
+        Connection conexao = realizaConexaoMySQL();
+        ArrayList<Turma> listaTurmas = new ArrayList<>();
+        if (conexao == null) return listaTurmas;
+
+        String sql = "SELECT * FROM Turma ORDER BY NomeTurma";
+
+        try (PreparedStatement ps = conexao.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Turma turma = new Turma();
+                turma.setCodigoTurma(rs.getLong("CodigoTurma"));
+                turma.setNomeTurma(rs.getString("NomeTurma"));
+                listaTurmas.add(turma);
+            }
+        } catch (SQLException e) {
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao recuperar Turmas: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao recuperar turmas: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            desconectaMySQL(conexao);
+        }
+        return listaTurmas;
     }
 
     public void alteraTurma(Turma turma) {
@@ -555,6 +601,43 @@ public class ConexoesMySQL {
             desconectaMySQL(conexao);
         }
         return null;
+    }
+    
+    public ArrayList<Professor> recuperaTodosProfessores() {
+        Connection conexao = realizaConexaoMySQL();
+        ArrayList<Professor> listaProfessores = new ArrayList<>();
+        if (conexao == null) return listaProfessores;
+
+        String sql = "SELECT * FROM Pessoa p "
+                   + "INNER JOIN Professor prof ON p.CPF = prof.CPF_Pessoa "
+                   + "ORDER BY p.Nome";
+
+        try (PreparedStatement ps = conexao.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Professor professor = new Professor();
+                professor.setCPF(rs.getLong("CPF"));
+                professor.setNome(rs.getString("Nome"));
+                professor.setDataNascimento(rs.getString("DataNascimento"));
+                professor.setTelefone(rs.getString("Telefone"));
+                professor.setRua(rs.getString("Rua"));
+                professor.setBairro(rs.getString("Bairro"));
+                professor.setCidade(rs.getString("Cidade"));
+                professor.setEstado(rs.getString("Estado"));
+                professor.setDataAdmissao(rs.getString("DataAdmissao"));
+                professor.setSalarioBruto(rs.getDouble("SalarioBruto"));
+                professor.setChefia(rs.getBoolean("isChefia"));
+                professor.setCoordenacao(rs.getBoolean("isCoordenacao"));
+                listaProfessores.add(professor);
+            }
+        } catch (SQLException e) {
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao recuperar Professores: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao recuperar professores: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            desconectaMySQL(conexao);
+        }
+        return listaProfessores;
     }
 
     public void alteraProfessor(Professor professor) {
