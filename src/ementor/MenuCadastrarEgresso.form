@@ -385,13 +385,24 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="lblFaixaSalarial">
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lblFaixaSalarialActionPerformed"/>
-                  </Events>
+                <Component class="javax.swing.JComboBox" name="jComboBox1">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="5">
+                        <StringItem index="0" value="Selecione Uma Op&#xe7;&#xe3;o"/>
+                        <StringItem index="1" value="1 a 3 sal&#xe1;rios m&#xed;nimos"/>
+                        <StringItem index="2" value="3 a 6 sal&#xe1;rios m&#xed;nimos"/>
+                        <StringItem index="3" value="6 a 9 sal&#xe1;rios m&#xed;nimos"/>
+                        <StringItem index="4" value="Mais que 9 sal&#xe1;rios m&#xed;nimos"/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="180" y="110" width="125" height="-1"/>
+                      <AbsoluteConstraints x="180" y="110" width="120" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>

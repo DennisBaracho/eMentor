@@ -61,7 +61,7 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
         lblProfissaoAtual = new javax.swing.JTextField();
         txtProfissaoAtual = new javax.swing.JLabel();
         txtFaixaSalarial = new javax.swing.JLabel();
-        lblFaixaSalarial = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel7 = new javax.swing.JPanel();
         lblMatricula = new javax.swing.JTextField();
         txtMatricula = new javax.swing.JLabel();
@@ -229,9 +229,9 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
         jPanel6.add(txtFaixaSalarial);
         txtFaixaSalarial.setBounds(180, 90, 70, 16);
 
-        lblFaixaSalarial.addActionListener(this::lblFaixaSalarialActionPerformed);
-        jPanel6.add(lblFaixaSalarial);
-        lblFaixaSalarial.setBounds(180, 110, 125, 22);
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione Uma Opção", "1 a 3 salários mínimos", "3 a 6 salários mínimos", "6 a 9 salários mínimos", "Mais que 9 salários mínimos" }));
+        jPanel6.add(jComboBox1);
+        jComboBox1.setBounds(180, 110, 120, 22);
 
         jTabbedPane2.addTab("Dados Pessoais", jPanel6);
 
@@ -469,10 +469,6 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void lblFaixaSalarialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblFaixaSalarialActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblFaixaSalarialActionPerformed
-
     private void lblProfissaoAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblProfissaoAtualActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lblProfissaoAtualActionPerformed
@@ -691,6 +687,7 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -725,7 +722,6 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
     private javax.swing.JTextField lblCursoAtual;
     private javax.swing.JTextField lblDataNascimento;
     private javax.swing.JTextField lblEstado;
-    private javax.swing.JTextField lblFaixaSalarial;
     private javax.swing.JTextField lblMatricula;
     private javax.swing.JTextField lblNome;
     private javax.swing.JTextField lblPeriodo;
