@@ -78,4 +78,18 @@ public class Aluno extends Pessoa {
         for(int i = 0; i < 10; i++)
             System.out.println("Nota "+i+": "+this.Notas[i]);
     }
+    
+    public double calcularMedia() {
+        double soma = 0;
+        int quantidade = 0;
+
+        for (float nota : getNotas()) {
+            if (nota > 0) {
+                soma += nota;
+                quantidade++;
+            }
+        }
+
+        return quantidade == 0 ? 0 : soma / quantidade;
+    }
 }
