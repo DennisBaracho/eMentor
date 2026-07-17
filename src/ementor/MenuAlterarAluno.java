@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ementor;
-
+import jiconfont.swing.IconFontSwing;
+import jiconfont.icons.font_awesome.FontAwesome;
+import java.util.List;
+import java.util.ArrayList;
 /**
  *
  * @author Anderson
@@ -11,7 +14,44 @@ package ementor;
 public class MenuAlterarAluno extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuAlterarAluno.class.getName());
-
+    
+    private List<Aluno> listaAlunos = new ArrayList<>();
+    private int indiceAtual = -1;
+    
+    private void exibirAlunoNaTela(Aluno aluno) {
+        if (aluno == null) return;
+        
+        lblNome.setText(aluno.getNome());
+        lblDataNascimento.setText(aluno.getDataNascimento());
+        lblCPF.setText(String.valueOf(aluno.getCPF()));
+        lblTelefone.setText(aluno.getTelefone());
+        lblRua.setText(aluno.getRua());
+        lblBairro.setText(aluno.getBairro());
+        lblCidade.setText(aluno.getCidade());
+        lblEstado.setText(aluno.getEstado());
+    
+        lblMatricula.setText(String.valueOf(aluno.getMatricula()));
+        lblPeriodo.setText(String.valueOf(aluno.getPeriodo()));
+        lblTurma.setText(String.valueOf(aluno.getTurma()));
+    
+        float[] notas = aluno.getNotas();
+        if (notas != null && notas.length >= 10) {
+            jTextField4.setText(String.valueOf(notas[0]));
+            jTextField14.setText(String.valueOf(notas[1]));
+            jTextField6.setText(String.valueOf(notas[2]));
+            jTextField13.setText(String.valueOf(notas[3]));
+            jTextField7.setText(String.valueOf(notas[4]));
+            jTextField12.setText(String.valueOf(notas[5]));
+            jTextField8.setText(String.valueOf(notas[6]));
+            jTextField11.setText(String.valueOf(notas[7]));
+            jTextField9.setText(String.valueOf(notas[8]));
+            jTextField10.setText(String.valueOf(notas[9]));
+        }
+        
+        liberarCampos();
+        lblNome1.setEditable(false);
+    }
+    
         private void salvarTodasAlteracoes() {
         try {
             Aluno alunoAlterado = new Aluno();
@@ -46,6 +86,8 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
             conexao.alteraAluno(alunoAlterado);
             bloquearCampos();
             lblNome1.setEditable(true);
+            listaAlunos.clear();
+            indiceAtual = -1;
         
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Erro ao preparar dados para alterar: " + e.getMessage(), "Erro de Validação", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -106,15 +148,29 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
         jButton7.setEnabled(true);
 }
     public MenuAlterarAluno() {
+        IconFontSwing.register(FontAwesome.getIconFont());
+        
         initComponents();
         
         this.setResizable(false); 
-    
-        this.setSize(800, 640); 
-    
-        this.setLocationRelativeTo(null);
-        bloquearCampos();
         
+        this.setSize(800, 640); 
+        
+        this.setLocationRelativeTo(null);
+        
+        bloquearCampos();
+
+        jButton7.setIcon(IconFontSwing.buildIcon(FontAwesome.FLOPPY_O, 18, new java.awt.Color(255, 255, 255)));
+        
+        jButton1.setIcon(IconFontSwing.buildIcon(FontAwesome.SEARCH, 16, new java.awt.Color(255, 255, 255)));
+        
+        jButton6.setIcon(IconFontSwing.buildIcon(FontAwesome.ARROW_LEFT, 16, new java.awt.Color(255, 255, 255)));
+        
+        jButton3.setIcon(IconFontSwing.buildIcon(FontAwesome.CHEVRON_LEFT, 16, new java.awt.Color(255, 255, 255)));
+        
+        jButton2.setIcon(IconFontSwing.buildIcon(FontAwesome.CHEVRON_RIGHT, 16, new java.awt.Color(255, 255, 255)));
+        
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
     }
 
     /**
@@ -604,14 +660,6 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_lblNome1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        salvarTodasAlteracoes();
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String matriculaStr = lblNome1.getText().trim();
     
         if (matriculaStr.isEmpty()) {
@@ -660,11 +708,51 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
                 }    
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "A matrícula deve conter apenas números!", "Erro de formatação", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }       
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        salvarTodasAlteracoes();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (listaAlunos.isEmpty()) {
+            ConexoesMySQL conexao = new ConexoesMySQL();
+            // Pega todos os alunos ordenados por Nome
+            listaAlunos = conexao.recuperaTodosAlunos("p.Nome");
+        }
+        
+        if (listaAlunos.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Não há nenhum aluno cadastrado no banco de dados.");
+            return;
+        }
+        
+        if (indiceAtual < listaAlunos.size() - 1) {
+            indiceAtual++;
+            exibirAlunoNaTela(listaAlunos.get(indiceAtual));
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Você já está no último registro da lista!", "Fim da Lista", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        if (listaAlunos.isEmpty()) {
+            ConexoesMySQL conexao = new ConexoesMySQL();
+            listaAlunos = conexao.recuperaTodosAlunos("p.Nome");
+        }
+        
+        if (listaAlunos.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Não há nenhum aluno cadastrado no banco de dados.");
+            return;
+        }
+        
+        if (indiceAtual > 0) {
+            indiceAtual--;
+            exibirAlunoNaTela(listaAlunos.get(indiceAtual));
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Você já está no primeiro registro da lista!", "Início da Lista", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
