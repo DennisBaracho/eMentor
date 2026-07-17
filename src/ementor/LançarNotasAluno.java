@@ -48,7 +48,7 @@ public class LançarNotasAluno extends javax.swing.JFrame {
         quantidadeNotasLancadas = 0;
     }
 
-    private void configurarCamposNotas(int quantidade) {
+    private void configurarCamposNotas(int quantidade, float[] notasExistentes) {
         this.quantidadeNotasLancadas = quantidade;
         javax.swing.JTextField[] campos = {jTextField1, jTextField10, jTextField2, jTextField9, jTextField3, jTextField8, jTextField4, jTextField7, jTextField5, jTextField6};
         javax.swing.JLabel[] labels = {jLabel1, jLabel11, jLabel2, jLabel10, jLabel3, jLabel9, jLabel4, jLabel8, jLabel6, jLabel7};
@@ -58,25 +58,19 @@ public class LançarNotasAluno extends javax.swing.JFrame {
                 labels[i].setVisible(true);
                 campos[i].setVisible(true);
                 campos[i].setEditable(true);
+
+                // Preenche com o valor já existente no banco, se houver
+                if (notasExistentes != null && i < notasExistentes.length) {
+                    campos[i].setText(String.valueOf(notasExistentes[i]));
+                } else {
+                    campos[i].setText("");
+                }
             } else {
                 labels[i].setVisible(false);
                 campos[i].setVisible(false);
+                campos[i].setText("");
             }
         }
-        jButton11.setEnabled(true);
-    }
-
-    private void liberarCampos() {
-        jTextField1.setEditable(true);
-        jTextField2.setEditable(true);
-        jTextField3.setEditable(true);
-        jTextField4.setEditable(true);
-        jTextField5.setEditable(true);
-        jTextField6.setEditable(true);
-        jTextField7.setEditable(true);
-        jTextField8.setEditable(true);
-        jTextField9.setEditable(true);
-        jTextField10.setEditable(true);
         jButton11.setEnabled(true);
     }
 
@@ -414,48 +408,73 @@ public class LançarNotasAluno extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String matriculaStr = lblNome1.getText().trim();
 
-        if (matriculaStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, digite uma matrícula para buscar.");
-            return;
-        }
+    if (matriculaStr.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, digite uma matrícula para buscar.");
+        return;
+    }
 
-        try {
-            long matricula = Long.parseLong(matriculaStr);
-            ConexoesMySQL conexao = new ConexoesMySQL();
-            Aluno aluno = conexao.buscaAlunoPorMatricula(matricula);
+    try {
+        long matricula = Long.parseLong(matriculaStr);
+        ConexoesMySQL conexao = new ConexoesMySQL();
+        Aluno aluno = conexao.buscaAlunoPorMatricula(matricula);
 
-            if (aluno != null) {
-                alunoAtual = aluno;
-                JOptionPane.showMessageDialog(this, "Aluno encontrado: " + aluno.getNome());
-                
-                String input = JOptionPane.showInputDialog(this, "Quantas notas deseja lançar para este aluno? (1 a 10)", "Quantidade de Notas", JOptionPane.QUESTION_MESSAGE);
-                
-                if (input == null) {
-                    alunoAtual = null;
-                    bloquearCampos();
-                    return;
-                }
-                
-                int qtd = Integer.parseInt(input);
-                if (qtd < 1 || qtd > 10) {
-                    JOptionPane.showMessageDialog(this, "A quantidade deve ser um número entre 1 e 10.", "Valor Inválido", JOptionPane.ERROR_MESSAGE);
-                    alunoAtual = null;
-                    bloquearCampos();
-                    return;
-                }
-                
-                configurarCamposNotas(qtd);
-                lblNome1.setEditable(false);
+        if (aluno != null) {
+            alunoAtual = aluno;
 
-            } else {
+            float[] notasExistentes = aluno.getNotas(); // já vem do banco
+            int qtdExistente = (notasExistentes != null) ? notasExistentes.length : 0;
+
+            JOptionPane.showMessageDialog(this, "Aluno encontrado: " + aluno.getNome()
+                    + (qtdExistente > 0 ? "\nJá possui " + qtdExistente + " nota(s) lançada(s)." : ""));
+
+            String input = JOptionPane.showInputDialog(this,
+                    "Quantas notas deseja lançar para este aluno? (1 a 10)",
+                    "Quantidade de Notas",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null, null,
+                    qtdExistente > 0 ? String.valueOf(qtdExistente) : "").toString();
+
+            if (input == null) {
                 alunoAtual = null;
                 bloquearCampos();
-                JOptionPane.showMessageDialog(this, "Nenhum aluno encontrado com a matrícula: " + matricula, "Não encontrado", JOptionPane.WARNING_MESSAGE);
+                return;
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Digite apenas números inteiros válidos!", "Erro de formatação", JOptionPane.ERROR_MESSAGE);
+
+            int qtd = Integer.parseInt(input.trim());
+            if (qtd < 1 || qtd > 10) {
+                JOptionPane.showMessageDialog(this, "A quantidade deve ser um número entre 1 e 10.", "Valor Inválido", JOptionPane.ERROR_MESSAGE);
+                alunoAtual = null;
+                bloquearCampos();
+                return;
+            }
+
+            if (qtdExistente > qtd) {
+                int resposta = JOptionPane.showConfirmDialog(this,
+                        "Este aluno já possui " + qtdExistente + " nota(s) lançada(s).\n"
+                        + "Ao salvar com apenas " + qtd + " nota(s), a(s) Nota " + (qtd + 1)
+                        + (qtdExistente > qtd + 1 ? " até " + qtdExistente : "") + " será(ão) APAGADA(S).\nDeseja continuar?",
+                        "Atenção: notas serão apagadas",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+                if (resposta != JOptionPane.YES_OPTION) {
+                    alunoAtual = null;
+                    bloquearCampos();
+                    return;
+                }
+            }
+
+            configurarCamposNotas(qtd, notasExistentes);
+            lblNome1.setEditable(false);
+
+        } else {
+            alunoAtual = null;
             bloquearCampos();
+            JOptionPane.showMessageDialog(this, "Nenhum aluno encontrado com a matrícula: " + matricula, "Não encontrado", JOptionPane.WARNING_MESSAGE);
         }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Digite apenas números inteiros válidos!", "Erro de formatação", JOptionPane.ERROR_MESSAGE);
+        bloquearCampos();
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void lblNome1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblNome1ActionPerformed
