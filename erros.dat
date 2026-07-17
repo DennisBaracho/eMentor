@@ -5,3 +5,5 @@
 [15/07/2026 04:13:56] CÓDIGO: 1049 | DESCRIÇÃO: Erro de Conexão: Unknown database 'ementor-plus'
 [16/07/2026 21:34:27] CÓDIGO: 1049 | DESCRIÇÃO: Erro de Conexão: Unknown database 'ementor-plus'
 [16/07/2026 22:01:30] CÓDIGO: 0 | DESCRIÇÃO: Erro de Conexão: No suitable driver found for jdbc:mysql://localhost:3306/ementor-Plus?useTimezone=true&serverTimezone=UTC
+[16/07/2026 22:16:37] CÓDIGO: 1049 | DESCRIÇÃO: Erro de Conexão: Unknown database 'ementor-plus'
+[16/07/2026 22:16:42] CÓDIGO: 1049 | DESCRIÇÃO: Erro de Conexão: Unknown database 'ementor-plus'
