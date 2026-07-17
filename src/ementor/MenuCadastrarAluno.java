@@ -367,32 +367,8 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
             return;
         }
 
-        javax.swing.JTextField[] camposNotas = {
-            jTextField4, jTextField14, jTextField6, jTextField13, jTextField7,
-            jTextField12, jTextField8, jTextField11, jTextField9, jTextField10
-        };
-        for (int i = 0; i < camposNotas.length; i++) {
-            if (camposNotas[i].getText().isBlank()) {
-                JOptionPane.showMessageDialog(this,
-                    "Preencha a Nota " + (i + 1) + ".",
-                    "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-        }
-
         try {
-            float[] notas = new float[10];
-            for (int i = 0; i < camposNotas.length; i++) {
-                float nota = Float.parseFloat(camposNotas[i].getText());
-                if (nota < 0 || nota > 10) {
-                    JOptionPane.showMessageDialog(this,
-                        "A Nota " + (i + 1) + " deve estar entre 0 e 10.",
-                        "Valor inválido", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-                notas[i] = nota;
-            }
-
+            float[] notas = new float[10]; // todas zeradas — serão lançadas depois em outra tela
             long cpf = Long.parseLong(lblCPF.getText());
             long matricula = Long.parseLong(lblMatricula.getText());
             int periodo = Integer.parseInt(lblPeriodo.getText());
@@ -400,19 +376,9 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
 
             Aluno aluno = new Aluno();
             aluno.setDados(
-                lblNome.getText(),
-                lblDataNascimento.getText(),
-                cpf,
-                lblTelefone.getText(),
-                lblRua.getText(),
-                lblBairro.getText(),
-                lblCidade.getText(),
-                lblEstado.getText(),
-                matricula,
-                periodo,
-                notas,
-                turma
-            );
+                lblNome.getText(), lblDataNascimento.getText(), cpf, lblTelefone.getText(),
+                lblRua.getText(), lblBairro.getText(), lblCidade.getText(), lblEstado.getText(),
+                matricula, periodo, notas, turma);
 
             ConexoesMySQL banco = new ConexoesMySQL();
             banco.insereAluno(aluno);
@@ -421,7 +387,7 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
-                "Verifique se CPF, telefone, matrícula, período, turma e notas foram preenchidos com números válidos.",
+                "Verifique se CPF, telefone, matrícula, período e turma foram preenchidos com números válidos.",
                 "Erro de formato", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton3ActionPerformed

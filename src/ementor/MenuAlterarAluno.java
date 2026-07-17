@@ -604,6 +604,14 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_lblNome1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        salvarTodasAlteracoes();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String matriculaStr = lblNome1.getText().trim();
     
         if (matriculaStr.isEmpty()) {
@@ -653,14 +661,6 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "A matrícula deve conter apenas números!", "Erro de formatação", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        salvarTodasAlteracoes();
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

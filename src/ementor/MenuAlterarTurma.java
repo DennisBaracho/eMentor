@@ -266,6 +266,10 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+                                           
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         String codigoStr = lblMatricula1.getText().trim();
     
         if (codigoStr.isEmpty()) {
@@ -293,11 +297,7 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
 
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "O Código da Turma deve conter apenas números!", "Erro de formatação", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }                                        
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+        }     
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed

@@ -260,6 +260,32 @@ public class ConexoesMySQL {
         return null;
     }
 
+    public void atualizaNotas(long matricula, float[] notas) {
+        Connection conexao = realizaConexaoMySQL();
+        if (conexao == null) return;
+        String sqlNota = "UPDATE Nota SET Valor = ? WHERE Matricula_Aluno = ? AND NumeroNota = ?";
+
+        try {
+            conexao.setAutoCommit(false);
+            try (PreparedStatement psNota = conexao.prepareStatement(sqlNota)) {
+                for (int i = 0; i < notas.length; i++) {
+                    psNota.setFloat(1, notas[i]);
+                    psNota.setLong(2, matricula);
+                    psNota.setInt(3, i + 1);
+                    psNota.addBatch();
+                }
+                psNota.executeBatch();
+                conexao.commit();
+                JOptionPane.showMessageDialog(null, "Notas lançadas com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLException e) {
+            try { conexao.rollback(); } catch (SQLException ex) {}
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao lançar notas: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao lançar notas: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            desconectaMySQL(conexao);
+        }
+    }
     // ========================================================================
     // EGRESSO - GRAVAR E ALTERAR
 
@@ -376,7 +402,6 @@ public class ConexoesMySQL {
         java.sql.Connection conexao = realizaConexaoMySQL();
         if (conexao == null) return null;
 
-        // Faz o JOIN ligando as 3 tabelas e filtra pelo CPF da Pessoa!
         String sql = "SELECT * FROM Pessoa p "
                    + "INNER JOIN Aluno a ON p.CPF = a.CPF_Pessoa "
                    + "INNER JOIN Egresso e ON a.Matricula = e.Matricula_Aluno "
@@ -387,7 +412,6 @@ public class ConexoesMySQL {
             try (java.sql.ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Egresso egresso = new Egresso();
-                    // Dados de Pessoa
                     egresso.setCPF(rs.getLong("CPF"));
                     egresso.setNome(rs.getString("Nome"));
                     egresso.setDataNascimento(rs.getString("DataNascimento"));
@@ -396,11 +420,9 @@ public class ConexoesMySQL {
                     egresso.setBairro(rs.getString("Bairro"));
                     egresso.setCidade(rs.getString("Cidade"));
                     egresso.setEstado(rs.getString("Estado"));
-                    // Dados de Aluno
                     egresso.setMatricula(rs.getLong("Matricula"));
                     egresso.setPeriodo(rs.getInt("Periodo"));
                     egresso.setTurma(rs.getLong("Codigo_Turma"));
-                    // Dados de Egresso
                     egresso.setProfissaoAtual(rs.getString("ProfissaoAtual"));
                     egresso.setFaixaSalarial(rs.getString("FaixaSalarial"));
                     egresso.setCursoAnterior(rs.getString("CursoAnterior"));
@@ -416,6 +438,50 @@ public class ConexoesMySQL {
         return null;
     }
     
+    public ArrayList<Egresso> recuperaTodosEgressos() {
+        Connection conexao = realizaConexaoMySQL();
+        ArrayList<Egresso> listaEgressos = new ArrayList<>();
+        if (conexao == null) return listaEgressos;
+
+        String sql = "SELECT * FROM Pessoa p "
+                   + "INNER JOIN Aluno a ON p.CPF = a.CPF_Pessoa "
+                   + "INNER JOIN Egresso e ON a.Matricula = e.Matricula_Aluno "
+                   + "ORDER BY p.Nome";
+
+        try (PreparedStatement ps = conexao.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Egresso egresso = new Egresso();
+
+                egresso.setCPF(rs.getLong("CPF"));
+                egresso.setNome(rs.getString("Nome"));
+                egresso.setDataNascimento(rs.getString("DataNascimento"));
+                egresso.setTelefone(rs.getString("Telefone"));
+                egresso.setRua(rs.getString("Rua"));
+                egresso.setBairro(rs.getString("Bairro"));
+                egresso.setCidade(rs.getString("Cidade"));
+                egresso.setEstado(rs.getString("Estado"));
+
+                egresso.setMatricula(rs.getLong("Matricula"));
+                egresso.setPeriodo(rs.getInt("Periodo"));
+                egresso.setTurma(rs.getLong("Codigo_Turma"));
+
+                egresso.setProfissaoAtual(rs.getString("ProfissaoAtual"));
+                egresso.setFaixaSalarial(rs.getString("FaixaSalarial"));
+                egresso.setCursoAnterior(rs.getString("CursoAnterior"));
+                egresso.setCursoAtual(rs.getString("CursoAtual"));
+
+                listaEgressos.add(egresso);
+            }
+        } catch (SQLException e) {
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao recuperar Egressos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao recuperar egressos: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            desconectaMySQL(conexao);
+        }
+        return listaEgressos;
+    }
     
     // ========================================================================
     // TURMA - GRAVAR
