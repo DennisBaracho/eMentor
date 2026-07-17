@@ -29,3 +29,4 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 [17/07/2026 15:59:08] CÓDIGO: 0 | DESCRIÇÃO: Erro de Conexão: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+[17/07/2026 18:08:48] CÓDIGO: 1452 | DESCRIÇÃO: Erro ao inserir Egresso: Cannot add or update a child row: a foreign key constraint fails (`ementorplus`.`aluno`, CONSTRAINT `fk_aluno_turma` FOREIGN KEY (`Codigo_Turma`) REFERENCES `turma` (`CodigoTurma`))

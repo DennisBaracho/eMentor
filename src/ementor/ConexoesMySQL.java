@@ -367,7 +367,7 @@ public class ConexoesMySQL {
                 }
 
                 conexao.commit();
-                JOptionPane.showMessageDialog(null, "Egresso cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+               
             }
         } catch (SQLException e) {
             try { conexao.rollback(); } catch (SQLException ex) {}

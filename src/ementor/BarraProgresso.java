@@ -21,11 +21,19 @@ public class BarraProgresso extends javax.swing.JFrame {
         initComponents();
         
         this.setResizable(false); 
-    
-        this.setSize(800, 640); 
-    
+        this.setMinimumSize(new java.awt.Dimension(420, 220)); 
+        this.setSize(420, 220);
+        
         this.setLocationRelativeTo(null);
         
+        jProgressBar1.setIndeterminate(false);
+        jProgressBar1.setMinimum(0);
+        jProgressBar1.setMaximum(100);
+        jProgressBar1.setValue(0);
+    }
+    
+    public javax.swing.JProgressBar getBarra() {
+        return jProgressBar1;
     }
 
     /**

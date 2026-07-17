@@ -5,7 +5,7 @@
 package ementor;
 
 import javax.swing.JOptionPane;
-
+import javax.swing.SwingWorker;
 /**
  *
  *@author Anderson Cordeiro de Souza, Marcos Vinícius Pimentel Gomes, Dennis Francisco Guimarães de Oliveira Baracho
@@ -637,6 +637,9 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
             long turma = Long.parseLong(lblTurma.getText());
 
             Egresso egresso = new Egresso();
+            BarraProgresso barra = new BarraProgresso();
+            barra.setVisible(true);
+
             egresso.setDados(
                 lblNome.getText(),
                 lblDataNascimento.getText(),
@@ -656,12 +659,40 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
                 lblCursoAtual.getText()
             );
 
-            ConexoesMySQL banco = new ConexoesMySQL();
-            banco.insereEgresso(egresso); 
+            javax.swing.Timer timer = new javax.swing.Timer(30, null);
+            timer.addActionListener(e -> {
+                int valorAtual = barra.getBarra().getValue();
+                if (valorAtual < 90) {
+                    barra.getBarra().setValue(valorAtual + 1);
+                }
+            });
+            timer.start();
 
-            MenuOpçõesEgresso menu = new MenuOpçõesEgresso();
-            menu.setVisible(true);
-            this.dispose();
+            SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                @Override
+                protected Void doInBackground() {
+                    ConexoesMySQL banco = new ConexoesMySQL();
+                    banco.insereEgresso(egresso);
+                    return null;
+                }
+
+                @Override
+                protected void done() {
+                    timer.stop();
+                    barra.getBarra().setValue(100); // completa visualmente antes de fechar
+
+                    javax.swing.Timer fechamento = new javax.swing.Timer(150, e -> {
+                        barra.dispose();
+                        MenuOpçõesEgresso menu = new MenuOpçõesEgresso();
+                        menu.setVisible(true);
+                        MenuCadastrarEgresso.this.dispose();
+                    });
+                    fechamento.setRepeats(false);
+                    fechamento.start();
+                }
+            };
+            worker.execute();
+            //JOptionPane.showMessageDialog(null, "Egresso cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
