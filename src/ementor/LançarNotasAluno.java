@@ -427,12 +427,12 @@ public class LançarNotasAluno extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Aluno encontrado: " + aluno.getNome()
                     + (qtdExistente > 0 ? "\nJá possui " + qtdExistente + " nota(s) lançada(s)." : ""));
 
-            String input = JOptionPane.showInputDialog(this,
-                    "Quantas notas deseja lançar para este aluno? (1 a 10)",
-                    "Quantidade de Notas",
-                    JOptionPane.QUESTION_MESSAGE,
-                    null, null,
-                    qtdExistente > 0 ? String.valueOf(qtdExistente) : "").toString();
+            Object input= = JOptionPane.showInputDialog(this,
+                "Quantas notas deseja lançar para este aluno? (1 a 10)",
+                "Quantidade de Notas",
+                JOptionPane.QUESTION_MESSAGE,
+                null, null,
+                qtdExistente > 0 ? String.valueOf(qtdExistente) : "");
 
             if (input == null) {
                 alunoAtual = null;
@@ -440,14 +440,23 @@ public class LançarNotasAluno extends javax.swing.JFrame {
                 return;
             }
 
-            int qtd = Integer.parseInt(input.trim());
-            if (qtd < 1 || qtd > 10) {
+            int qtd;
+            try {
+                qtd = Integer.parseInt(input.toString().trim());
+            } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "A quantidade deve ser um número entre 1 e 10.", "Valor Inválido", JOptionPane.ERROR_MESSAGE);
                 alunoAtual = null;
                 bloquearCampos();
                 return;
             }
 
+            if (qtd < 1 || qtd > 10) {
+                JOptionPane.showMessageDialog(this, "A quantidade deve ser um número entre 1 e 10.", "Valor Inválido", JOptionPane.ERROR_MESSAGE);
+                alunoAtual = null;
+                bloquearCampos();
+                return;
+            }
+            
             if (qtdExistente > qtd) {
                 int resposta = JOptionPane.showConfirmDialog(this,
                         "Este aluno já possui " + qtdExistente + " nota(s) lançada(s).\n"
