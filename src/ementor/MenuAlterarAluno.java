@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ementor;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+import javax.swing.Timer;
 import jiconfont.swing.IconFontSwing;
 import jiconfont.icons.font_awesome.FontAwesome;
 import java.util.List;
@@ -92,29 +95,88 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
             
             for (int i = 0; i < quantidadeNotasAtual; i++) {
                 if (campos[i].getText().isBlank()) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Preencha a Nota " + (i + 1) + ".", "Campo obrigatório", javax.swing.JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Preencha a Nota " + (i + 1) + ".", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 
                 float nota = Float.parseFloat(campos[i].getText().replace(",", "."));
                 if (nota < 0 || nota > 10) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "A Nota " + (i + 1) + " deve estar entre 0 e 10.", "Valor inválido", javax.swing.JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "A Nota " + (i + 1) + " deve estar entre 0 e 10.", "Valor inválido", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 notas[i] = nota;
             }
             alunoAlterado.setNotas(notas);
         
-            ConexoesMySQL conexao = new ConexoesMySQL();
-            conexao.alteraAluno(alunoAlterado);
-            bloquearCampos();
-           
-            lblNome1.setEditable(true);
-            listaAlunos.clear();
-            indiceAtual = -1;
+            BarraProgresso barra = new BarraProgresso();
+            barra.setVisible(true);
+
+            Timer timer = new Timer(30, null);
+            timer.addActionListener(e -> {
+                int valorAtual = barra.getBarra().getValue();
+                if (valorAtual < 90) {
+                    barra.getBarra().setValue(valorAtual + 1);
+                }
+            });
+            timer.start();
+
+            SwingWorker<Boolean, Void> worker = new SwingWorker<>() {
+                @Override
+                protected Boolean doInBackground() {
+                    try {
+                        ConexoesMySQL conexao = new ConexoesMySQL();
+                        conexao.alteraAluno(alunoAlterado);
+                        return true;
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        return false;
+                    }
+                }
+
+                @Override
+                protected void done() {
+                    timer.stop();
+                    barra.getBarra().setValue(100);
+
+                    Timer fechamento = new Timer(150, e -> {
+                        barra.dispose();
+                        
+                        try {
+                            boolean sucesso = get();
+                            
+                            if (sucesso) {
+                                JOptionPane.showMessageDialog(
+                                    MenuAlterarAluno.this, 
+                                    "Dados do aluno alterados com sucesso!", 
+                                    "Sucesso", 
+                                    JOptionPane.INFORMATION_MESSAGE
+                                );
+                                
+                                bloquearCampos();
+                                lblNome1.setEditable(true);
+                                listaAlunos.clear();
+                                indiceAtual = -1;
+
+                            } else {
+                                JOptionPane.showMessageDialog(
+                                    MenuAlterarAluno.this, 
+                                    "Ocorreu um erro ao tentar atualizar os dados no banco.", 
+                                    "Erro no Banco de Dados", 
+                                    JOptionPane.ERROR_MESSAGE
+                                );
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    });
+                    fechamento.setRepeats(false);
+                    fechamento.start();
+                }
+            };
+            worker.execute();
         
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao preparar dados para alterar: " + e.getMessage(), "Erro de Validação", javax.swing.JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao preparar dados para alterar: " + e.getMessage(), "Erro de Validação", JOptionPane.ERROR_MESSAGE);
         }
     }
     private void bloquearCampos() {

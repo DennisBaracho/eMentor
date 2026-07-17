@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ementor;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+import javax.swing.Timer;
 import jiconfont.swing.IconFontSwing;
 import jiconfont.icons.font_awesome.FontAwesome;
 import java.util.List;
@@ -118,19 +121,78 @@ public class MenuAlterarProfessor extends javax.swing.JFrame {
             
             profAlterado.setChefia(jCheckBox2.isSelected());   
             profAlterado.setCoordenacao(jCheckBox4.isSelected()); 
-        
-            ConexoesMySQL conexao = new ConexoesMySQL();
-            conexao.alteraProfessor(profAlterado);
-        
-            lblSalarioBruto1.setText(String.format("%.2f", profAlterado.calcularSalarioLiquido()));
 
-            bloquearCampos();
-            lblDataAdmissao1.setEditable(true);
-            listaProfessores.clear();
-            indiceAtual = -1;
+            BarraProgresso barra = new BarraProgresso();
+            barra.setVisible(true);
+
+            Timer timer = new Timer(30, null);
+            timer.addActionListener(e -> {
+                int valorAtual = barra.getBarra().getValue();
+                if (valorAtual < 90) {
+                    barra.getBarra().setValue(valorAtual + 1);
+                }
+            });
+            timer.start();
+
+            SwingWorker<Boolean, Void> worker = new SwingWorker<>() {
+                @Override
+                protected Boolean doInBackground() {
+                    try {
+                        ConexoesMySQL conexao = new ConexoesMySQL();
+                        conexao.alteraProfessor(profAlterado);
+                        return true;
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        return false;
+                    }
+                }
+
+                @Override
+                protected void done() {
+                    timer.stop();
+                    barra.getBarra().setValue(100);
+
+                    Timer fechamento = new Timer(150, e -> {
+                        barra.dispose();
+                        
+                        try {
+                            boolean sucesso = get();
+                            
+                            if (sucesso) {
+                                lblSalarioBruto1.setText(String.format("%.2f", profAlterado.calcularSalarioLiquido()));
+
+                                JOptionPane.showMessageDialog(
+                                    MenuAlterarProfessor.this, 
+                                    "Dados do professor alterados com sucesso!", 
+                                    "Sucesso", 
+                                    JOptionPane.INFORMATION_MESSAGE
+                                );
+                                
+                                bloquearCampos();
+                                lblDataAdmissao1.setEditable(true);
+                                listaProfessores.clear();
+                                indiceAtual = -1;
+
+                            } else {
+                                JOptionPane.showMessageDialog(
+                                    MenuAlterarProfessor.this, 
+                                    "Ocorreu um erro ao tentar atualizar os dados do professor no banco.", 
+                                    "Erro no Banco de Dados", 
+                                    JOptionPane.ERROR_MESSAGE
+                                );
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    });
+                    fechamento.setRepeats(false);
+                    fechamento.start();
+                }
+            };
+            worker.execute();
         
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao preparar dados para alterar: " + e.getMessage(), "Erro de Validação", javax.swing.JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao preparar dados para alterar: " + e.getMessage(), "Erro de Validação", JOptionPane.ERROR_MESSAGE);
         }
     }
     public MenuAlterarProfessor() {

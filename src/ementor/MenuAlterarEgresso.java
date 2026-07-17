@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ementor;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+import javax.swing.Timer;
 import jiconfont.swing.IconFontSwing;
 import jiconfont.icons.font_awesome.FontAwesome;
 import java.util.List;
@@ -124,8 +127,8 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
     private void salvarTodasAlteracoes() {
         try {
             if (jComboBox1.getSelectedIndex() == 0) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecione uma Faixa Salarial válida!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
-                    return;
+                JOptionPane.showMessageDialog(this, "Por favor, selecione uma Faixa Salarial válida!", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
             }
             
             Egresso egressoAlterado = new Egresso();
@@ -156,16 +159,75 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
             }
             egressoAlterado.setNotas(notas);
             
-            ConexoesMySQL conexao = new ConexoesMySQL();
-            conexao.alteraEgresso(egressoAlterado);
-        
-            bloquearCampos();
-            lblProfissaoAtual1.setEditable(true);
-            listaEgressos.clear();
-            indiceAtual = -1;
+            BarraProgresso barra = new BarraProgresso();
+            barra.setVisible(true);
+
+            Timer timer = new Timer(30, null);
+            timer.addActionListener(e -> {
+                int valorAtual = barra.getBarra().getValue();
+                if (valorAtual < 90) {
+                    barra.getBarra().setValue(valorAtual + 1);
+                }
+            });
+            timer.start();
+
+            SwingWorker<Boolean, Void> worker = new SwingWorker<>() {
+                @Override
+                protected Boolean doInBackground() {
+                    try {
+                        ConexoesMySQL conexao = new ConexoesMySQL();
+                        conexao.alteraEgresso(egressoAlterado);
+                        return true;
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        return false;
+                    }
+                }
+
+                @Override
+                protected void done() {
+                    timer.stop();
+                    barra.getBarra().setValue(100);
+
+                    Timer fechamento = new Timer(150, e -> {
+                        barra.dispose();
+                        
+                        try {
+                            boolean sucesso = get();
+                            
+                            if (sucesso) {
+                                JOptionPane.showMessageDialog(
+                                    MenuAlterarEgresso.this, 
+                                    "Dados do egresso alterados com sucesso!", 
+                                    "Sucesso", 
+                                    JOptionPane.INFORMATION_MESSAGE
+                                );
+                                
+                                bloquearCampos();
+                                lblProfissaoAtual1.setEditable(true);
+                                listaEgressos.clear();
+                                indiceAtual = -1;
+
+                            } else {
+                                JOptionPane.showMessageDialog(
+                                    MenuAlterarEgresso.this, 
+                                    "Ocorreu um erro ao tentar atualizar os dados do egresso no banco.", 
+                                    "Erro no Banco de Dados", 
+                                    JOptionPane.ERROR_MESSAGE
+                                );
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    });
+                    fechamento.setRepeats(false);
+                    fechamento.start();
+                }
+            };
+            worker.execute();
         
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao preparar dados para alterar: " + e.getMessage(), "Erro de Validação", javax.swing.JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao preparar dados para alterar: " + e.getMessage(), "Erro de Validação", JOptionPane.ERROR_MESSAGE);
         }
     }
 
