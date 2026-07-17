@@ -6,7 +6,7 @@ package ementor;
 import java.util.ArrayList;
 /**
  *
- * @author Anderson
+ * @author Anderson Cordeiro de Souza, Marcos Vinícius Pimentel Gomes, Dennis Francisco Guimarães de Oliveira Baracho
  */
 public class ListaProfessores extends javax.swing.JFrame {
     
@@ -28,6 +28,7 @@ public class ListaProfessores extends javax.swing.JFrame {
     }
        
     private void carregarProfessores() {
+
         ConexoesMySQL banco = new ConexoesMySQL();
         ArrayList<Professor> listaProfessores = banco.recuperaTodosProfessores();
 
@@ -47,10 +48,12 @@ public class ListaProfessores extends javax.swing.JFrame {
                 professor.getEstado(),
                 professor.getDataAdmissao(),
                 String.format("R$ %.2f", professor.calcularSalarioBruto()),
+                String.format("R$ %.2f", professor.calcularSalarioLiquido()),
                 professor.isChefia() ? "Sim" : "Não",
                 professor.isCoordenacao() ? "Sim" : "Não"
             });
         }
+
     }
 
     /**
@@ -95,13 +98,13 @@ public class ListaProfessores extends javax.swing.JFrame {
         jTable1.setBackground(new java.awt.Color(30, 30, 30));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Data Nascimento", "CPF", "Telefone", "Rua", "Bairro", "Cidade", "Estado", "DataAdmissao", "SalarioBruto", "Chefia", "Coordenação"
+                "Nome", "Data Nascimento", "CPF", "Telefone", "Rua", "Bairro", "Cidade", "Estado", "DataAdmissao", "SalarioBruto", "SalarioLiquido", "Chefia", "Coordenação"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

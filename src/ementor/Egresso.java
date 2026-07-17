@@ -1,8 +1,6 @@
 /*
-Tocante a subclasse Egresso, filha de Aluno, deve conter os atributos de Profissão Atual, Faixa
-Salarial, Curso Anterior, Curso Atual. Os métodos são todos aqueles inerentes a de aluno,
-lembrando dos atributos adicionais. Em outros termos, aplicar a sobrescrita.
- */
+@author Anderson Cordeiro de Souza, Marcos Vinícius Pimentel Gomes, Dennis Francisco Guimarães de Oliveira Baracho
+*/
 package ementor;
 
 public class Egresso extends Aluno {

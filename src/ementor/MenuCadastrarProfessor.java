@@ -26,6 +26,7 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
     
         this.setLocationRelativeTo(null);
         
+        lblSalarioLiquido.setEditable(false);
     }
 
     /**
@@ -64,7 +65,7 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         lblDataAdmissao = new javax.swing.JTextField();
         txtSalarioBruto = new javax.swing.JLabel();
         lblSalarioBruto = new javax.swing.JTextField();
-        lblSalarioBruto1 = new javax.swing.JTextField();
+        lblSalarioLiquido = new javax.swing.JTextField();
         txtSalarioBruto1 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         txtSalarioBruto2 = new javax.swing.JLabel();
@@ -211,9 +212,9 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         jPanel6.add(lblSalarioBruto);
         lblSalarioBruto.setBounds(180, 110, 125, 22);
 
-        lblSalarioBruto1.addActionListener(this::lblSalarioBruto1ActionPerformed);
-        jPanel6.add(lblSalarioBruto1);
-        lblSalarioBruto1.setBounds(180, 160, 125, 22);
+        lblSalarioLiquido.addActionListener(this::lblSalarioLiquidoActionPerformed);
+        jPanel6.add(lblSalarioLiquido);
+        lblSalarioLiquido.setBounds(180, 160, 125, 22);
 
         txtSalarioBruto1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtSalarioBruto1.setForeground(new java.awt.Color(255, 255, 255));
@@ -354,9 +355,9 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lblNomeActionPerformed
 
-    private void lblSalarioBruto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblSalarioBruto1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblSalarioBruto1ActionPerformed
+    private void lblSalarioLiquidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblSalarioLiquidoActionPerformed
+        
+    }//GEN-LAST:event_lblSalarioLiquidoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         MenuOpçõesProfessor MinhaJanela = new MenuOpçõesProfessor();
@@ -451,6 +452,8 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
             ConexoesMySQL banco = new ConexoesMySQL();
             banco.insereProfessor(professor);
 
+            lblSalarioLiquido.setText(String.format("%.2f", professor.calcularSalarioLiquido()));
+
             MenuOpçõesProfessor menu = new MenuOpçõesProfessor();
             menu.setVisible(true);
             this.dispose();
@@ -511,7 +514,7 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
     private javax.swing.JTextField lblNome;
     private javax.swing.JTextField lblRua;
     private javax.swing.JTextField lblSalarioBruto;
-    private javax.swing.JTextField lblSalarioBruto1;
+    private javax.swing.JTextField lblSalarioLiquido;
     private javax.swing.JTextField lblTelefone;
     private javax.swing.JLabel txtBairro;
     private javax.swing.JLabel txtCPF;

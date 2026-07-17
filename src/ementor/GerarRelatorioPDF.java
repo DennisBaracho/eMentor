@@ -23,6 +23,10 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+/*
+@author Anderson Cordeiro de Souza, Marcos Vinícius Pimentel Gomes, Dennis Francisco Guimarães de Oliveira Baracho
+*/
+
 public class GerarRelatorioPDF {
 
     private void registrarErroLog(String codigo, String descricao) {

@@ -1,3 +1,6 @@
+/*
+@author Anderson Cordeiro de Souza, Marcos Vinícius Pimentel Gomes, Dennis Francisco Guimarães de Oliveira Baracho
+*/
 package ementor;
 
 import java.io.BufferedWriter;

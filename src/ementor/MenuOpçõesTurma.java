@@ -6,7 +6,7 @@ package ementor;
 
 /**
  *
- * @author Anderson
+ * @author Anderson Cordeiro de Souza, Marcos Vinícius Pimentel Gomes, Dennis Francisco Guimarães de Oliveira Baracho
  */
 public class MenuOpçõesTurma extends javax.swing.JFrame {
     

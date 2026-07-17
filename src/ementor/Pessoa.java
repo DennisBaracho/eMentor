@@ -1,6 +1,6 @@
-/*Pessoa deve possuir os atributos de Nome, Data de Nascimento, CPF e Telefone. 
-Em relação aos métodos, deve ser implementado o método construtor padrão 
-e método construtor para inicializar todos os atributos. */
+/*
+@author Anderson Cordeiro de Souza, Marcos Vinícius Pimentel Gomes, Dennis Francisco Guimarães de Oliveira Baracho
+*/
 package ementor;
 
 import java.io.Serializable;

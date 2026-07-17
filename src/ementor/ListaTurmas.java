@@ -6,7 +6,7 @@ package ementor;
 import java.util.ArrayList;
 /**
  *
- * @author Anderson
+ * @author Anderson Cordeiro de Souza, Marcos Vinícius Pimentel Gomes, Dennis Francisco Guimarães de Oliveira Baracho
  */
 public class ListaTurmas extends javax.swing.JFrame {
     
