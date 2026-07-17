@@ -352,6 +352,7 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
         txtProfissaoAtual1.setBounds(630, 40, 90, 16);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione Uma Opção", "1 a 3 salários mínimos", "3 a 6 salários mínimos", "6 a 9 salários mínimos", "Mais que 9 salários mínimos" }));
+        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
         jPanel6.add(jComboBox1);
         jComboBox1.setBounds(180, 110, 120, 22);
 
@@ -762,6 +763,10 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
