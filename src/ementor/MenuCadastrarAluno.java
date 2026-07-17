@@ -383,6 +383,8 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
             ConexoesMySQL banco = new ConexoesMySQL();
             banco.insereAluno(aluno);
 
+            MenuOpçõesAluno MinhaJanela = new MenuOpçõesAluno();
+            MinhaJanela.setVisible(true);
             this.dispose();
 
         } catch (NumberFormatException e) {

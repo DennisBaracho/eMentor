@@ -16,3 +16,5 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 [16/07/2026 22:44:57] CÓDIGO: 0 | DESCRIÇÃO: Erro de Conexão: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+[16/07/2026 23:02:36] CÓDIGO: 1049 | DESCRIÇÃO: Erro de Conexão: Unknown database 'ementor-plus'
+[16/07/2026 23:07:58] CÓDIGO: 1062 | DESCRIÇÃO: Erro ao inserir Aluno: Duplicate entry '21' for key 'aluno.PRIMARY'

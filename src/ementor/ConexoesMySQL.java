@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat; 
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -19,7 +19,7 @@ public class ConexoesMySQL {
     /* Seção de atributos/variáveis iniciais */
     private final String caminho = "localhost"; 
     private final String porta = "3306"; 
-    private final String nome = "ementor-Plus"; 
+    private final String nome = "ementor"; 
     private final String usuario = "root"; 
     private final String senha = "admin"; 
     private final String fusoHorario = "?useTimezone=true&serverTimezone=UTC";

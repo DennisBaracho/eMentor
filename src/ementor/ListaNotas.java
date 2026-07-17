@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ementor;
-
+import java.util.ArrayList;
 /**
  *
  * @author Anderson
@@ -23,8 +23,48 @@ public class ListaNotas extends javax.swing.JFrame {
         this.setSize(800, 640); 
     
         this.setLocationRelativeTo(null);
+        
+        carregarNotas();
     }
+    
+    private void carregarNotas() {
+        ConexoesMySQL banco = new ConexoesMySQL();
+        ArrayList<Aluno> listaAlunos = banco.recuperaTodosAlunos("Nome");
 
+        javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
+
+        for (Aluno aluno : listaAlunos) {
+            float[] notas = aluno.getNotas();
+            float soma = 0;
+            int quantidadeNotas = 0;
+
+            if (notas != null) {
+                for (float nota : notas) {
+                    soma += nota;
+                    quantidadeNotas++;
+                }
+            }
+
+            float media = quantidadeNotas > 0 ? soma / quantidadeNotas : 0;
+
+            modelo.addRow(new Object[]{
+                aluno.getNome(),
+                notas != null && notas.length > 0 ? notas[0] : 0,
+                notas != null && notas.length > 1 ? notas[1] : 0,
+                notas != null && notas.length > 2 ? notas[2] : 0,
+                notas != null && notas.length > 3 ? notas[3] : 0,
+                notas != null && notas.length > 4 ? notas[4] : 0,
+                notas != null && notas.length > 5 ? notas[5] : 0,
+                notas != null && notas.length > 6 ? notas[6] : 0,
+                notas != null && notas.length > 7 ? notas[7] : 0,
+                notas != null && notas.length > 8 ? notas[8] : 0,
+                notas != null && notas.length > 9 ? notas[9] : 0,
+                String.format("%.2f", media)
+            });
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,6 +126,7 @@ public class ListaNotas extends javax.swing.JFrame {
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Voltar");
         jButton5.setBorderPainted(false);
+        jButton5.addActionListener(this::jButton5ActionPerformed);
         jPanel1.add(jButton5);
         jButton5.setBounds(580, 10, 100, 23);
 
@@ -94,6 +135,7 @@ public class ListaNotas extends javax.swing.JFrame {
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("Gerar PDF");
         jButton6.setBorderPainted(false);
+        jButton6.addActionListener(this::jButton6ActionPerformed);
         jPanel1.add(jButton6);
         jButton6.setBounds(690, 10, 100, 23);
 
@@ -118,6 +160,34 @@ public class ListaNotas extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        javax.swing.JFileChooser seletor = new javax.swing.JFileChooser();
+        seletor.setDialogTitle("Salvar Relatório de Notas");
+        seletor.setSelectedFile(new java.io.File("relatorio_notas.pdf"));
+
+        int opcao = seletor.showSaveDialog(this);
+        if (opcao != javax.swing.JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+
+        String caminhoArquivo = seletor.getSelectedFile().getAbsolutePath();
+        if (!caminhoArquivo.toLowerCase().endsWith(".pdf")) {
+            caminhoArquivo += ".pdf";
+        }
+
+        ConexoesMySQL banco = new ConexoesMySQL();
+        ArrayList<Aluno> listaAlunos = banco.recuperaTodosAlunos("Nome");
+
+        GerarRelatorioPDF gerador = new GerarRelatorioPDF();
+        gerador.gerarRelatorioNotas(listaAlunos, caminhoArquivo);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        MenuOpçõesEgresso MinhaJanela = new MenuOpçõesEgresso();
+        MinhaJanela.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
