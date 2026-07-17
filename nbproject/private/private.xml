@@ -3,19 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/marco/Downloads/eMentor-main/eMentor-main/src/ementor/ConexoesMySQL.java</file>
-            <file>file:/C:/Users/marco/Downloads/eMentor-main/eMentor-main/src/ementor/ListaEgressos.java</file>
-            <file>file:/C:/Users/marco/Downloads/eMentor-main/eMentor-main/src/ementor/MenuAlterarEgresso.java</file>
-=======
-            <file>file:/E:/CC/4P/eMentor/src/ementor/MenuAlterarAluno.java</file>
             <file>file:/E:/CC/4P/eMentor/src/ementor/ConexoesMySQL.java</file>
             <file>file:/E:/CC/4P/eMentor/src/ementor/LançarNotasAluno.java</file>
             <file>file:/E:/CC/4P/eMentor/src/ementor/MenuCadastrarAluno.java</file>
             <file>file:/E:/CC/4P/eMentor/src/ementor/MenuAlterarEgresso.java</file>
             <file>file:/E:/CC/4P/eMentor/src/ementor/MenuAlterarProfessor.java</file>
             <file>file:/E:/CC/4P/eMentor/src/ementor/MenuAlterarTurma.java</file>
->>>>>>> 9a934f61e683cf53d3f81452af40812cd9adc076
+            <file>file:/E:/CC/4P/eMentor/src/ementor/MenuCadastrarEgresso.java</file>
+            <file>file:/E:/CC/4P/eMentor/src/ementor/MenuAlterarAluno.java</file>
         </group>
     </open-files>
 </project-private>
