@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 /**
  *
- * @author Anderson
+ * @author Anderson Cordeiro de Souza, Marcos Vinícius Pimentel Gomes, Dennis Francisco Guimarães de Oliveira Baracho
  */
 public class MenuAlterarAluno extends javax.swing.JFrame {
     

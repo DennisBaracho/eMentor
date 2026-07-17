@@ -3,14 +3,35 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ementor;
-
+import jiconfont.swing.IconFontSwing;
+import jiconfont.icons.font_awesome.FontAwesome;
+import java.util.List;
+import java.util.ArrayList;
 /**
  *
- * @author Anderson
+ * @author Anderson Cordeiro de Souza, Marcos Vinícius Pimentel Gomes, Dennis Francisco Guimarães de Oliveira Baracho
  */
 public class MenuAlterarTurma extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuAlterarTurma.class.getName());
+    
+    private List<Turma> listaTurmas = new ArrayList<>();
+    private int indiceAtual = -1;
+    
+    // 2. Método auxiliar para preencher a tela na navegação e nas buscas
+    private void exibirTurmaNaTela(Turma turma) {
+        if (turma == null) return;
+        
+        lblMatricula.setText(String.valueOf(turma.getCodigoTurma()));
+        lblPeriodo.setText(turma.getNomeTurma());
+
+        liberarCampos();
+        lblMatricula1.setEditable(false);
+        
+        // --> LIBERA A NAVEGAÇÃO AO EXIBIR O REGISTRO <--
+        jButton6.setEnabled(true);  // Próximo >>
+        jButton10.setEnabled(true); // Anterior <<
+    }
 
     private void bloquearCampos() {
     lblMatricula.setEditable(false);
@@ -35,12 +56,12 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
             ConexoesMySQL conexao = new ConexoesMySQL();
             conexao.alteraTurma(turmaAlterada);
 
-            lblMatricula.setText("");
-            lblPeriodo.setText("");
-
             bloquearCampos();
             lblMatricula1.setEditable(true);
             lblMatricula1.setText("");       
+
+            listaTurmas.clear();
+            indiceAtual = -1;
 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Erro ao preparar dados para alterar: " + e.getMessage(), "Erro de Validação", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -48,15 +69,32 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
     }
     
     public MenuAlterarTurma() {
+        IconFontSwing.register(FontAwesome.getIconFont());
+        
         initComponents();
 
-        this.setResizable(false); 
-
+        this.setResizable(false);
+        
         this.setSize(800, 640); 
-
+        
         this.setLocationRelativeTo(null);
-
+        
         bloquearCampos();   
+        
+        jButton10.setEnabled(false); 
+        jButton6.setEnabled(false); 
+        
+        
+        jButton8.setIcon(IconFontSwing.buildIcon(FontAwesome.FLOPPY_O, 18, new java.awt.Color(255, 255, 255)));
+        
+        jButton9.setIcon(IconFontSwing.buildIcon(FontAwesome.SEARCH, 16, new java.awt.Color(255, 255, 255)));
+        
+        jButton7.setIcon(IconFontSwing.buildIcon(FontAwesome.ARROW_LEFT, 16, new java.awt.Color(255, 255, 255)));
+        
+        jButton10.setIcon(IconFontSwing.buildIcon(FontAwesome.CHEVRON_LEFT, 16, new java.awt.Color(255, 255, 255)));
+        
+        jButton6.setIcon(IconFontSwing.buildIcon(FontAwesome.CHEVRON_RIGHT, 16, new java.awt.Color(255, 255, 255)));
+        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -266,7 +304,23 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-                                           
+        if (listaTurmas.isEmpty()) {
+            ConexoesMySQL conexao = new ConexoesMySQL();
+            listaTurmas = conexao.recuperaTodasTurmas();
+        }
+        
+        if (listaTurmas.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Não há nenhuma turma cadastrada no banco de dados.");
+            return;
+        }
+        
+        if (indiceAtual < listaTurmas.size() - 1) {
+            indiceAtual++;
+            exibirTurmaNaTela(listaTurmas.get(indiceAtual));
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Você já está no último registro da lista!", "Fim da Lista", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
+    }                   
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
@@ -280,28 +334,36 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
         try {
             long codigo = Long.parseLong(codigoStr);
             ConexoesMySQL conexao = new ConexoesMySQL();
-
             Turma turma = conexao.buscaTurmaPorCodigo(codigo);
 
             if (turma != null) {
-                lblMatricula.setText(String.valueOf(turma.getCodigoTurma()));
-                lblPeriodo.setText(turma.getNomeTurma());
-
-                liberarCampos();
-
-                lblMatricula1.setEditable(false);
-
+                exibirTurmaNaTela(turma); // Desenha os dados na tela e destrava as setas de navegação!
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Nenhuma turma encontrada com o código: " + codigo, "Não encontrado", javax.swing.JOptionPane.WARNING_MESSAGE);
             }
-
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "O Código da Turma deve conter apenas números!", "Erro de formatação", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }     
+        }           
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
+        if (listaTurmas.isEmpty()) {
+            ConexoesMySQL conexao = new ConexoesMySQL();
+            listaTurmas = conexao.recuperaTodasTurmas();
+        }
+        
+        if (listaTurmas.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Não há nenhuma turma cadastrada no banco de dados.");
+            return;
+        }
+        
+        if (indiceAtual > 0) {
+            indiceAtual--;
+            exibirTurmaNaTela(listaTurmas.get(indiceAtual));
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Você já está no primeiro registro da lista!", "Início da Lista", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
