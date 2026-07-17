@@ -31,37 +31,55 @@ public class ListaNotas extends javax.swing.JFrame {
         ConexoesMySQL banco = new ConexoesMySQL();
         ArrayList<Aluno> listaAlunos = banco.recuperaTodosAlunos("Nome");
 
+        // Mapa: matrícula -> lista de notas realmente lançadas (na ordem de NumeroNota)
+        java.util.Map<Long, java.util.List<Float>> notasPorMatricula = new java.util.HashMap<>();
+
+        java.sql.Connection conexao = banco.realizaConexaoMySQL();
+        if (conexao != null) {
+            String sql = "SELECT Matricula_Aluno, Valor FROM Nota ORDER BY Matricula_Aluno, NumeroNota";
+            try (java.sql.PreparedStatement ps = conexao.prepareStatement(sql);
+                 java.sql.ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+                    long matricula = rs.getLong("Matricula_Aluno");
+                    float valor = rs.getFloat("Valor");
+                    notasPorMatricula
+                        .computeIfAbsent(matricula, k -> new java.util.ArrayList<>())
+                        .add(valor);
+                }
+            } catch (java.sql.SQLException e) {
+                logger.log(java.util.logging.Level.SEVERE, "Erro ao carregar notas", e);
+            } finally {
+                banco.desconectaMySQL(conexao);
+            }
+        }
+
         javax.swing.table.DefaultTableModel modelo =
             (javax.swing.table.DefaultTableModel) jTable1.getModel();
         modelo.setRowCount(0);
 
         for (Aluno aluno : listaAlunos) {
-            float[] notas = aluno.getNotas();
+            java.util.List<Float> notas = notasPorMatricula.getOrDefault(aluno.getMatricula(), java.util.Collections.emptyList());
+
             float soma = 0;
-            int quantidadeNotas = 0;
-
-            if (notas != null) {
-                for (float nota : notas) {
-                    soma += nota;
-                    quantidadeNotas++;
-                }
+            for (float nota : notas) {
+                soma += nota;
             }
-
-            float media = quantidadeNotas > 0 ? soma / quantidadeNotas : 0;
+            float media = !notas.isEmpty() ? soma / notas.size() : 0;
 
             modelo.addRow(new Object[]{
                 aluno.getNome(),
-                notas != null && notas.length > 0 ? notas[0] : 0,
-                notas != null && notas.length > 1 ? notas[1] : 0,
-                notas != null && notas.length > 2 ? notas[2] : 0,
-                notas != null && notas.length > 3 ? notas[3] : 0,
-                notas != null && notas.length > 4 ? notas[4] : 0,
-                notas != null && notas.length > 5 ? notas[5] : 0,
-                notas != null && notas.length > 6 ? notas[6] : 0,
-                notas != null && notas.length > 7 ? notas[7] : 0,
-                notas != null && notas.length > 8 ? notas[8] : 0,
-                notas != null && notas.length > 9 ? notas[9] : 0,
-                String.format("%.2f", media)
+                notas.size() > 0 ? notas.get(0) : "",
+                notas.size() > 1 ? notas.get(1) : "",
+                notas.size() > 2 ? notas.get(2) : "",
+                notas.size() > 3 ? notas.get(3) : "",
+                notas.size() > 4 ? notas.get(4) : "",
+                notas.size() > 5 ? notas.get(5) : "",
+                notas.size() > 6 ? notas.get(6) : "",
+                notas.size() > 7 ? notas.get(7) : "",
+                notas.size() > 8 ? notas.get(8) : "",
+                notas.size() > 9 ? notas.get(9) : "",
+                !notas.isEmpty() ? String.format("%.2f", media) : ""
             });
         }
     }
