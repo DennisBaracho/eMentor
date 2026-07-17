@@ -158,6 +158,9 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
         
         this.setLocationRelativeTo(null);
         
+        jButton2.setEnabled(false);
+        jButton3.setEnabled(false);
+        
         bloquearCampos();
 
         jButton7.setIcon(IconFontSwing.buildIcon(FontAwesome.FLOPPY_O, 18, new java.awt.Color(255, 255, 255)));
@@ -703,6 +706,9 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
                 
                 liberarCampos();
                 lblNome1.setEditable(false);
+                jButton2.setEnabled(true);
+                jButton3.setEnabled(true);
+                
                 } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Nenhum aluno encontrado com a matrícula: " + matricula, "Não encontrado", javax.swing.JOptionPane.WARNING_MESSAGE);
                 }    

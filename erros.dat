@@ -7,3 +7,9 @@
 [16/07/2026 22:01:30] CÓDIGO: 0 | DESCRIÇÃO: Erro de Conexão: No suitable driver found for jdbc:mysql://localhost:3306/ementor-Plus?useTimezone=true&serverTimezone=UTC
 [16/07/2026 22:16:37] CÓDIGO: 1049 | DESCRIÇÃO: Erro de Conexão: Unknown database 'ementor-plus'
 [16/07/2026 22:16:42] CÓDIGO: 1049 | DESCRIÇÃO: Erro de Conexão: Unknown database 'ementor-plus'
+[16/07/2026 22:37:57] CÓDIGO: 0 | DESCRIÇÃO: Erro de Conexão: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+[16/07/2026 22:38:00] CÓDIGO: 0 | DESCRIÇÃO: Erro de Conexão: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
