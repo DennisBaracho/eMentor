@@ -319,8 +319,7 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
             exibirTurmaNaTela(listaTurmas.get(indiceAtual));
         } else {
             javax.swing.JOptionPane.showMessageDialog(this, "Você já está no último registro da lista!", "Fim da Lista", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        }
-    }                   
+        }              
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
