@@ -451,6 +451,8 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
             ConexoesMySQL banco = new ConexoesMySQL();
             banco.insereProfessor(professor);
 
+            MenuOpçõesProfessor menu = new MenuOpçõesProfessor();
+            menu.setVisible(true);
             this.dispose();
 
         } catch (NumberFormatException e) {

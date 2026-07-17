@@ -197,6 +197,8 @@ public class MenuCadastrarTurma extends javax.swing.JFrame {
             ConexoesMySQL banco = new ConexoesMySQL();
             banco.insereTurma(turma);
 
+            MenuOpçõesTurma menu = new MenuOpçõesTurma();
+            menu.setVisible(true);
             this.dispose();
 
         } catch (NumberFormatException e) {
