@@ -682,7 +682,18 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
                     barra.getBarra().setValue(100); // completa visualmente antes de fechar
 
                     javax.swing.Timer fechamento = new javax.swing.Timer(150, e -> {
+                        // 1. Fecha a barra de progresso
                         barra.dispose();
+                        
+                        // 2. Exibe a mensagem de sucesso (o código aguarda o usuário clicar em OK)
+                        JOptionPane.showMessageDialog(
+                            MenuCadastrarEgresso.this, 
+                            "Egresso cadastrado com sucesso!", 
+                            "Sucesso", 
+                            JOptionPane.INFORMATION_MESSAGE
+                        );
+
+                        // 3. Abre a nova janela e fecha a atual após o usuário fechar o aviso
                         MenuOpçõesEgresso menu = new MenuOpçõesEgresso();
                         menu.setVisible(true);
                         MenuCadastrarEgresso.this.dispose();
