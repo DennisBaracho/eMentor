@@ -100,14 +100,12 @@ public class ConexoesMySQL {
 
         String sqlPessoa = "INSERT INTO Pessoa (CPF, Nome, DataNascimento, Telefone, Rua, Bairro, Cidade, Estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         String sqlAluno = "INSERT INTO Aluno (Matricula, Periodo, CPF_Pessoa, Codigo_Turma) VALUES (?, ?, ?, ?)";
-        String sqlNota = "INSERT INTO Nota (Matricula_Aluno, NumeroNota, Valor) VALUES (?, ?, ?)";
 
         try {
             conexao.setAutoCommit(false);
 
             try (PreparedStatement psPessoa = conexao.prepareStatement(sqlPessoa);
-                PreparedStatement psAluno = conexao.prepareStatement(sqlAluno);
-                PreparedStatement psNota = conexao.prepareStatement(sqlNota)) {
+                PreparedStatement psAluno = conexao.prepareStatement(sqlAluno)) {
 
                 psPessoa.setLong(1, aluno.getCPF());
                 psPessoa.setString(2, aluno.getNome());
@@ -125,14 +123,8 @@ public class ConexoesMySQL {
                 psAluno.setLong(4, aluno.getTurma());
                 psAluno.executeUpdate();
 
-                float[] notas = aluno.getNotas();
-                for (int i = 0; i < notas.length; i++) {
-                    psNota.setLong(1, aluno.getMatricula());
-                    psNota.setInt(2, i + 1);        // Nota 1 a Nota 10
-                    psNota.setFloat(3, notas[i]);
-                    psNota.addBatch();
-                }
-                psNota.executeBatch();
+                // Nenhuma linha em Nota é criada aqui. Elas só existem quando o
+                // professor lança notas de fato, via atualizaNotas().
 
                 conexao.commit();
                 JOptionPane.showMessageDialog(null, "Aluno cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
@@ -219,8 +211,8 @@ public class ConexoesMySQL {
                 aluno.setMatricula(rs.getLong("Matricula"));
                 aluno.setPeriodo(rs.getInt("Periodo"));
                 aluno.setTurma(rs.getLong("Codigo_Turma"));
-                
-                listaAlunos.add(aluno);       
+                aluno.setNotas(buscaNotasPorMatricula(conexao, aluno.getMatricula()));
+                listaAlunos.add(aluno);
             }
         } catch (SQLException e) {
             registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao recuperar Alunos: " + e.getMessage());
@@ -252,6 +244,8 @@ public class ConexoesMySQL {
                     aluno.setMatricula(rs.getLong("Matricula"));
                     aluno.setPeriodo(rs.getInt("Periodo"));
                     aluno.setTurma(rs.getLong("Codigo_Turma"));
+                    aluno.setTurma(rs.getLong("Codigo_Turma"));
+                    aluno.setNotas(buscaNotasPorMatricula(conexao, aluno.getMatricula()));
                     return aluno;
                 }
             }
@@ -266,18 +260,28 @@ public class ConexoesMySQL {
     public void atualizaNotas(long matricula, float[] notas) {
         Connection conexao = realizaConexaoMySQL();
         if (conexao == null) return;
-        String sqlNota = "UPDATE Nota SET Valor = ? WHERE Matricula_Aluno = ? AND NumeroNota = ?";
+
+        String sqlDelete = "DELETE FROM Nota WHERE Matricula_Aluno = ? AND NumeroNota > ?";
+        String sqlUpsert = "INSERT INTO Nota (Matricula_Aluno, NumeroNota, Valor) VALUES (?, ?, ?) "
+                          + "ON DUPLICATE KEY UPDATE Valor = VALUES(Valor)";
 
         try {
             conexao.setAutoCommit(false);
-            try (PreparedStatement psNota = conexao.prepareStatement(sqlNota)) {
+            try (PreparedStatement psDelete = conexao.prepareStatement(sqlDelete);
+                 PreparedStatement psUpsert = conexao.prepareStatement(sqlUpsert)) {
+
+                psDelete.setLong(1, matricula);
+                psDelete.setInt(2, notas.length);
+                psDelete.executeUpdate();
+
                 for (int i = 0; i < notas.length; i++) {
-                    psNota.setFloat(1, notas[i]);
-                    psNota.setLong(2, matricula);
-                    psNota.setInt(3, i + 1);
-                    psNota.addBatch();
+                    psUpsert.setLong(1, matricula);
+                    psUpsert.setInt(2, i + 1);
+                    psUpsert.setFloat(3, notas[i]);
+                    psUpsert.addBatch();
                 }
-                psNota.executeBatch();
+                psUpsert.executeBatch();
+
                 conexao.commit();
                 JOptionPane.showMessageDialog(null, "Notas lançadas com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -289,6 +293,24 @@ public class ConexoesMySQL {
             desconectaMySQL(conexao);
         }
     }
+    
+    private float[] buscaNotasPorMatricula(Connection conexao, long matricula) throws SQLException {
+        String sql = "SELECT Valor FROM Nota WHERE Matricula_Aluno = ? ORDER BY NumeroNota";
+        ArrayList<Float> valores = new ArrayList<>();
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setLong(1, matricula);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    valores.add(rs.getFloat("Valor"));
+                }
+            }
+        }
+        float[] notas = new float[valores.size()];
+        for (int i = 0; i < notas.length; i++) {
+            notas[i] = valores.get(i);
+        }
+        return notas; // tamanho = quantidade de notas realmente lançadas
+}
     // ========================================================================
     // EGRESSO - GRAVAR E ALTERAR
 

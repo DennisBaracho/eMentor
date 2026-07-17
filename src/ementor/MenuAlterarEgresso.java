@@ -42,19 +42,16 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
         lblCursoAtual.setText(egresso.getCursoAtual());
 
         float[] notas = egresso.getNotas();
-        if (notas != null && notas.length >= 10) {
-            jTextField4.setText(String.valueOf(notas[0]));
-            jTextField14.setText(String.valueOf(notas[1]));
-            jTextField6.setText(String.valueOf(notas[2]));
-            jTextField13.setText(String.valueOf(notas[3]));
-            jTextField7.setText(String.valueOf(notas[4]));
-            jTextField12.setText(String.valueOf(notas[5]));
-            jTextField8.setText(String.valueOf(notas[6]));
-            jTextField11.setText(String.valueOf(notas[7]));
-            jTextField9.setText(String.valueOf(notas[8]));
-            jTextField10.setText(String.valueOf(notas[9]));
-        }
+        javax.swing.JTextField[] camposNotas = {jTextField4, jTextField14, jTextField6, jTextField13, jTextField7, jTextField12, jTextField8, jTextField11, jTextField9, jTextField10};
 
+        for (int i = 0; i < 10; i++) {
+            if (notas != null && i < notas.length) {
+                camposNotas[i].setText(String.valueOf(notas[i]));
+            } else {
+                camposNotas[i].setText("");
+            }
+        }
+        
         liberarCampos();
         lblProfissaoAtual1.setEditable(false); 
         lblCPF.setEditable(false);
