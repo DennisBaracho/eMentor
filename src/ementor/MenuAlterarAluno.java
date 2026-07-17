@@ -55,9 +55,9 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
     
         float[] notas = aluno.getNotas();
         int qtd = (notas != null) ? notas.length : 0;
-        if (qtd > 10) qtd = 10; // Trava de segurança limite de tela
+        if (qtd > 10) qtd = 10; 
         
-        configurarCamposNotas(qtd); // Faz a mágica de ocultar os campos desnecessários
+        configurarCamposNotas(qtd);
         
         javax.swing.JTextField[] campos = {jTextField4, jTextField14, jTextField6, jTextField13, jTextField7, jTextField12, jTextField8, jTextField11, jTextField9, jTextField10};
         for (int i = 0; i < qtd; i++) {
@@ -66,6 +66,8 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
         
         liberarCampos();
         lblNome1.setEditable(false);
+        jButton2.setEnabled(true); 
+        jButton3.setEnabled(true); 
     }
     
         private void salvarTodasAlteracoes() {
@@ -106,6 +108,7 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
             ConexoesMySQL conexao = new ConexoesMySQL();
             conexao.alteraAluno(alunoAlterado);
             bloquearCampos();
+           
             lblNome1.setEditable(true);
             listaAlunos.clear();
             indiceAtual = -1;
@@ -131,8 +134,7 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
         for (int i = 0; i < 10; i++) {
             campos[i].setEditable(false);
         }
-        
-        //botão de salvar bloqueado alterar para o novo
+ 
         jButton7.setEnabled(false);
     }
 
@@ -170,7 +172,8 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
         jButton3.setEnabled(false);
         
         bloquearCampos();
-
+        configurarCamposNotas(0);
+        
         jButton7.setIcon(IconFontSwing.buildIcon(FontAwesome.FLOPPY_O, 18, new java.awt.Color(255, 255, 255)));
         
         jButton1.setIcon(IconFontSwing.buildIcon(FontAwesome.SEARCH, 16, new java.awt.Color(255, 255, 255)));
@@ -672,57 +675,26 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String matriculaStr = lblNome1.getText().trim();
-    
+
         if (matriculaStr.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "Por favor, digite uma matrícula para buscar.");
             return;
         }
-    
+
         try {
             long matricula = Long.parseLong(matriculaStr);
             ConexoesMySQL conexao = new ConexoesMySQL();
-            
+
             Aluno aluno = conexao.buscaAlunoPorMatricula(matricula);
-            
+
             if (aluno != null) {
-                lblNome.setText(aluno.getNome());
-                lblDataNascimento.setText(aluno.getDataNascimento());
-                lblCPF.setText(String.valueOf(aluno.getCPF()));
-                lblTelefone.setText(aluno.getTelefone());
-                lblRua.setText(aluno.getRua());
-                lblBairro.setText(aluno.getBairro());
-                lblCidade.setText(aluno.getCidade());
-                lblEstado.setText(aluno.getEstado());
-            
-                lblMatricula.setText(String.valueOf(aluno.getMatricula()));
-                lblPeriodo.setText(String.valueOf(aluno.getPeriodo()));
-                lblTurma.setText(String.valueOf(aluno.getTurma()));
-            
-                float[] notas = aluno.getNotas();
-                if (notas != null && notas.length >= 10) {
-                    jTextField4.setText(String.valueOf(notas[0]));
-                    jTextField14.setText(String.valueOf(notas[1]));
-                    jTextField6.setText(String.valueOf(notas[2]));
-                    jTextField13.setText(String.valueOf(notas[3]));
-                    jTextField7.setText(String.valueOf(notas[4]));
-                    jTextField12.setText(String.valueOf(notas[5]));
-                    jTextField8.setText(String.valueOf(notas[6]));
-                    jTextField11.setText(String.valueOf(notas[7]));
-                    jTextField9.setText(String.valueOf(notas[8]));
-                    jTextField10.setText(String.valueOf(notas[9]));
-                }
-                
-                liberarCampos();
-                lblNome1.setEditable(false);
-                jButton2.setEnabled(true);
-                jButton3.setEnabled(true);
-                
-                } else {
+                exibirAlunoNaTela(aluno); 
+            } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Nenhum aluno encontrado com a matrícula: " + matricula, "Não encontrado", javax.swing.JOptionPane.WARNING_MESSAGE);
-                }    
+            }
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "A matrícula deve conter apenas números!", "Erro de formatação", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }       
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -732,15 +704,14 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (listaAlunos.isEmpty()) {
             ConexoesMySQL conexao = new ConexoesMySQL();
-            // Pega todos os alunos ordenados por Nome
             listaAlunos = conexao.recuperaTodosAlunos("p.Nome");
         }
-        
+
         if (listaAlunos.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "Não há nenhum aluno cadastrado no banco de dados.");
             return;
         }
-        
+
         if (indiceAtual < listaAlunos.size() - 1) {
             indiceAtual++;
             exibirAlunoNaTela(listaAlunos.get(indiceAtual));
