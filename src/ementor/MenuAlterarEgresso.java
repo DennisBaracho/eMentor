@@ -731,22 +731,8 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
     }//GEN-LAST:event_lblNomeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (listaEgressos.isEmpty()) {
-            ConexoesMySQL conexao = new ConexoesMySQL();
-            listaEgressos = conexao.recuperaTodosEgressos();
-        }
+
         
-        if (listaEgressos.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Não há nenhum egresso cadastrado no banco de dados.");
-            return;
-        }
-        
-        if (indiceAtual < listaEgressos.size() - 1) {
-            indiceAtual++;
-            exibirEgressoNaTela(listaEgressos.get(indiceAtual));
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Você já está no último registro da lista!", "Fim da Lista", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        }        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void lblCursoAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblCursoAtualActionPerformed
@@ -830,6 +816,22 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        if (listaEgressos.isEmpty()) {
+            ConexoesMySQL conexao = new ConexoesMySQL();
+            listaEgressos = conexao.recuperaTodosEgressos();
+        }
+        
+        if (listaEgressos.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Não há nenhum egresso cadastrado no banco de dados.");
+            return;
+        }
+        
+        if (indiceAtual < listaEgressos.size() - 1) {
+            indiceAtual++;
+            exibirEgressoNaTela(listaEgressos.get(indiceAtual));
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Você já está no último registro da lista!", "Fim da Lista", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
