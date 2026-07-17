@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ementor;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+import javax.swing.Timer;
 import jiconfont.swing.IconFontSwing;
 import jiconfont.icons.font_awesome.FontAwesome;
 import java.util.List;
@@ -18,7 +21,6 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
     private List<Turma> listaTurmas = new ArrayList<>();
     private int indiceAtual = -1;
     
-    // 2. Método auxiliar para preencher a tela na navegação e nas buscas
     private void exibirTurmaNaTela(Turma turma) {
         if (turma == null) return;
         
@@ -28,9 +30,8 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
         liberarCampos();
         lblMatricula1.setEditable(false);
         
-        // --> LIBERA A NAVEGAÇÃO AO EXIBIR O REGISTRO <--
-        jButton6.setEnabled(true);  // Próximo >>
-        jButton10.setEnabled(true); // Anterior <<
+        jButton6.setEnabled(true); 
+        jButton10.setEnabled(true); 
     }
 
     private void bloquearCampos() {
@@ -53,18 +54,76 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
             turmaAlterada.setCodigoTurma(Long.parseLong(lblMatricula.getText()));
             turmaAlterada.setNomeTurma(lblPeriodo.getText());
 
-            ConexoesMySQL conexao = new ConexoesMySQL();
-            conexao.alteraTurma(turmaAlterada);
+            BarraProgresso barra = new BarraProgresso();
+            barra.setVisible(true);
 
-            bloquearCampos();
-            lblMatricula1.setEditable(true);
-            lblMatricula1.setText("");       
+            Timer timer = new Timer(30, null);
+            timer.addActionListener(e -> {
+                int valorAtual = barra.getBarra().getValue();
+                if (valorAtual < 90) {
+                    barra.getBarra().setValue(valorAtual + 1);
+                }
+            });
+            timer.start();
 
-            listaTurmas.clear();
-            indiceAtual = -1;
+            SwingWorker<Boolean, Void> worker = new SwingWorker<>() {
+                @Override
+                protected Boolean doInBackground() {
+                    try {
+                        ConexoesMySQL conexao = new ConexoesMySQL();
+                        conexao.alteraTurma(turmaAlterada);
+                        return true;
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        return false;
+                    }
+                }
+
+                @Override
+                protected void done() {
+                    timer.stop();
+                    barra.getBarra().setValue(100);
+
+                    Timer fechamento = new Timer(150, e -> {
+                        barra.dispose(); 
+                        
+                        try {
+                            boolean sucesso = get();
+                            
+                            if (sucesso) {
+                                JOptionPane.showMessageDialog(
+                                    MenuAlterarTurma.this, 
+                                    "Dados da turma alterados com sucesso!", 
+                                    "Sucesso", 
+                                    JOptionPane.INFORMATION_MESSAGE
+                                );
+                                
+                                bloquearCampos();
+                                lblMatricula1.setEditable(true);
+                                lblMatricula1.setText("");       
+                                listaTurmas.clear();
+                                indiceAtual = -1;
+
+                            } else {
+                                JOptionPane.showMessageDialog(
+                                    MenuAlterarTurma.this, 
+                                    "Ocorreu um erro ao tentar atualizar os dados da turma no banco.", 
+                                    "Erro no Banco de Dados", 
+                                    JOptionPane.ERROR_MESSAGE
+                                );
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    });
+                    fechamento.setRepeats(false);
+                    fechamento.start();
+                }
+            };
+            worker.execute();
 
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao preparar dados para alterar: " + e.getMessage(), "Erro de Validação", javax.swing.JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao preparar dados para alterar: " + e.getMessage(), "Erro de Validação", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -336,7 +395,7 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
             Turma turma = conexao.buscaTurmaPorCodigo(codigo);
 
             if (turma != null) {
-                exibirTurmaNaTela(turma); // Desenha os dados na tela e destrava as setas de navegação!
+                exibirTurmaNaTela(turma);
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Nenhuma turma encontrada com o código: " + codigo, "Não encontrado", javax.swing.JOptionPane.WARNING_MESSAGE);
             }
