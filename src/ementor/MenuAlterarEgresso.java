@@ -3,10 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ementor;
-
+import jiconfont.swing.IconFontSwing;
+import jiconfont.icons.font_awesome.FontAwesome;
+import java.util.List;
+import java.util.ArrayList;
 /**
  *
- * @author Anderson
+ * @author Anderson Cordeiro de Souza, Marcos Vinícius Pimentel Gomes, Dennis Francisco Guimarães de Oliveira Baracho
  */
 public class MenuAlterarEgresso extends javax.swing.JFrame {
     
@@ -15,7 +18,50 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
     /**
      * Creates new form Cadastros
      */
+    private List<Egresso> listaEgressos = new ArrayList<>();
+    private int indiceAtual = -1;
     
+    private void exibirEgressoNaTela(Egresso egresso) {
+        if (egresso == null) return;
+        
+        lblNome.setText(egresso.getNome());
+        lblDataNascimento.setText(egresso.getDataNascimento());
+        lblCPF.setText(String.valueOf(egresso.getCPF()));
+        lblTelefone.setText(egresso.getTelefone());
+        lblRua.setText(egresso.getRua());
+        lblBairro.setText(egresso.getBairro());
+        lblCidade.setText(egresso.getCidade());
+        lblEstado.setText(egresso.getEstado());
+        lblProfissaoAtual.setText(egresso.getProfissaoAtual());
+        jComboBox1.setSelectedItem(egresso.getFaixaSalarial());
+
+        lblMatricula.setText(String.valueOf(egresso.getMatricula()));
+        lblPeriodo.setText(String.valueOf(egresso.getPeriodo()));
+        lblTurma.setText(String.valueOf(egresso.getTurma()));
+        lblCursoAnterior.setText(egresso.getCursoAnterior());
+        lblCursoAtual.setText(egresso.getCursoAtual());
+
+        float[] notas = egresso.getNotas();
+        if (notas != null && notas.length >= 10) {
+            jTextField4.setText(String.valueOf(notas[0]));
+            jTextField14.setText(String.valueOf(notas[1]));
+            jTextField6.setText(String.valueOf(notas[2]));
+            jTextField13.setText(String.valueOf(notas[3]));
+            jTextField7.setText(String.valueOf(notas[4]));
+            jTextField12.setText(String.valueOf(notas[5]));
+            jTextField8.setText(String.valueOf(notas[6]));
+            jTextField11.setText(String.valueOf(notas[7]));
+            jTextField9.setText(String.valueOf(notas[8]));
+            jTextField10.setText(String.valueOf(notas[9]));
+        }
+
+        liberarCampos();
+        lblProfissaoAtual1.setEditable(false); 
+        lblCPF.setEditable(false);
+        
+        jButton1.setEnabled(true);
+        jButton6.setEnabled(true);
+    }
     private void bloquearCampos() {
         lblNome.setEditable(false);
         lblDataNascimento.setEditable(false);
@@ -82,7 +128,7 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
         try {
             if (jComboBox1.getSelectedIndex() == 0) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecione uma Faixa Salarial válida!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
-                    return; // Para o código aqui e não deixa salvar no banco
+                    return;
             }
             
             Egresso egressoAlterado = new Egresso();
@@ -121,7 +167,9 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
             conexao.alteraEgresso(egressoAlterado);
         
             bloquearCampos();
-            lblProfissaoAtual1.setEditable(true); // Esse é o seu campo de digitação da busca
+            lblProfissaoAtual1.setEditable(true);
+            listaEgressos.clear();
+            indiceAtual = -1;
         
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Erro ao preparar dados para alterar: " + e.getMessage(), "Erro de Validação", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -129,15 +177,31 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
     }
 
     public MenuAlterarEgresso() {
-    initComponents();
-    
-    this.setResizable(false); 
-    
-    this.setSize(800, 640); 
-    
-    this.setLocationRelativeTo(null);
-    
-    bloquearCampos();
+    IconFontSwing.register(FontAwesome.getIconFont());
+        
+        initComponents();
+        
+        this.setResizable(false); 
+        
+        this.setSize(800, 640); 
+        
+        this.setLocationRelativeTo(null);
+        
+        bloquearCampos();
+        
+        jButton6.setEnabled(false);
+        jButton1.setEnabled(false); 
+       
+        jButton5.setIcon(IconFontSwing.buildIcon(FontAwesome.FLOPPY_O, 18, new java.awt.Color(255, 255, 255)));
+        
+        jButton2.setIcon(IconFontSwing.buildIcon(FontAwesome.SEARCH, 16, new java.awt.Color(255, 255, 255)));
+        
+        jButton3.setIcon(IconFontSwing.buildIcon(FontAwesome.ARROW_LEFT, 16, new java.awt.Color(255, 255, 255)));
+        
+        jButton6.setIcon(IconFontSwing.buildIcon(FontAwesome.CHEVRON_LEFT, 16, new java.awt.Color(255, 255, 255)));
+        
+        jButton1.setIcon(IconFontSwing.buildIcon(FontAwesome.CHEVRON_RIGHT, 16, new java.awt.Color(255, 255, 255)));
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
     }
 
     /**
@@ -718,49 +782,13 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
         try {
             long cpf = Long.parseLong(cpfStr);
             ConexoesMySQL conexao = new ConexoesMySQL();
-
             Egresso egresso = conexao.buscaEgressoPorCPF(cpf);
 
             if (egresso != null) {
-                lblNome.setText(egresso.getNome());
-                lblDataNascimento.setText(egresso.getDataNascimento());
-                lblCPF.setText(String.valueOf(egresso.getCPF()));
-                lblTelefone.setText(egresso.getTelefone());
-                lblRua.setText(egresso.getRua());
-                lblBairro.setText(egresso.getBairro());
-                lblCidade.setText(egresso.getCidade());
-                lblEstado.setText(egresso.getEstado());
-                lblProfissaoAtual.setText(egresso.getProfissaoAtual());
-                jComboBox1.setSelectedItem(egresso.getFaixaSalarial());
-
-                lblMatricula.setText(String.valueOf(egresso.getMatricula()));
-                lblPeriodo.setText(String.valueOf(egresso.getPeriodo()));
-                lblTurma.setText(String.valueOf(egresso.getTurma()));
-                lblCursoAnterior.setText(egresso.getCursoAnterior());
-                lblCursoAtual.setText(egresso.getCursoAtual());
-
-                float[] notas = egresso.getNotas();
-                if (notas != null && notas.length >= 10) {
-                    jTextField4.setText(String.valueOf(notas[0]));
-                    jTextField14.setText(String.valueOf(notas[1]));
-                    jTextField6.setText(String.valueOf(notas[2]));
-                    jTextField13.setText(String.valueOf(notas[3]));
-                    jTextField7.setText(String.valueOf(notas[4]));
-                    jTextField12.setText(String.valueOf(notas[5]));
-                    jTextField8.setText(String.valueOf(notas[6]));
-                    jTextField11.setText(String.valueOf(notas[7]));
-                    jTextField9.setText(String.valueOf(notas[8]));
-                    jTextField10.setText(String.valueOf(notas[9]));
-                }
-
-                liberarCampos();
-                lblProfissaoAtual1.setEditable(false); 
-                lblCPF.setEditable(false);
-
+                exibirEgressoNaTela(egresso); // Desenha os dados na tela e destrava as setas!
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Nenhum egresso encontrado com o CPF: " + cpf, "Não encontrado", javax.swing.JOptionPane.WARNING_MESSAGE);
             }
-
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "O CPF deve conter apenas números (sem pontos ou traços)!", "Erro de formatação", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
@@ -768,10 +796,42 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        if (listaEgressos.isEmpty()) {
+            ConexoesMySQL conexao = new ConexoesMySQL();
+            listaEgressos = conexao.recuperaTodosEgressos();
+        }
+        
+        if (listaEgressos.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Não há nenhum egresso cadastrado no banco de dados.");
+            return;
+        }
+        
+        if (indiceAtual > 0) {
+            indiceAtual--;
+            exibirEgressoNaTela(listaEgressos.get(indiceAtual));
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Você já está no primeiro registro da lista!", "Início da Lista", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        if (listaEgressos.isEmpty()) {
+            ConexoesMySQL conexao = new ConexoesMySQL();
+            listaEgressos = conexao.recuperaTodosEgressos();
+        }
+        
+        if (listaEgressos.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Não há nenhum egresso cadastrado no banco de dados.");
+            return;
+        }
+        
+        if (indiceAtual < listaEgressos.size() - 1) {
+            indiceAtual++;
+            exibirEgressoNaTela(listaEgressos.get(indiceAtual));
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Você já está no último registro da lista!", "Fim da Lista", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
