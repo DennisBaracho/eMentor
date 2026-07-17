@@ -11,18 +11,44 @@ package ementor;
 public class LançarNotasAluno extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Cadastros.class.getName());
-
+    private Aluno alunoAtual;
     /**
      * Creates new form Cadastros
      */
     public LançarNotasAluno() {
         initComponents();
-        
-        this.setResizable(false); 
-    
-        this.setSize(800, 640); 
-    
+        this.setResizable(false);
+        this.setSize(800, 640);
         this.setLocationRelativeTo(null);
+        bloquearCampos();
+    }
+    
+    private void bloquearCampos() {
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
+        jTextField3.setEditable(false);
+        jTextField4.setEditable(false);
+        jTextField5.setEditable(false);
+        jTextField6.setEditable(false);
+        jTextField7.setEditable(false);
+        jTextField8.setEditable(false);
+        jTextField9.setEditable(false);
+        jTextField10.setEditable(false);
+        jButton11.setEnabled(false);
+    }
+
+    private void liberarCampos() {
+        jTextField1.setEditable(true);
+        jTextField2.setEditable(true);
+        jTextField3.setEditable(true);
+        jTextField4.setEditable(true);
+        jTextField5.setEditable(true);
+        jTextField6.setEditable(true);
+        jTextField7.setEditable(true);
+        jTextField8.setEditable(true);
+        jTextField9.setEditable(true);
+        jTextField10.setEditable(true);
+        jButton11.setEnabled(true);
     }
 
     /**
@@ -39,7 +65,6 @@ public class LançarNotasAluno extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         lblNome1 = new javax.swing.JTextField();
@@ -108,13 +133,6 @@ public class LançarNotasAluno extends javax.swing.JFrame {
         jButton8.setBorderPainted(false);
         jButton8.addActionListener(this::jButton8ActionPerformed);
 
-        jButton10.setBackground(new java.awt.Color(45, 60, 135));
-        jButton10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jButton10.setForeground(new java.awt.Color(255, 255, 255));
-        jButton10.setText("Alterar");
-        jButton10.setBorderPainted(false);
-        jButton10.addActionListener(this::jButton10ActionPerformed);
-
         jButton11.setBackground(new java.awt.Color(45, 60, 135));
         jButton11.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         jButton11.setForeground(new java.awt.Color(255, 255, 255));
@@ -141,6 +159,8 @@ public class LançarNotasAluno extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Nota 1");
+
+        jTextField1.addActionListener(this::jTextField1ActionPerformed);
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
@@ -224,9 +244,7 @@ public class LançarNotasAluno extends javax.swing.JFrame {
                                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(124, 124, 124)
                                 .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -316,10 +334,9 @@ public class LançarNotasAluno extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addGap(4, 4, 4)
                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 290, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -347,12 +364,47 @@ public class LançarNotasAluno extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
-
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
+
+        if (alunoAtual == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Busque um aluno pela matrícula antes de salvar.", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        javax.swing.JTextField[] camposNotas = {
+            jTextField1, jTextField10, jTextField2, jTextField9, jTextField3,
+            jTextField8, jTextField4, jTextField7, jTextField5, jTextField6
+        };
+
+        for (int i = 0; i < camposNotas.length; i++) {
+            if (camposNotas[i].getText().isBlank()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Preencha a Nota " + (i + 1) + ".", "Campo obrigatório", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
+
+        try {
+            float[] notas = new float[10];
+            for (int i = 0; i < camposNotas.length; i++) {
+                float nota = Float.parseFloat(camposNotas[i].getText());
+                if (nota < 0 || nota > 10) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "A Nota " + (i + 1) + " deve estar entre 0 e 10.", "Valor inválido", javax.swing.JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                notas[i] = nota;
+            }
+
+            ConexoesMySQL conexao = new ConexoesMySQL();
+            conexao.atualizaNotas(alunoAtual.getMatricula(), notas);
+
+            bloquearCampos();
+            lblNome1.setEditable(true);
+            lblNome1.setText("");
+            alunoAtual = null;
+
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "As notas devem conter apenas números válidos.", "Erro de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -370,36 +422,28 @@ public class LançarNotasAluno extends javax.swing.JFrame {
             Aluno aluno = conexao.buscaAlunoPorMatricula(matricula);
 
             if (aluno != null) {
-                lblNome.setText(aluno.getNome());
-                lblDataNascimento.setText(aluno.getDataNascimento());
-                lblCPF.setText(String.valueOf(aluno.getCPF()));
-                lblTelefone.setText(aluno.getTelefone());
-                lblRua.setText(aluno.getRua());
-                lblBairro.setText(aluno.getBairro());
-                lblCidade.setText(aluno.getCidade());
-                lblEstado.setText(aluno.getEstado());
-
-                lblMatricula.setText(String.valueOf(aluno.getMatricula()));
-                lblPeriodo.setText(String.valueOf(aluno.getPeriodo()));
-                lblTurma.setText(String.valueOf(aluno.getTurma()));
+                alunoAtual = aluno;
 
                 float[] notas = aluno.getNotas();
                 if (notas != null && notas.length >= 10) {
-                    jTextField4.setText(String.valueOf(notas[0]));
-                    jTextField14.setText(String.valueOf(notas[1]));
-                    jTextField6.setText(String.valueOf(notas[2]));
-                    jTextField13.setText(String.valueOf(notas[3]));
-                    jTextField7.setText(String.valueOf(notas[4]));
-                    jTextField12.setText(String.valueOf(notas[5]));
-                    jTextField8.setText(String.valueOf(notas[6]));
-                    jTextField11.setText(String.valueOf(notas[7]));
-                    jTextField9.setText(String.valueOf(notas[8]));
-                    jTextField10.setText(String.valueOf(notas[9]));
+                    jTextField1.setText(String.valueOf(notas[0]));  // Nota 1
+                    jTextField10.setText(String.valueOf(notas[1])); // Nota 2
+                    jTextField2.setText(String.valueOf(notas[2]));  // Nota 3
+                    jTextField9.setText(String.valueOf(notas[3]));  // Nota 4
+                    jTextField3.setText(String.valueOf(notas[4]));  // Nota 5
+                    jTextField8.setText(String.valueOf(notas[5]));  // Nota 6
+                    jTextField4.setText(String.valueOf(notas[6]));  // Nota 7
+                    jTextField7.setText(String.valueOf(notas[7]));  // Nota 8
+                    jTextField5.setText(String.valueOf(notas[8]));  // Nota 9
+                    jTextField6.setText(String.valueOf(notas[9]));  // Nota 10
                 }
+
+                javax.swing.JOptionPane.showMessageDialog(this, "Aluno encontrado: " + aluno.getNome());
 
                 liberarCampos();
                 lblNome1.setEditable(false);
             } else {
+                alunoAtual = null;
                 javax.swing.JOptionPane.showMessageDialog(this, "Nenhum aluno encontrado com a matrícula: " + matricula, "Não encontrado", javax.swing.JOptionPane.WARNING_MESSAGE);
             }
         } catch (NumberFormatException e) {
@@ -422,6 +466,10 @@ public class LançarNotasAluno extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -450,7 +498,6 @@ public class LançarNotasAluno extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

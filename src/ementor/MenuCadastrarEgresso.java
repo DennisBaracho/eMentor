@@ -609,6 +609,11 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
         }
 
         try {
+            if (jComboBox1.getSelectedIndex() == 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecione uma Faixa Salarial válida!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+                    return; // Para o código aqui e não deixa salvar no banco
+            }
+            
             float[] notas = new float[10];
             for (int i = 0; i < camposNotas.length; i++) {
                 float nota = Float.parseFloat(camposNotas[i].getText());

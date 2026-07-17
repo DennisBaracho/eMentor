@@ -26,7 +26,7 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
         lblCidade.setEditable(false);
         lblEstado.setEditable(false);
         lblProfissaoAtual.setEditable(false);
-        lblFaixaSalarial.setEditable(false);
+        jComboBox1.setEnabled(false);
     
         lblMatricula.setEditable(false);
         lblPeriodo.setEditable(false);
@@ -57,7 +57,7 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
         lblCidade.setEditable(true);
         lblEstado.setEditable(true);
         lblProfissaoAtual.setEditable(true);
-        lblFaixaSalarial.setEditable(true);
+        jComboBox1.setEnabled(true);
     
         lblPeriodo.setEditable(true);
         lblTurma.setEditable(true);
@@ -80,6 +80,11 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
 
     private void salvarTodasAlteracoes() {
         try {
+            if (jComboBox1.getSelectedIndex() == 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecione uma Faixa Salarial válida!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+                    return; // Para o código aqui e não deixa salvar no banco
+            }
+            
             Egresso egressoAlterado = new Egresso();
         
             egressoAlterado.setNome(lblNome.getText());
@@ -91,7 +96,7 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
             egressoAlterado.setCidade(lblCidade.getText());
             egressoAlterado.setEstado(lblEstado.getText());
             egressoAlterado.setProfissaoAtual(lblProfissaoAtual.getText());
-            egressoAlterado.setFaixaSalarial(lblFaixaSalarial.getText());
+            egressoAlterado.setFaixaSalarial(jComboBox1.getSelectedItem().toString());
             
             egressoAlterado.setMatricula(Long.parseLong(lblMatricula.getText()));
             egressoAlterado.setPeriodo(Integer.parseInt(lblPeriodo.getText()));
@@ -661,63 +666,8 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
     }//GEN-LAST:event_lblNomeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        String cpfStr = lblProfissaoAtual1.getText().trim();
-    
-        if (cpfStr.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, digite um CPF para buscar.");
-            return;
-        }
 
-        try {
-            long cpf = Long.parseLong(cpfStr);
-            ConexoesMySQL conexao = new ConexoesMySQL();
-
-            Egresso egresso = conexao.buscaEgressoPorCPF(cpf);
-
-            if (egresso != null) {
-                lblNome.setText(egresso.getNome());
-                lblDataNascimento.setText(egresso.getDataNascimento());
-                lblCPF.setText(String.valueOf(egresso.getCPF()));
-                lblTelefone.setText(egresso.getTelefone());
-                lblRua.setText(egresso.getRua());
-                lblBairro.setText(egresso.getBairro());
-                lblCidade.setText(egresso.getCidade());
-                lblEstado.setText(egresso.getEstado());
-                lblProfissaoAtual.setText(egresso.getProfissaoAtual());
-                lblFaixaSalarial.setText(egresso.getFaixaSalarial());
-
-                lblMatricula.setText(String.valueOf(egresso.getMatricula()));
-                lblPeriodo.setText(String.valueOf(egresso.getPeriodo()));
-                lblTurma.setText(String.valueOf(egresso.getTurma()));
-                lblCursoAnterior.setText(egresso.getCursoAnterior());
-                lblCursoAtual.setText(egresso.getCursoAtual());
-
-                float[] notas = egresso.getNotas();
-                if (notas != null && notas.length >= 10) {
-                    jTextField4.setText(String.valueOf(notas[0]));
-                    jTextField14.setText(String.valueOf(notas[1]));
-                    jTextField6.setText(String.valueOf(notas[2]));
-                    jTextField13.setText(String.valueOf(notas[3]));
-                    jTextField7.setText(String.valueOf(notas[4]));
-                    jTextField12.setText(String.valueOf(notas[5]));
-                    jTextField8.setText(String.valueOf(notas[6]));
-                    jTextField11.setText(String.valueOf(notas[7]));
-                    jTextField9.setText(String.valueOf(notas[8]));
-                    jTextField10.setText(String.valueOf(notas[9]));
-                }
-
-                liberarCampos();
-                lblProfissaoAtual1.setEditable(false); 
-                lblCPF.setEditable(false);
-
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Nenhum egresso encontrado com o CPF: " + cpf, "Não encontrado", javax.swing.JOptionPane.WARNING_MESSAGE);
-            }
-
-        } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "O CPF deve conter apenas números (sem pontos ou traços)!", "Erro de formatação", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void lblCursoAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblCursoAtualActionPerformed
@@ -751,12 +701,68 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+
         salvarTodasAlteracoes();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        String cpfStr = lblProfissaoAtual1.getText().trim();
+    
+        if (cpfStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, digite um CPF para buscar.");
+            return;
+        }
+
+        try {
+            long cpf = Long.parseLong(cpfStr);
+            ConexoesMySQL conexao = new ConexoesMySQL();
+
+            Egresso egresso = conexao.buscaEgressoPorCPF(cpf);
+
+            if (egresso != null) {
+                lblNome.setText(egresso.getNome());
+                lblDataNascimento.setText(egresso.getDataNascimento());
+                lblCPF.setText(String.valueOf(egresso.getCPF()));
+                lblTelefone.setText(egresso.getTelefone());
+                lblRua.setText(egresso.getRua());
+                lblBairro.setText(egresso.getBairro());
+                lblCidade.setText(egresso.getCidade());
+                lblEstado.setText(egresso.getEstado());
+                lblProfissaoAtual.setText(egresso.getProfissaoAtual());
+                jComboBox1.setSelectedItem(egresso.getFaixaSalarial());
+
+                lblMatricula.setText(String.valueOf(egresso.getMatricula()));
+                lblPeriodo.setText(String.valueOf(egresso.getPeriodo()));
+                lblTurma.setText(String.valueOf(egresso.getTurma()));
+                lblCursoAnterior.setText(egresso.getCursoAnterior());
+                lblCursoAtual.setText(egresso.getCursoAtual());
+
+                float[] notas = egresso.getNotas();
+                if (notas != null && notas.length >= 10) {
+                    jTextField4.setText(String.valueOf(notas[0]));
+                    jTextField14.setText(String.valueOf(notas[1]));
+                    jTextField6.setText(String.valueOf(notas[2]));
+                    jTextField13.setText(String.valueOf(notas[3]));
+                    jTextField7.setText(String.valueOf(notas[4]));
+                    jTextField12.setText(String.valueOf(notas[5]));
+                    jTextField8.setText(String.valueOf(notas[6]));
+                    jTextField11.setText(String.valueOf(notas[7]));
+                    jTextField9.setText(String.valueOf(notas[8]));
+                    jTextField10.setText(String.valueOf(notas[9]));
+                }
+
+                liberarCampos();
+                lblProfissaoAtual1.setEditable(false); 
+                lblCPF.setEditable(false);
+
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Nenhum egresso encontrado com o CPF: " + cpf, "Não encontrado", javax.swing.JOptionPane.WARNING_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "O CPF deve conter apenas números (sem pontos ou traços)!", "Erro de formatação", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
