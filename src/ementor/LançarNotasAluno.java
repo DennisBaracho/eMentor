@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ementor;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+import javax.swing.Timer;
 import jiconfont.swing.IconFontSwing;
 import jiconfont.icons.font_awesome.FontAwesome;
 import javax.swing.JOptionPane;
@@ -34,17 +37,15 @@ public class LançarNotasAluno extends javax.swing.JFrame {
     }
     
     private void bloquearCampos() {
-        // Vetores na ordem exata da Nota 1 até a Nota 10
         javax.swing.JTextField[] campos = {jTextField1, jTextField10, jTextField2, jTextField9, jTextField3, jTextField8, jTextField4, jTextField7, jTextField5, jTextField6};
         javax.swing.JLabel[] labels = {jLabel1, jLabel11, jLabel2, jLabel10, jLabel3, jLabel9, jLabel4, jLabel8, jLabel6, jLabel7};
 
-        // Esconde tudo no início
         for (int i = 0; i < 10; i++) {
             campos[i].setVisible(false);
             labels[i].setVisible(false);
             campos[i].setText("");
         }
-        jButton11.setEnabled(false); // Trava o botão Salvar
+            jButton11.setEnabled(false);
         quantidadeNotasLancadas = 0;
     }
 
@@ -59,7 +60,6 @@ public class LançarNotasAluno extends javax.swing.JFrame {
                 campos[i].setVisible(true);
                 campos[i].setEditable(true);
 
-                // Preenche com o valor já existente no banco, se houver
                 if (notasExistentes != null && i < notasExistentes.length) {
                     campos[i].setText(String.valueOf(notasExistentes[i]));
                 } else {
@@ -369,36 +369,90 @@ public class LançarNotasAluno extends javax.swing.JFrame {
         }
 
         javax.swing.JTextField[] camposNotas = {jTextField1, jTextField10, jTextField2, jTextField9, jTextField3, jTextField8, jTextField4, jTextField7, jTextField5, jTextField6};
+        float[] notasParaSalvar = new float[quantidadeNotasLancadas];
 
         try {
-            // Cria um vetor do tamanho exato que o professor pediu
-            float[] notas = new float[quantidadeNotasLancadas];
-            
             for (int i = 0; i < quantidadeNotasLancadas; i++) {
                 if (camposNotas[i].getText().isBlank()) {
                     JOptionPane.showMessageDialog(this, "Preencha a Nota " + (i + 1) + ".", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 
-                // Aceita notas com vírgula ou ponto
                 float nota = Float.parseFloat(camposNotas[i].getText().replace(",", "."));
                 
                 if (nota < 0 || nota > 10) {
                     JOptionPane.showMessageDialog(this, "A Nota " + (i + 1) + " deve estar entre 0 e 10.", "Valor inválido", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                notas[i] = nota;
+                notasParaSalvar[i] = nota;
             }
 
-            // Manda para o banco de dados apenas a array das notas inseridas
-            ConexoesMySQL conexao = new ConexoesMySQL();
-            conexao.atualizaNotas(alunoAtual.getMatricula(), notas);
+            BarraProgresso barra = new BarraProgresso();
+            barra.setVisible(true);
 
-            // Limpa a tela para a próxima operação
-            bloquearCampos();
-            lblNome1.setEditable(true);
-            lblNome1.setText("");
-            alunoAtual = null;
+            Timer timer = new Timer(30, null);
+            timer.addActionListener(e -> {
+                int valorAtual = barra.getBarra().getValue();
+                if (valorAtual < 90) {
+                    barra.getBarra().setValue(valorAtual + 1);
+                }
+            });
+            timer.start();
+
+            SwingWorker<Boolean, Void> worker = new SwingWorker<>() {
+                @Override
+                protected Boolean doInBackground() {
+                    try {
+                        ConexoesMySQL conexao = new ConexoesMySQL();
+                        conexao.atualizaNotas(alunoAtual.getMatricula(), notasParaSalvar);
+                        return true;
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        return false;
+                    }
+                }
+
+                @Override
+                protected void done() {
+                    timer.stop();
+                    barra.getBarra().setValue(100); 
+
+                    Timer fechamento = new Timer(150, e -> {
+                        barra.dispose();
+                        
+                        try {
+                            boolean sucesso = get();
+                            
+                            if (sucesso) {
+                                JOptionPane.showMessageDialog(
+                                    LançarNotasAluno.this, 
+                                    "Notas atualizadas com sucesso!", 
+                                    "Sucesso", 
+                                    JOptionPane.INFORMATION_MESSAGE
+                                );
+                                
+                                bloquearCampos();
+                                lblNome1.setEditable(true);
+                                lblNome1.setText("");
+                                alunoAtual = null;
+
+                            } else {
+                                JOptionPane.showMessageDialog(
+                                    LançarNotasAluno.this, 
+                                    "Ocorreu um erro ao tentar atualizar as notas no banco.", 
+                                    "Erro no Banco de Dados", 
+                                    JOptionPane.ERROR_MESSAGE
+                                );
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    });
+                    fechamento.setRepeats(false);
+                    fechamento.start();
+                }
+            };
+            worker.execute();
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "As notas devem conter apenas números válidos.", "Erro de formato", JOptionPane.ERROR_MESSAGE);
@@ -421,7 +475,7 @@ public class LançarNotasAluno extends javax.swing.JFrame {
         if (aluno != null) {
             alunoAtual = aluno;
 
-            float[] notasExistentes = aluno.getNotas(); // já vem do banco
+            float[] notasExistentes = aluno.getNotas();
             int qtdExistente = (notasExistentes != null) ? notasExistentes.length : 0;
 
             JOptionPane.showMessageDialog(this, "Aluno encontrado: " + aluno.getNome()
