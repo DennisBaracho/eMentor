@@ -168,10 +168,10 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
         lblProfissaoAtual = new javax.swing.JTextField();
         txtProfissaoAtual = new javax.swing.JLabel();
         txtFaixaSalarial = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         lblProfissaoAtual1 = new javax.swing.JTextField();
         txtProfissaoAtual1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         lblMatricula = new javax.swing.JTextField();
         txtMatricula = new javax.swing.JLabel();
@@ -207,6 +207,8 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         jButton4.setBackground(new java.awt.Color(45, 60, 135));
         jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -339,17 +341,6 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
         jPanel6.add(txtFaixaSalarial);
         txtFaixaSalarial.setBounds(180, 90, 70, 16);
 
-        jButton1.setBackground(new java.awt.Color(45, 60, 135));
-        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Pesquisar");
-        jButton1.setBorderPainted(false);
-        jButton1.setMaximumSize(new java.awt.Dimension(100, 22));
-        jButton1.setMinimumSize(new java.awt.Dimension(100, 22));
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-        jPanel6.add(jButton1);
-        jButton1.setBounds(630, 90, 120, 25);
-
         lblProfissaoAtual1.addActionListener(this::lblProfissaoAtual1ActionPerformed);
         jPanel6.add(lblProfissaoAtual1);
         lblProfissaoAtual1.setBounds(630, 60, 120, 22);
@@ -363,6 +354,17 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione Uma Opção", "1 a 3 salários mínimos", "3 a 6 salários mínimos", "6 a 9 salários mínimos", "Mais que 9 salários mínimos" }));
         jPanel6.add(jComboBox1);
         jComboBox1.setBounds(180, 110, 120, 22);
+
+        jButton2.setBackground(new java.awt.Color(45, 60, 135));
+        jButton2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Pesquisar");
+        jButton2.setBorderPainted(false);
+        jButton2.setMaximumSize(new java.awt.Dimension(100, 22));
+        jButton2.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+        jPanel6.add(jButton2);
+        jButton2.setBounds(630, 90, 120, 25);
 
         jTabbedPane2.addTab("Dados Pessoais", jPanel6);
 
@@ -565,7 +567,7 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
         jButton3.setMinimumSize(new java.awt.Dimension(100, 22));
         jButton3.addActionListener(this::jButton3ActionPerformed);
         jPanel1.add(jButton3);
-        jButton3.setBounds(440, 550, 150, 25);
+        jButton3.setBounds(430, 560, 150, 25);
 
         jButton5.setBackground(new java.awt.Color(45, 60, 135));
         jButton5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
@@ -576,7 +578,29 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
         jButton5.setMinimumSize(new java.awt.Dimension(100, 22));
         jButton5.addActionListener(this::jButton5ActionPerformed);
         jPanel1.add(jButton5);
-        jButton5.setBounds(610, 550, 150, 25);
+        jButton5.setBounds(610, 560, 150, 25);
+
+        jButton1.setBackground(new java.awt.Color(45, 60, 135));
+        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Próximo");
+        jButton1.setBorderPainted(false);
+        jButton1.setMaximumSize(new java.awt.Dimension(100, 22));
+        jButton1.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+        jPanel1.add(jButton1);
+        jButton1.setBounds(170, 560, 120, 25);
+
+        jButton6.setBackground(new java.awt.Color(45, 60, 135));
+        jButton6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(255, 255, 255));
+        jButton6.setText("Anterior");
+        jButton6.setBorderPainted(false);
+        jButton6.setMaximumSize(new java.awt.Dimension(100, 22));
+        jButton6.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton6.addActionListener(this::jButton6ActionPerformed);
+        jPanel1.add(jButton6);
+        jButton6.setBounds(30, 560, 120, 25);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -731,6 +755,14 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
         salvarTodasAlteracoes();
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -758,9 +790,11 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

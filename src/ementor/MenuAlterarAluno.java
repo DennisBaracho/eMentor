@@ -147,9 +147,9 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
         lblCidade = new javax.swing.JTextField();
         lblEstado = new javax.swing.JTextField();
         txtEstado = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         lblNome1 = new javax.swing.JTextField();
         txtNome1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         lblMatricula = new javax.swing.JTextField();
         txtMatricula = new javax.swing.JLabel();
@@ -160,6 +160,8 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         jButton4.setBackground(new java.awt.Color(45, 60, 135));
         jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -277,17 +279,6 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
         jPanel6.add(txtEstado);
         txtEstado.setBounds(40, 420, 37, 16);
 
-        jButton1.setBackground(new java.awt.Color(45, 60, 135));
-        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Pesquisar");
-        jButton1.setBorderPainted(false);
-        jButton1.setMaximumSize(new java.awt.Dimension(100, 22));
-        jButton1.setMinimumSize(new java.awt.Dimension(100, 22));
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-        jPanel6.add(jButton1);
-        jButton1.setBounds(630, 80, 130, 25);
-
         lblNome1.addActionListener(this::lblNome1ActionPerformed);
         jPanel6.add(lblNome1);
         lblNome1.setBounds(630, 50, 130, 22);
@@ -297,6 +288,17 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
         txtNome1.setText("Matricula");
         jPanel6.add(txtNome1);
         txtNome1.setBounds(630, 30, 70, 16);
+
+        jButton2.setBackground(new java.awt.Color(45, 60, 135));
+        jButton2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Pesquisar");
+        jButton2.setBorderPainted(false);
+        jButton2.setMaximumSize(new java.awt.Dimension(100, 22));
+        jButton2.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+        jPanel6.add(jButton2);
+        jButton2.setBounds(630, 80, 130, 25);
 
         jTabbedPane2.addTab("Dados Pessoais", jPanel6);
 
@@ -368,6 +370,28 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
         jButton7.addActionListener(this::jButton7ActionPerformed);
         jPanel1.add(jButton7);
         jButton7.setBounds(610, 550, 150, 25);
+
+        jButton1.setBackground(new java.awt.Color(45, 60, 135));
+        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Próximo");
+        jButton1.setBorderPainted(false);
+        jButton1.setMaximumSize(new java.awt.Dimension(100, 22));
+        jButton1.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+        jPanel1.add(jButton1);
+        jButton1.setBounds(170, 550, 130, 25);
+
+        jButton3.setBackground(new java.awt.Color(45, 60, 135));
+        jButton3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Anterior");
+        jButton3.setBorderPainted(false);
+        jButton3.setMaximumSize(new java.awt.Dimension(100, 22));
+        jButton3.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton3.addActionListener(this::jButton3ActionPerformed);
+        jPanel1.add(jButton3);
+        jButton3.setBounds(20, 550, 130, 25);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 800, 600);
@@ -487,6 +511,14 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
         salvarTodasAlteracoes();
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -514,6 +546,8 @@ public class MenuAlterarAluno extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;

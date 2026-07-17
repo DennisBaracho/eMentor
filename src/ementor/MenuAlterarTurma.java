@@ -76,12 +76,14 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
         txtMatricula = new javax.swing.JLabel();
         txtPeriodo = new javax.swing.JLabel();
         lblPeriodo = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
         lblMatricula1 = new javax.swing.JTextField();
         txtMatricula1 = new javax.swing.JLabel();
+        jButton9 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
 
         jButton4.setBackground(new java.awt.Color(45, 60, 135));
         jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -137,18 +139,6 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
         jPanel7.add(lblPeriodo);
         lblPeriodo.setBounds(40, 110, 125, 22);
 
-        jButton6.setBackground(new java.awt.Color(45, 60, 135));
-        jButton6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Pesquisar");
-        jButton6.setBorderPainted(false);
-        jButton6.setMaximumSize(new java.awt.Dimension(100, 22));
-        jButton6.setMinimumSize(new java.awt.Dimension(100, 22));
-        jButton6.setPreferredSize(new java.awt.Dimension(100, 22));
-        jButton6.addActionListener(this::jButton6ActionPerformed);
-        jPanel7.add(jButton6);
-        jButton6.setBounds(640, 80, 120, 25);
-
         lblMatricula1.addActionListener(this::lblMatricula1ActionPerformed);
         jPanel7.add(lblMatricula1);
         lblMatricula1.setBounds(640, 50, 120, 22);
@@ -158,6 +148,18 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
         txtMatricula1.setText("Código da Turma");
         jPanel7.add(txtMatricula1);
         txtMatricula1.setBounds(640, 30, 100, 16);
+
+        jButton9.setBackground(new java.awt.Color(45, 60, 135));
+        jButton9.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton9.setForeground(new java.awt.Color(255, 255, 255));
+        jButton9.setText("Pesquisar");
+        jButton9.setBorderPainted(false);
+        jButton9.setMaximumSize(new java.awt.Dimension(100, 22));
+        jButton9.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton9.setPreferredSize(new java.awt.Dimension(100, 22));
+        jButton9.addActionListener(this::jButton9ActionPerformed);
+        jPanel7.add(jButton9);
+        jButton9.setBounds(640, 80, 120, 25);
 
         jTabbedPane2.addTab("Dados Acadêmicos", jPanel7);
 
@@ -194,6 +196,30 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
         jButton8.addActionListener(this::jButton8ActionPerformed);
         jPanel1.add(jButton8);
         jButton8.setBounds(610, 540, 150, 25);
+
+        jButton6.setBackground(new java.awt.Color(45, 60, 135));
+        jButton6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(255, 255, 255));
+        jButton6.setText("Próximo");
+        jButton6.setBorderPainted(false);
+        jButton6.setMaximumSize(new java.awt.Dimension(100, 22));
+        jButton6.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton6.setPreferredSize(new java.awt.Dimension(100, 22));
+        jButton6.addActionListener(this::jButton6ActionPerformed);
+        jPanel1.add(jButton6);
+        jButton6.setBounds(180, 540, 120, 25);
+
+        jButton10.setBackground(new java.awt.Color(45, 60, 135));
+        jButton10.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton10.setForeground(new java.awt.Color(255, 255, 255));
+        jButton10.setText("Anterior");
+        jButton10.setBorderPainted(false);
+        jButton10.setMaximumSize(new java.awt.Dimension(100, 22));
+        jButton10.setMinimumSize(new java.awt.Dimension(100, 22));
+        jButton10.setPreferredSize(new java.awt.Dimension(100, 22));
+        jButton10.addActionListener(this::jButton10ActionPerformed);
+        jPanel1.add(jButton10);
+        jButton10.setBounds(40, 540, 120, 25);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -270,6 +296,14 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
         }                                        
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton10ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -296,10 +330,12 @@ public class MenuAlterarTurma extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
