@@ -122,6 +122,18 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         jPanel6.add(txtNome);
         txtNome.setBounds(30, 30, 37, 16);
 
+        lblDataNascimento.setForeground(java.awt.Color.gray);
+        lblDataNascimento.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        lblDataNascimento.setText("AAAA/MM/DD");
+        lblDataNascimento.setToolTipText("");
+        lblDataNascimento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblDataNascimentoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lblDataNascimentoFocusLost(evt);
+            }
+        });
         lblDataNascimento.addActionListener(this::lblDataNascimentoActionPerformed);
         jPanel6.add(lblDataNascimento);
         lblDataNascimento.setBounds(30, 110, 125, 22);
@@ -146,7 +158,7 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         txtTelefone.setForeground(new java.awt.Color(255, 255, 255));
         txtTelefone.setText("Telefone");
         jPanel6.add(txtTelefone);
-        txtTelefone.setBounds(30, 200, 46, 16);
+        txtTelefone.setBounds(30, 200, 60, 16);
 
         lblTelefone.addActionListener(this::lblTelefoneActionPerformed);
         jPanel6.add(lblTelefone);
@@ -176,7 +188,7 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         txtCidade.setForeground(new java.awt.Color(255, 255, 255));
         txtCidade.setText("Cidade");
         jPanel6.add(txtCidade);
-        txtCidade.setBounds(30, 360, 36, 16);
+        txtCidade.setBounds(30, 360, 60, 16);
 
         lblCidade.addActionListener(this::lblCidadeActionPerformed);
         jPanel6.add(lblCidade);
@@ -198,6 +210,16 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         jPanel6.add(txtDataAdmissao);
         txtDataAdmissao.setBounds(180, 30, 100, 16);
 
+        lblDataAdmissao.setForeground(java.awt.Color.gray);
+        lblDataAdmissao.setText("AAAA/MM/DD");
+        lblDataAdmissao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblDataAdmissaoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lblDataAdmissaoFocusLost(evt);
+            }
+        });
         lblDataAdmissao.addActionListener(this::lblDataAdmissaoActionPerformed);
         jPanel6.add(lblDataAdmissao);
         lblDataAdmissao.setBounds(180, 50, 125, 22);
@@ -464,6 +486,36 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
                 "Erro de formato", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void lblDataNascimentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblDataNascimentoFocusGained
+
+        if (lblDataNascimento.getText().equals("AAAA/MM/DD")) {
+            lblDataNascimento.setText("");
+            lblDataNascimento.setForeground(java.awt.Color.BLACK);
+        }
+    }//GEN-LAST:event_lblDataNascimentoFocusGained
+
+    private void lblDataNascimentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblDataNascimentoFocusLost
+
+            if (lblDataNascimento.getText().trim().isEmpty()) {
+                lblDataNascimento.setText("AAAA/MM/DD");
+                lblDataNascimento.setForeground(java.awt.Color.GRAY);
+        }
+    }//GEN-LAST:event_lblDataNascimentoFocusLost
+
+    private void lblDataAdmissaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblDataAdmissaoFocusGained
+         if (lblDataAdmissao.getText().equals("AAAA/MM/DD")) {
+            lblDataAdmissao.setText("");
+            lblDataAdmissao.setForeground(java.awt.Color.BLACK);
+        }
+    }//GEN-LAST:event_lblDataAdmissaoFocusGained
+
+    private void lblDataAdmissaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblDataAdmissaoFocusLost
+         if (lblDataAdmissao.getText().trim().isEmpty()) {
+                lblDataAdmissao.setText("AAAA/MM/DD");
+                lblDataAdmissao.setForeground(java.awt.Color.GRAY);
+        }
+    }//GEN-LAST:event_lblDataAdmissaoFocusLost
 
     /**
      * @param args the command line arguments

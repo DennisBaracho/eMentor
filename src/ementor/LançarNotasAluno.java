@@ -427,14 +427,14 @@ public class LançarNotasAluno extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Aluno encontrado: " + aluno.getNome()
                     + (qtdExistente > 0 ? "\nJá possui " + qtdExistente + " nota(s) lançada(s)." : ""));
 
-            Object input= = JOptionPane.showInputDialog(this,
+            Object inputObj = JOptionPane.showInputDialog(this,
                 "Quantas notas deseja lançar para este aluno? (1 a 10)",
                 "Quantidade de Notas",
                 JOptionPane.QUESTION_MESSAGE,
                 null, null,
                 qtdExistente > 0 ? String.valueOf(qtdExistente) : "");
 
-            if (input == null) {
+            if (inputObj == null) {
                 alunoAtual = null;
                 bloquearCampos();
                 return;
@@ -442,7 +442,7 @@ public class LançarNotasAluno extends javax.swing.JFrame {
 
             int qtd;
             try {
-                qtd = Integer.parseInt(input.toString().trim());
+                qtd = Integer.parseInt(inputObj.toString().trim());
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "A quantidade deve ser um número entre 1 e 10.", "Valor Inválido", JOptionPane.ERROR_MESSAGE);
                 alunoAtual = null;

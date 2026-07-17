@@ -147,17 +147,13 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
             egressoAlterado.setCursoAnterior(lblCursoAnterior.getText());
             egressoAlterado.setCursoAtual(lblCursoAtual.getText());
             
+            javax.swing.JTextField[] camposNotas = {jTextField4, jTextField14, jTextField6, jTextField13, jTextField7, jTextField12, jTextField8, jTextField11, jTextField9, jTextField10};
             float[] notas = new float[10];
-            notas[0] = Float.parseFloat(jTextField4.getText());
-            notas[1] = Float.parseFloat(jTextField14.getText());
-            notas[2] = Float.parseFloat(jTextField6.getText());
-            notas[3] = Float.parseFloat(jTextField13.getText());
-            notas[4] = Float.parseFloat(jTextField7.getText());
-            notas[5] = Float.parseFloat(jTextField12.getText());
-            notas[6] = Float.parseFloat(jTextField8.getText());
-            notas[7] = Float.parseFloat(jTextField11.getText());
-            notas[8] = Float.parseFloat(jTextField9.getText());
-            notas[9] = Float.parseFloat(jTextField10.getText());
+
+            for (int i = 0; i < camposNotas.length; i++) {
+                String texto = camposNotas[i].getText().trim();
+                notas[i] = texto.isEmpty() ? Float.NaN : Float.parseFloat(texto.replace(",", "."));
+            }
             egressoAlterado.setNotas(notas);
             
             ConexoesMySQL conexao = new ConexoesMySQL();
@@ -728,7 +724,22 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
     }//GEN-LAST:event_lblNomeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        if (listaEgressos.isEmpty()) {
+            ConexoesMySQL conexao = new ConexoesMySQL();
+            listaEgressos = conexao.recuperaTodosEgressos();
+        }
+        
+        if (listaEgressos.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Não há nenhum egresso cadastrado no banco de dados.");
+            return;
+        }
+        
+        if (indiceAtual < listaEgressos.size() - 1) {
+            indiceAtual++;
+            exibirEgressoNaTela(listaEgressos.get(indiceAtual));
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Você já está no último registro da lista!", "Fim da Lista", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -813,22 +824,7 @@ public class MenuAlterarEgresso extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-        if (listaEgressos.isEmpty()) {
-            ConexoesMySQL conexao = new ConexoesMySQL();
-            listaEgressos = conexao.recuperaTodosEgressos();
-        }
         
-        if (listaEgressos.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Não há nenhum egresso cadastrado no banco de dados.");
-            return;
-        }
-        
-        if (indiceAtual < listaEgressos.size() - 1) {
-            indiceAtual++;
-            exibirEgressoNaTela(listaEgressos.get(indiceAtual));
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Você já está no último registro da lista!", "Fim da Lista", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**

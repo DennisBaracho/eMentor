@@ -143,6 +143,16 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
         jPanel6.add(txtNome);
         txtNome.setBounds(30, 40, 37, 16);
 
+        lblDataNascimento.setForeground(java.awt.Color.gray);
+        lblDataNascimento.setText("AAAA/MM/DD");
+        lblDataNascimento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblDataNascimentoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lblDataNascimentoFocusLost(evt);
+            }
+        });
         lblDataNascimento.addActionListener(this::lblDataNascimentoActionPerformed);
         jPanel6.add(lblDataNascimento);
         lblDataNascimento.setBounds(30, 110, 125, 22);
@@ -151,7 +161,7 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
         txtDataNascimento.setForeground(new java.awt.Color(255, 255, 255));
         txtDataNascimento.setText("Data de Nascimento");
         jPanel6.add(txtDataNascimento);
-        txtDataNascimento.setBounds(30, 90, 108, 16);
+        txtDataNascimento.setBounds(30, 90, 110, 16);
 
         txtCPF.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtCPF.setForeground(new java.awt.Color(255, 255, 255));
@@ -167,7 +177,7 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
         txtTelefone.setForeground(new java.awt.Color(255, 255, 255));
         txtTelefone.setText("Telefone");
         jPanel6.add(txtTelefone);
-        txtTelefone.setBounds(30, 200, 46, 16);
+        txtTelefone.setBounds(30, 200, 60, 16);
 
         lblTelefone.addActionListener(this::lblTelefoneActionPerformed);
         jPanel6.add(lblTelefone);
@@ -197,7 +207,7 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
         txtCidade.setForeground(new java.awt.Color(255, 255, 255));
         txtCidade.setText("Cidade");
         jPanel6.add(txtCidade);
-        txtCidade.setBounds(30, 370, 36, 16);
+        txtCidade.setBounds(30, 370, 50, 16);
 
         lblCidade.addActionListener(this::lblCidadeActionPerformed);
         jPanel6.add(lblCidade);
@@ -227,7 +237,7 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
         txtFaixaSalarial.setForeground(new java.awt.Color(255, 255, 255));
         txtFaixaSalarial.setText("Faixa Salarial");
         jPanel6.add(txtFaixaSalarial);
-        txtFaixaSalarial.setBounds(180, 90, 70, 16);
+        txtFaixaSalarial.setBounds(180, 90, 80, 16);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione Uma Opção", "1 a 3 salários mínimos", "3 a 6 salários mínimos", "6 a 9 salários mínimos", "Mais que 9 salários mínimos" }));
         jPanel6.add(jComboBox1);
@@ -595,24 +605,23 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
             jTextField4, jTextField14, jTextField6, jTextField13, jTextField7,
             jTextField12, jTextField8, jTextField11, jTextField9, jTextField10
         };
-        for (int i = 0; i < camposNotas.length; i++) {
-            if (camposNotas[i].getText().isBlank()) {
-                JOptionPane.showMessageDialog(this,
-                    "Preencha a Nota " + (i + 1) + ".",
-                    "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-        }
-
+ 
         try {
             if (jComboBox1.getSelectedIndex() == 0) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecione uma Faixa Salarial válida!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
-                    return; // Para o código aqui e não deixa salvar no banco
+                    return; 
             }
             
             float[] notas = new float[10];
             for (int i = 0; i < camposNotas.length; i++) {
-                float nota = Float.parseFloat(camposNotas[i].getText());
+                String texto = camposNotas[i].getText().trim();
+
+                if (texto.isEmpty()) {
+                    notas[i] = Float.NaN;
+                    continue;
+                }
+
+                float nota = Float.parseFloat(texto.replace(",", "."));
                 if (nota < 0 || nota > 10) {
                     JOptionPane.showMessageDialog(this,
                         "A Nota " + (i + 1) + " deve estar entre 0 e 10.",
@@ -660,6 +669,20 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
                 "Erro de formato", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void lblDataNascimentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblDataNascimentoFocusGained
+        if (lblDataNascimento.getText().equals("AAAA/MM/DD")) {
+            lblDataNascimento.setText("");
+            lblDataNascimento.setForeground(java.awt.Color.BLACK);
+        }
+    }//GEN-LAST:event_lblDataNascimentoFocusGained
+
+    private void lblDataNascimentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblDataNascimentoFocusLost
+         if (lblDataNascimento.getText().trim().isEmpty()) {
+                lblDataNascimento.setText("AAAA/MM/DD");
+                lblDataNascimento.setForeground(java.awt.Color.GRAY);
+        }
+    }//GEN-LAST:event_lblDataNascimentoFocusLost
 
     /**
      * @param args the command line arguments

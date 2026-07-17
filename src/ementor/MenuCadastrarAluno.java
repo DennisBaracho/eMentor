@@ -114,6 +114,16 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         jPanel6.add(txtNome);
         txtNome.setBounds(40, 30, 37, 16);
 
+        lblDataNascimento.setForeground(java.awt.Color.gray);
+        lblDataNascimento.setText("AAAA/MM/DD");
+        lblDataNascimento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lblDataNascimentoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lblDataNascimentoFocusLost(evt);
+            }
+        });
         lblDataNascimento.addActionListener(this::lblDataNascimentoActionPerformed);
         jPanel6.add(lblDataNascimento);
         lblDataNascimento.setBounds(40, 110, 125, 22);
@@ -122,7 +132,7 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         txtDataNascimento.setForeground(new java.awt.Color(255, 255, 255));
         txtDataNascimento.setText("Data de Nascimento");
         jPanel6.add(txtDataNascimento);
-        txtDataNascimento.setBounds(40, 90, 108, 16);
+        txtDataNascimento.setBounds(40, 90, 120, 16);
 
         txtCPF.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtCPF.setForeground(new java.awt.Color(255, 255, 255));
@@ -138,7 +148,7 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         txtTelefone.setForeground(new java.awt.Color(255, 255, 255));
         txtTelefone.setText("Telefone");
         jPanel6.add(txtTelefone);
-        txtTelefone.setBounds(40, 200, 46, 16);
+        txtTelefone.setBounds(40, 200, 70, 16);
 
         lblTelefone.addActionListener(this::lblTelefoneActionPerformed);
         jPanel6.add(lblTelefone);
@@ -168,7 +178,7 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         txtCidade.setForeground(new java.awt.Color(255, 255, 255));
         txtCidade.setText("Cidade");
         jPanel6.add(txtCidade);
-        txtCidade.setBounds(40, 370, 36, 16);
+        txtCidade.setBounds(40, 370, 60, 16);
 
         lblCidade.addActionListener(this::lblCidadeActionPerformed);
         jPanel6.add(lblCidade);
@@ -399,6 +409,20 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         MinhaJanela.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void lblDataNascimentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblDataNascimentoFocusGained
+        if (lblDataNascimento.getText().equals("AAAA/MM/DD")) {
+            lblDataNascimento.setText("");
+            lblDataNascimento.setForeground(java.awt.Color.BLACK);
+        }
+    }//GEN-LAST:event_lblDataNascimentoFocusGained
+
+    private void lblDataNascimentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lblDataNascimentoFocusLost
+        if (lblDataNascimento.getText().trim().isEmpty()) {
+                lblDataNascimento.setText("AAAA/MM/DD");
+                lblDataNascimento.setForeground(java.awt.Color.GRAY);
+        }
+    }//GEN-LAST:event_lblDataNascimentoFocusLost
 
     /**
      * @param args the command line arguments

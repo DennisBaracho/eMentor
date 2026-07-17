@@ -463,6 +463,7 @@ public class GerarRelatorioPDF {
                 int quantidadeNotas = 0;
                 if (notas != null) {
                     for (float nota : notas) {
+                        if (Float.isNaN(nota)) continue;
                         soma += nota;
                         quantidadeNotas++;
                     }
@@ -471,8 +472,11 @@ public class GerarRelatorioPDF {
 
                 tabela.addCell(new Phrase(aluno.getNome(), fonteTexto));
                 for (int i = 0; i < 10; i++) {
-                    float valor = (notas != null && notas.length > i) ? notas[i] : 0;
-                    tabela.addCell(new Phrase(String.format("%.1f", valor), fonteTexto));
+                    if (notas != null && notas.length > i && !Float.isNaN(notas[i])) {
+                        tabela.addCell(new Phrase(String.format("%.1f", notas[i]), fonteTexto));
+                    } else {
+                        tabela.addCell(new Phrase("", fonteTexto));
+                    }
                 }
                 tabela.addCell(new Phrase(String.format("%.2f", media), fonteTexto));
             }

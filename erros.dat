@@ -18,3 +18,8 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
 [16/07/2026 23:02:36] CÓDIGO: 1049 | DESCRIÇÃO: Erro de Conexão: Unknown database 'ementor-plus'
 [16/07/2026 23:07:58] CÓDIGO: 1062 | DESCRIÇÃO: Erro ao inserir Aluno: Duplicate entry '21' for key 'aluno.PRIMARY'
+[17/07/2026 02:50:30] CÓDIGO: 1062 | DESCRIÇÃO: Erro ao inserir Egresso: Duplicate entry '12' for key 'pessoa.PRIMARY'
+[17/07/2026 02:51:30] CÓDIGO: 1452 | DESCRIÇÃO: Erro ao inserir Egresso: Cannot add or update a child row: a foreign key constraint fails (`ementorplus`.`aluno`, CONSTRAINT `fk_aluno_turma` FOREIGN KEY (`Codigo_Turma`) REFERENCES `turma` (`CodigoTurma`))
+[17/07/2026 03:17:56] CÓDIGO: 1054 | DESCRIÇÃO: Erro ao alterar Egresso: Unknown column 'NaN' in 'field list'
+[17/07/2026 03:20:38] CÓDIGO: 1054 | DESCRIÇÃO: Erro ao alterar Egresso: Unknown column 'NaN' in 'field list'
+[17/07/2026 03:20:46] CÓDIGO: 1054 | DESCRIÇÃO: Erro ao alterar Egresso: Unknown column 'NaN' in 'field list'
