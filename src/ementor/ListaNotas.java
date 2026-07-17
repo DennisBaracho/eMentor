@@ -4,6 +4,8 @@
  */
 package ementor;
 import java.util.ArrayList;
+import jiconfont.icons.font_awesome.FontAwesome;
+import jiconfont.swing.IconFontSwing;
 /**
  *
  * @author Anderson Cordeiro de Souza, Marcos Vinícius Pimentel Gomes, Dennis Francisco Guimarães de Oliveira Baracho
@@ -16,6 +18,8 @@ public class ListaNotas extends javax.swing.JFrame {
      * Creates new form Cadastros
      */
     public ListaNotas() {
+        IconFontSwing.register(FontAwesome.getIconFont());
+        
         initComponents();
         
         this.setResizable(false); 
@@ -25,6 +29,10 @@ public class ListaNotas extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         
         carregarNotas();
+        
+        jButton6.setIcon(IconFontSwing.buildIcon(FontAwesome.FILE_PDF_O, 18, new java.awt.Color(255, 255, 255))); //salvar
+        
+        jButton5.setIcon(IconFontSwing.buildIcon(FontAwesome.ARROW_LEFT, 16, new java.awt.Color(255, 255, 255))); // voltar
     }
     
     private void carregarNotas() {
@@ -146,7 +154,7 @@ public class ListaNotas extends javax.swing.JFrame {
         jButton5.setBorderPainted(false);
         jButton5.addActionListener(this::jButton5ActionPerformed);
         jPanel1.add(jButton5);
-        jButton5.setBounds(580, 10, 100, 23);
+        jButton5.setBounds(540, 10, 100, 23);
 
         jButton6.setBackground(new java.awt.Color(45, 60, 135));
         jButton6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
@@ -155,7 +163,7 @@ public class ListaNotas extends javax.swing.JFrame {
         jButton6.setBorderPainted(false);
         jButton6.addActionListener(this::jButton6ActionPerformed);
         jPanel1.add(jButton6);
-        jButton6.setBounds(690, 10, 100, 23);
+        jButton6.setBounds(650, 10, 140, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
