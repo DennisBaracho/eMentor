@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ementor;
-
+import java.util.ArrayList;
 /**
  *
  * @author Anderson
@@ -23,8 +23,25 @@ public class ListaTurmas extends javax.swing.JFrame {
         this.setSize(800, 640); 
     
         this.setLocationRelativeTo(null);
+
+        carregarTurmas();
     }
     
+    private void carregarTurmas() {
+        ConexoesMySQL banco = new ConexoesMySQL();
+        ArrayList<Turma> listaTurmas = banco.recuperaTodasTurmas();
+
+        javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
+
+        for (Turma turma : listaTurmas) {
+            modelo.addRow(new Object[]{
+                turma.getCodigoTurma(),
+                turma.getNomeTurma()
+            });
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -123,7 +140,26 @@ public class ListaTurmas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+
+        javax.swing.JFileChooser seletor = new javax.swing.JFileChooser();
+        seletor.setDialogTitle("Salvar Relatório de Turmas");
+        seletor.setSelectedFile(new java.io.File("relatorio_turmas.pdf"));
+
+        int opcao = seletor.showSaveDialog(this);
+        if (opcao != javax.swing.JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+
+        String caminhoArquivo = seletor.getSelectedFile().getAbsolutePath();
+        if (!caminhoArquivo.toLowerCase().endsWith(".pdf")) {
+            caminhoArquivo += ".pdf";
+        }
+
+        ConexoesMySQL banco = new ConexoesMySQL();
+        ArrayList<Turma> listaTurmas = banco.recuperaTodasTurmas();
+
+        GerarRelatorioPDF gerador = new GerarRelatorioPDF();
+        gerador.gerarRelatorioTurmas(listaTurmas, caminhoArquivo);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

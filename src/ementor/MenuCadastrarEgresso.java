@@ -5,7 +5,6 @@
 package ementor;
 
 import javax.swing.JOptionPane;
-import jiconfont.swing.IconFontSwing;
 
 /**
  *
@@ -29,7 +28,6 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
         
     }
 
-    javax.swing.Icon iconeSalvar = IconFontSwing.buildIcon(FontAwesome.FLOPPY_O, 18, new java.awt.Color(255, 255, 255));
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -571,10 +569,6 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Preencha a profissão atual.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (lblFaixaSalarial.getText().isBlank()) {
-            JOptionPane.showMessageDialog(this, "Preencha a faixa salarial.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
 
         if (lblMatricula.getText().isBlank()) {
             JOptionPane.showMessageDialog(this, "Preencha a matrícula.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
@@ -648,7 +642,7 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
                 notas,
                 turma,
                 lblProfissaoAtual.getText(),
-                lblFaixaSalarial.getText(),
+                jComboBox1.getSelectedItem().toString(), 
                 lblCursoAnterior.getText(),
                 lblCursoAtual.getText()
             );
@@ -656,6 +650,8 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
             ConexoesMySQL banco = new ConexoesMySQL();
             banco.insereEgresso(egresso); 
 
+            MenuOpçõesEgresso menu = new MenuOpçõesEgresso();
+            menu.setVisible(true);
             this.dispose();
 
         } catch (NumberFormatException e) {
