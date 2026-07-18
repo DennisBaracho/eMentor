@@ -4,6 +4,8 @@
  */
 package ementor;
 import java.util.ArrayList;
+import jiconfont.icons.font_awesome.FontAwesome;
+import jiconfont.swing.IconFontSwing;
 /**
  *
  * @author Anderson Cordeiro de Souza, Marcos Vinícius Pimentel Gomes, Dennis Francisco Guimarães de Oliveira Baracho
@@ -16,6 +18,7 @@ public class ListaTurmas extends javax.swing.JFrame {
      * Creates new form Cadastros
      */
     public ListaTurmas() {
+        IconFontSwing.register(FontAwesome.getIconFont());
         initComponents();
         
         this.setResizable(false); 
@@ -25,6 +28,9 @@ public class ListaTurmas extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
         carregarTurmas();
+        jButton3.setIcon(IconFontSwing.buildIcon(FontAwesome.FILE_PDF_O, 18, new java.awt.Color(255, 255, 255)));
+        
+        jButton2.setIcon(IconFontSwing.buildIcon(FontAwesome.ARROW_LEFT, 16, new java.awt.Color(255, 255, 255)));
     }
     
     private void carregarTurmas() {
@@ -106,7 +112,7 @@ public class ListaTurmas extends javax.swing.JFrame {
         jButton2.setBorderPainted(false);
         jButton2.addActionListener(this::jButton2ActionPerformed);
         jPanel1.add(jButton2);
-        jButton2.setBounds(580, 10, 100, 23);
+        jButton2.setBounds(540, 10, 100, 23);
 
         jButton3.setBackground(new java.awt.Color(45, 60, 135));
         jButton3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
@@ -115,7 +121,7 @@ public class ListaTurmas extends javax.swing.JFrame {
         jButton3.setBorderPainted(false);
         jButton3.addActionListener(this::jButton3ActionPerformed);
         jPanel1.add(jButton3);
-        jButton3.setBounds(690, 10, 100, 23);
+        jButton3.setBounds(650, 10, 140, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
