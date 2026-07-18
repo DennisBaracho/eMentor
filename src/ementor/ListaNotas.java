@@ -10,6 +10,14 @@ import java.util.ArrayList;
  */
 public class ListaNotas extends javax.swing.JFrame {
     
+    public enum ModoExibicao {
+        TODOS,
+        SOMENTE_EGRESSOS,
+        SOMENTE_NAO_EGRESSOS
+    }
+
+    private ModoExibicao modoAtual;
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListaNotas.class.getName());
 
     /**
@@ -17,19 +25,36 @@ public class ListaNotas extends javax.swing.JFrame {
      */
     public ListaNotas() {
         initComponents();
-        
-        this.setResizable(false); 
-    
-        this.setSize(800, 640); 
-    
+
+        this.modoAtual = ModoExibicao.TODOS;
+
+        this.setResizable(false);
+
+        this.setSize(800, 640);
+
         this.setLocationRelativeTo(null);
-        
-        carregarNotas();
+
+        carregarNotas(modoAtual);
     }
     
-    private void carregarNotas() {
+     private void carregarNotas(ModoExibicao modo) {
         ConexoesMySQL banco = new ConexoesMySQL();
-        ArrayList<Aluno> listaAlunos = banco.recuperaTodosAlunos("Nome");
+        ArrayList<? extends Aluno> listaAlunos;
+
+        switch (modo) {
+            case SOMENTE_EGRESSOS:
+                listaAlunos = banco.recuperaTodosEgressos();
+                jLabel1.setText("Lista de Notas - Egressos");
+                break;
+            case SOMENTE_NAO_EGRESSOS:
+                listaAlunos = banco.recuperaAlunosNaoEgressos("Nome");
+                jLabel1.setText("Lista de Notas - Alunos");
+                break;
+            default:
+                listaAlunos = banco.recuperaTodosAlunos("Nome");
+                jLabel1.setText("Lista de Notas - Todos");
+                break;
+        }
 
         java.util.Map<Long, java.util.List<Float>> notasPorMatricula = new java.util.HashMap<>();
 
@@ -171,6 +196,7 @@ public class ListaNotas extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Todos");
         jButton2.setBorderPainted(false);
+        jButton2.addActionListener(this::jButton2ActionPerformed);
         jPanel1.add(jButton2);
         jButton2.setBounds(170, 10, 72, 23);
 
@@ -207,8 +233,22 @@ public class ListaNotas extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         javax.swing.JFileChooser seletor = new javax.swing.JFileChooser();
+
+        String nomeSugerido;
+        switch (modoAtual) {
+            case SOMENTE_EGRESSOS:
+                nomeSugerido = "relatorio_notas_egressos.pdf";
+                break;
+            case SOMENTE_NAO_EGRESSOS:
+                nomeSugerido = "relatorio_notas_alunos.pdf";
+                break;
+            default:
+                nomeSugerido = "relatorio_notas_todos.pdf";
+                break;
+        }
+
         seletor.setDialogTitle("Salvar Relatório de Notas");
-        seletor.setSelectedFile(new java.io.File("relatorio_notas.pdf"));
+        seletor.setSelectedFile(new java.io.File(nomeSugerido));
 
         int opcao = seletor.showSaveDialog(this);
         if (opcao != javax.swing.JFileChooser.APPROVE_OPTION) {
@@ -221,10 +261,22 @@ public class ListaNotas extends javax.swing.JFrame {
         }
 
         ConexoesMySQL banco = new ConexoesMySQL();
-        ArrayList<Aluno> listaAlunos = banco.recuperaTodosAlunos("Nome");
-
         GerarRelatorioPDF gerador = new GerarRelatorioPDF();
-        gerador.gerarRelatorioNotas(listaAlunos, caminhoArquivo);
+
+        switch (modoAtual) {
+            case SOMENTE_EGRESSOS:
+                ArrayList<Egresso> listaEgressos = banco.recuperaTodosEgressos();
+                gerador.gerarRelatorioNotasEgressos(listaEgressos, caminhoArquivo);
+                break;
+            case SOMENTE_NAO_EGRESSOS:
+                ArrayList<Aluno> listaNaoEgressos = banco.recuperaAlunosNaoEgressos("Nome");
+                gerador.gerarRelatorioNotas(listaNaoEgressos, caminhoArquivo);
+                break;
+            default:
+                ArrayList<Aluno> listaTodos = banco.recuperaTodosAlunos("Nome");
+                gerador.gerarRelatorioNotas(listaTodos, caminhoArquivo);
+                break;
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -234,12 +286,19 @@ public class ListaNotas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        modoAtual = ModoExibicao.SOMENTE_EGRESSOS;
+        carregarNotas(modoAtual);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        modoAtual = ModoExibicao.SOMENTE_NAO_EGRESSOS;
+        carregarNotas(modoAtual);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        modoAtual = ModoExibicao.TODOS;
+        carregarNotas(modoAtual);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
