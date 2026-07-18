@@ -27,7 +27,7 @@ public class ListaAlunos extends javax.swing.JFrame {
 
     private void carregarAlunos() {
         ConexoesMySQL banco = new ConexoesMySQL();
-        ArrayList<Aluno> listaAlunos = banco.recuperaTodosAlunos("Nome");
+        ArrayList<Aluno> listaAlunos = banco.recuperaAlunosNaoEgressos("Nome");
 
         javax.swing.table.DefaultTableModel modelo =
             (javax.swing.table.DefaultTableModel) jTable1.getModel();
@@ -179,7 +179,7 @@ public class ListaAlunos extends javax.swing.JFrame {
         }
 
         ConexoesMySQL banco = new ConexoesMySQL();
-        ArrayList<Aluno> listaAlunos = banco.recuperaTodosAlunos("Nome");
+        ArrayList<Aluno> listaAlunos = banco.recuperaAlunosNaoEgressos("Nome");
 
         GerarRelatorioPDF gerador = new GerarRelatorioPDF();
         gerador.gerarRelatorioAlunos(listaAlunos, caminhoArquivo);

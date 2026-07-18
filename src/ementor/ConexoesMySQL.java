@@ -220,6 +220,44 @@ public class ConexoesMySQL {
         }
         return listaAlunos;
     }
+    
+    public ArrayList<Aluno> recuperaAlunosNaoEgressos(String campoOrdenacao) {
+        Connection conexao = realizaConexaoMySQL();
+        ArrayList<Aluno> listaAlunos = new ArrayList<>();
+        if (conexao == null) return listaAlunos;
+
+        String sql = "SELECT * FROM Pessoa p "
+                   + "INNER JOIN Aluno a ON p.CPF = a.CPF_Pessoa "
+                   + "WHERE a.Matricula NOT IN (SELECT Matricula_Aluno FROM Egresso) "
+                   + "ORDER BY " + campoOrdenacao;
+
+        try (PreparedStatement ps = conexao.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Aluno aluno = new Aluno();
+                aluno.setCPF(rs.getLong("CPF"));
+                aluno.setNome(rs.getString("Nome"));
+                aluno.setDataNascimento(rs.getString("DataNascimento"));
+                aluno.setTelefone(rs.getString("Telefone"));
+                aluno.setRua(rs.getString("Rua"));
+                aluno.setBairro(rs.getString("Bairro"));
+                aluno.setCidade(rs.getString("Cidade"));
+                aluno.setEstado(rs.getString("Estado"));
+                aluno.setMatricula(rs.getLong("Matricula"));
+                aluno.setPeriodo(rs.getInt("Periodo"));
+                aluno.setTurma(rs.getLong("Codigo_Turma"));
+                aluno.setNotas(buscaNotasPorMatricula(conexao, aluno.getMatricula()));
+                listaAlunos.add(aluno);
+            }
+        } catch (SQLException e) {
+            registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao recuperar Alunos não-egressos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao recuperar dados: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            desconectaMySQL(conexao);
+        }
+        return listaAlunos;
+    }
 
     public Aluno buscaAlunoPorMatricula(long matricula) {
         Connection conexao = realizaConexaoMySQL();

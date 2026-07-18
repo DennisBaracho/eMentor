@@ -50,10 +50,10 @@ public class GerarRelatorioPDF {
     public void gerarRelatorioAlunos(ArrayList<Aluno> listaAlunos, String caminhoArquivo) {
 
         Document documento = new Document(PageSize.A4,
-            85f,   // margem esquerda (3 cm)
-            57f,   // margem direita (2 cm)
-            85f,   // margem superior (3 cm)
-            57f    // margem inferior (2 cm)
+            85f,  
+            57f,  
+            85f,   
+            57f    
         );
         
         try {
@@ -278,72 +278,155 @@ public class GerarRelatorioPDF {
     }
     
     public void gerarRelatorioEgressos(ArrayList<Egresso> listaEgressos, String caminhoArquivo) {
-    Document documento = new Document(PageSize.A4, 85f, 57f, 85f, 57f);
+        Document documento = new Document(PageSize.A4, 85f, 57f, 85f, 57f);
 
-    try {
-        PdfWriter.getInstance(documento, new FileOutputStream(caminhoArquivo));
-        documento.open();
+        try {
+            PdfWriter.getInstance(documento, new FileOutputStream(caminhoArquivo));
+            documento.open();
 
-        Font fonteTitulo = new Font(Font.HELVETICA, 16, Font.BOLD);
-        Font fonteTexto = new Font(Font.HELVETICA, 12, Font.NORMAL);
-        Font fonteCabecalho = new Font(Font.HELVETICA, 12, Font.BOLD);
-        Font fonteSubtitulo = new Font(Font.HELVETICA, 12, Font.ITALIC);
+            Font fonteTitulo = new Font(Font.HELVETICA, 16, Font.BOLD);
+            Font fonteTexto = new Font(Font.HELVETICA, 12, Font.NORMAL);
+            Font fonteCabecalho = new Font(Font.HELVETICA, 12, Font.BOLD);
+            Font fonteSubtitulo = new Font(Font.HELVETICA, 12, Font.ITALIC);
 
-        Paragraph titulo = new Paragraph("eMentor-Plus - Relatório de Egressos", fonteTitulo);
-        titulo.setAlignment(Element.ALIGN_CENTER);
-        titulo.setSpacingAfter(20);
-        documento.add(titulo);
+            Paragraph titulo = new Paragraph("eMentor-Plus - Relatório de Egressos", fonteTitulo);
+            titulo.setAlignment(Element.ALIGN_CENTER);
+            titulo.setSpacingAfter(20);
+            documento.add(titulo);
 
-        String dataAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
-        Paragraph subtitulo = new Paragraph("Gerado em: " + dataAtual + "\n\n", fonteSubtitulo);
-        subtitulo.setAlignment(Element.ALIGN_CENTER);
-        subtitulo.setSpacingAfter(25);
-        documento.add(subtitulo);
+            String dataAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
+            Paragraph subtitulo = new Paragraph("Gerado em: " + dataAtual + "\n\n", fonteSubtitulo);
+            subtitulo.setAlignment(Element.ALIGN_CENTER);
+            subtitulo.setSpacingAfter(25);
+            documento.add(subtitulo);
 
-        if (listaEgressos == null || listaEgressos.isEmpty()) {
-            documento.add(new Paragraph("Nenhum egresso cadastrado.", fonteTexto));
-            JOptionPane.showMessageDialog(null, "Relatório gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
+            if (listaEgressos == null || listaEgressos.isEmpty()) {
+                documento.add(new Paragraph("Nenhum egresso cadastrado.", fonteTexto));
+                JOptionPane.showMessageDialog(null, "Relatório gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
 
-        PdfPTable tabela = new PdfPTable(6);
-        tabela.setWidthPercentage(100);
-        tabela.setWidths(new float[]{2.5f, 1.5f, 1.8f, 1.8f, 1.8f, 1.5f});
+            PdfPTable tabela = new PdfPTable(6);
+            tabela.setWidthPercentage(100);
+            tabela.setWidths(new float[]{2.5f, 1.5f, 1.8f, 1.8f, 1.8f, 1.5f});
 
-        String[] cabecalhos = {
-            "Nome", "Matrícula", "Curso Anterior", "Curso Atual", "Profissão Atual", "Faixa Salarial"
-        };
-        for (String cabecalho : cabecalhos) {
-            PdfPCell celula = new PdfPCell(new Phrase(cabecalho, fonteCabecalho));
-            celula.setHorizontalAlignment(Element.ALIGN_CENTER);
-            celula.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            tabela.addCell(celula);
-        }
+            String[] cabecalhos = {
+                "Nome", "Matrícula", "Curso Anterior", "Curso Atual", "Profissão Atual", "Faixa Salarial"
+            };
+            for (String cabecalho : cabecalhos) {
+                PdfPCell celula = new PdfPCell(new Phrase(cabecalho, fonteCabecalho));
+                celula.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celula.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                tabela.addCell(celula);
+            }
 
-        for (Egresso egresso : listaEgressos) {
-            tabela.addCell(new Phrase(egresso.getNome(), fonteTexto));
-            tabela.addCell(new Phrase(String.valueOf(egresso.getMatricula()), fonteTexto));
-            tabela.addCell(new Phrase(egresso.getCursoAnterior(), fonteTexto));
-            tabela.addCell(new Phrase(egresso.getCursoAtual(), fonteTexto));
-            tabela.addCell(new Phrase(egresso.getProfissaoAtual(), fonteTexto));
-            tabela.addCell(new Phrase(egresso.getFaixaSalarial(), fonteTexto));
-        }
+            for (Egresso egresso : listaEgressos) {
+                tabela.addCell(new Phrase(egresso.getNome(), fonteTexto));
+                tabela.addCell(new Phrase(String.valueOf(egresso.getMatricula()), fonteTexto));
+                tabela.addCell(new Phrase(egresso.getCursoAnterior(), fonteTexto));
+                tabela.addCell(new Phrase(egresso.getCursoAtual(), fonteTexto));
+                tabela.addCell(new Phrase(egresso.getProfissaoAtual(), fonteTexto));
+                tabela.addCell(new Phrase(egresso.getFaixaSalarial(), fonteTexto));
+            }
 
-        tabela.setSpacingBefore(10);
-        tabela.setSpacingAfter(10);
-        documento.add(tabela);
+            tabela.setSpacingBefore(10);
+            tabela.setSpacingAfter(10);
+            documento.add(tabela);
 
-        JOptionPane.showMessageDialog(null, "Relatório PDF gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Relatório PDF gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
-    } catch (DocumentException | IOException e) {
-        registrarErroLog("OPENPDF_ERROR", e.getMessage());
-        JOptionPane.showMessageDialog(null, "Erro ao gerar PDF:\n" + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-    } finally {
-        if (documento.isOpen()) {
-            documento.close();
+        } catch (DocumentException | IOException e) {
+            registrarErroLog("OPENPDF_ERROR", e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao gerar PDF:\n" + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            if (documento.isOpen()) {
+                documento.close();
+            }
         }
     }
-}
+
+        public void gerarRelatorioNotasEgressos(ArrayList<Egresso> listaEgressos, String caminhoArquivo) {
+        Document documento = new Document(PageSize.A4.rotate(), 40f, 40f, 60f, 40f);
+
+        try {
+            PdfWriter.getInstance(documento, new FileOutputStream(caminhoArquivo));
+            documento.open();
+
+            Font fonteTitulo = new Font(Font.HELVETICA, 16, Font.BOLD);
+            Font fonteTexto = new Font(Font.HELVETICA, 9, Font.NORMAL);
+            Font fonteCabecalho = new Font(Font.HELVETICA, 9, Font.BOLD);
+            Font fonteSubtitulo = new Font(Font.HELVETICA, 11, Font.ITALIC);
+
+            Paragraph titulo = new Paragraph("eMentor-Plus - Relatório de Notas (Egressos)", fonteTitulo);
+            titulo.setAlignment(Element.ALIGN_CENTER);
+            titulo.setSpacingAfter(15);
+            documento.add(titulo);
+
+            String dataAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
+            Paragraph subtitulo = new Paragraph("Gerado em: " + dataAtual + "\n\n", fonteSubtitulo);
+            subtitulo.setAlignment(Element.ALIGN_CENTER);
+            subtitulo.setSpacingAfter(15);
+            documento.add(subtitulo);
+
+            if (listaEgressos == null || listaEgressos.isEmpty()) {
+                documento.add(new Paragraph("Nenhum egresso cadastrado.", fonteTexto));
+                JOptionPane.showMessageDialog(null, "Relatório gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            PdfPTable tabela = new PdfPTable(12);
+            tabela.setWidthPercentage(100);
+            tabela.setWidths(new float[]{3f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1.2f});
+
+            String[] cabecalhos = {
+                "Nome", "N1", "N2", "N3", "N4", "N5", "N6", "N7", "N8", "N9", "N10", "Média"
+            };
+            for (String cabecalho : cabecalhos) {
+                PdfPCell celula = new PdfPCell(new Phrase(cabecalho, fonteCabecalho));
+                celula.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celula.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                tabela.addCell(celula);
+            }
+
+            for (Egresso egresso : listaEgressos) {
+                float[] notas = egresso.getNotas();
+                float soma = 0;
+                int quantidadeNotas = 0;
+                if (notas != null) {
+                    for (float nota : notas) {
+                        if (Float.isNaN(nota)) continue;
+                        soma += nota;
+                        quantidadeNotas++;
+                    }
+                }
+                float media = quantidadeNotas > 0 ? soma / quantidadeNotas : 0;
+
+                tabela.addCell(new Phrase(egresso.getNome(), fonteTexto));
+                for (int i = 0; i < 10; i++) {
+                    if (notas != null && notas.length > i && !Float.isNaN(notas[i])) {
+                        tabela.addCell(new Phrase(String.format("%.1f", notas[i]), fonteTexto));
+                    } else {
+                        tabela.addCell(new Phrase("", fonteTexto));
+                    }
+                }
+                tabela.addCell(new Phrase(quantidadeNotas > 0 ? String.format("%.2f", media) : "", fonteTexto));
+            }
+
+            tabela.setSpacingBefore(10);
+            tabela.setSpacingAfter(10);
+            documento.add(tabela);
+
+            JOptionPane.showMessageDialog(null, "Relatório PDF gerado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (DocumentException | IOException e) {
+            registrarErroLog("OPENPDF_ERROR", e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao gerar PDF:\n" + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            if (documento.isOpen()) {
+                documento.close();
+            }
+        }
+    }
     public void gerarRelatorioProfessores(ArrayList<Professor> listaProfessores, String caminhoArquivo) {
         Document documento = new Document(PageSize.A4, 85f, 57f, 85f, 57f);
 

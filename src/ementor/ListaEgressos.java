@@ -38,6 +38,7 @@ public class ListaEgressos extends javax.swing.JFrame {
         for (Egresso egresso : listaEgressos) {
             modelo.addRow(new Object[]{
                 egresso.getNome(),
+                egresso.getMatricula(),
                 egresso.getDataNascimento(),
                 egresso.getCPF(),
                 egresso.getTelefone(),
@@ -95,13 +96,13 @@ public class ListaEgressos extends javax.swing.JFrame {
         jTable1.setBackground(new java.awt.Color(30, 30, 30));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Data Nascimento", "CPF", "Telefone", "Rua", "Bairro", "Cidade", "Estado", "Curso Anterior", "Curso Atual", "Profissão Atual", "Faixa Salarial"
+                "Nome", "Matrícula", "Data Nascimento", "CPF", "Telefone", "Rua", "Bairro", "Cidade", "Estado", "Curso Anterior", "Curso Atual", "Profissão Atual", "Faixa Salarial"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
