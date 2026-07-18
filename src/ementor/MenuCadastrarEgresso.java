@@ -6,6 +6,8 @@ package ementor;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
+import jiconfont.icons.font_awesome.FontAwesome;
+import jiconfont.swing.IconFontSwing;
 /**
  *
  *@author Anderson Cordeiro de Souza, Marcos Vinícius Pimentel Gomes, Dennis Francisco Guimarães de Oliveira Baracho
@@ -18,6 +20,8 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
      * Creates new form Cadastros
      */
     public MenuCadastrarEgresso() {
+        IconFontSwing.register(FontAwesome.getIconFont());
+        
         initComponents();
         
         this.setResizable(false); 
@@ -26,6 +30,8 @@ public class MenuCadastrarEgresso extends javax.swing.JFrame {
     
         this.setLocationRelativeTo(null);
         
+        jButton3.setIcon(IconFontSwing.buildIcon(FontAwesome.FLOPPY_O, 18, new java.awt.Color(255, 255, 255))); 
+        jButton1.setIcon(IconFontSwing.buildIcon(FontAwesome.ARROW_LEFT, 16, new java.awt.Color(255, 255, 255)));
     }
 
     /**

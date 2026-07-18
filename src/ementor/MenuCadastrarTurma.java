@@ -6,6 +6,8 @@ package ementor;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
+import jiconfont.icons.font_awesome.FontAwesome;
+import jiconfont.swing.IconFontSwing;
 
 /**
  *
@@ -19,6 +21,7 @@ public class MenuCadastrarTurma extends javax.swing.JFrame {
      * Creates new form Cadastros
      */
     public MenuCadastrarTurma() {
+        IconFontSwing.register(FontAwesome.getIconFont());
         initComponents();
         
         this.setResizable(false); 
@@ -26,6 +29,9 @@ public class MenuCadastrarTurma extends javax.swing.JFrame {
         this.setSize(800, 640); 
     
         this.setLocationRelativeTo(null);
+        
+        jButton7.setIcon(IconFontSwing.buildIcon(FontAwesome.FLOPPY_O, 18, new java.awt.Color(255, 255, 255))); 
+        jButton6.setIcon(IconFontSwing.buildIcon(FontAwesome.ARROW_LEFT, 16, new java.awt.Color(255, 255, 255)));
         
     }
 
