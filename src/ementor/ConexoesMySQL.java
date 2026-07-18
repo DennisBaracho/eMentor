@@ -19,10 +19,9 @@ import javax.swing.JOptionPane;
 
 public class ConexoesMySQL {
     
-    /* Seção de atributos/variáveis iniciais */
     private final String caminho = "localhost"; 
     private final String porta = "3306"; 
-    private final String nome = "ementorPlus"; 
+    private final String nome = "ementorplus"; 
     private final String usuario = "root"; 
     private final String senha = "admin"; 
     private final String fusoHorario = "?useTimezone=true&serverTimezone=UTC";

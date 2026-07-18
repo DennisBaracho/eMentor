@@ -310,7 +310,7 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         jButton1.setMinimumSize(new java.awt.Dimension(100, 22));
         jButton1.addActionListener(this::jButton1ActionPerformed);
         jPanel1.add(jButton1);
-        jButton1.setBounds(550, 550, 100, 25);
+        jButton1.setBounds(520, 550, 100, 25);
 
         jButton2.setBackground(new java.awt.Color(45, 60, 135));
         jButton2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
@@ -321,7 +321,7 @@ public class MenuCadastrarProfessor extends javax.swing.JFrame {
         jButton2.setMinimumSize(new java.awt.Dimension(100, 22));
         jButton2.addActionListener(this::jButton2ActionPerformed);
         jPanel1.add(jButton2);
-        jButton2.setBounds(670, 550, 100, 25);
+        jButton2.setBounds(630, 550, 140, 25);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

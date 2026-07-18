@@ -133,7 +133,7 @@ public class MenuCadastrarTurma extends javax.swing.JFrame {
         jButton6.setPreferredSize(new java.awt.Dimension(100, 22));
         jButton6.addActionListener(this::jButton6ActionPerformed);
         jPanel1.add(jButton6);
-        jButton6.setBounds(550, 540, 100, 25);
+        jButton6.setBounds(520, 540, 100, 25);
 
         jButton7.setBackground(new java.awt.Color(45, 60, 135));
         jButton7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
@@ -145,7 +145,7 @@ public class MenuCadastrarTurma extends javax.swing.JFrame {
         jButton7.setPreferredSize(new java.awt.Dimension(100, 22));
         jButton7.addActionListener(this::jButton7ActionPerformed);
         jPanel1.add(jButton7);
-        jButton7.setBounds(670, 540, 100, 25);
+        jButton7.setBounds(630, 540, 140, 25);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
