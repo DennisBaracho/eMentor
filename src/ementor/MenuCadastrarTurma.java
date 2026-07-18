@@ -5,6 +5,7 @@
 package ementor;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -191,15 +192,60 @@ public class MenuCadastrarTurma extends javax.swing.JFrame {
             long codigoTurma = Long.parseLong(lblMatricula.getText());
 
             Turma turma = new Turma();
+            BarraProgresso barra = new BarraProgresso();
+
+            // CORREÇÃO: Torna a barra de progresso visível para o usuário
+            barra.setVisible(true); 
+
             turma.setCodigoTurma(codigoTurma);
             turma.setNomeTurma(lblPeriodo.getText());
 
-            ConexoesMySQL banco = new ConexoesMySQL();
-            banco.insereTurma(turma);
+            javax.swing.Timer timer = new javax.swing.Timer(30, null);
+            timer.addActionListener(e -> {
+                int valorAtual = barra.getBarra().getValue();
+                if (valorAtual < 90) {
+                    barra.getBarra().setValue(valorAtual + 1);
+                }
+            });
+            timer.start();
 
-            MenuOpçõesTurma menu = new MenuOpçõesTurma();
-            menu.setVisible(true);
-            this.dispose();
+            SwingWorker<Boolean, Void> worker = new SwingWorker<>() {
+                @Override
+                protected Boolean doInBackground() {
+                    try {
+                        ConexoesMySQL banco = new ConexoesMySQL();
+                        banco.insereTurma(turma);
+                        return true;
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        return false;
+                    }
+                }
+
+                @Override
+                protected void done() {
+                    timer.stop();
+                    barra.getBarra().setValue(100); 
+
+                    javax.swing.Timer fechamento = new javax.swing.Timer(150, e -> {
+                        barra.dispose();
+
+                        JOptionPane.showMessageDialog(
+                            MenuCadastrarTurma.this, 
+                            "Turma cadastrada com sucesso!", 
+                            "Sucesso", 
+                            JOptionPane.INFORMATION_MESSAGE
+                        );
+
+                        MenuOpçõesTurma menu = new MenuOpçõesTurma();
+                        menu.setVisible(true);
+                        MenuCadastrarTurma.this.dispose();
+                    });
+                    fechamento.setRepeats(false);
+                    fechamento.start();
+                }
+            };
+            worker.execute();
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,

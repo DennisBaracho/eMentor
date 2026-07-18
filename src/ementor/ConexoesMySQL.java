@@ -82,7 +82,7 @@ public class ConexoesMySQL {
             ps.setString(8, pessoa.getEstado());
             
             ps.executeUpdate(); 
-            JOptionPane.showMessageDialog(null, "Pessoa cadastrada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+           
         } catch (SQLException e) {
             registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao inserir Pessoa: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar Pessoa: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -125,7 +125,7 @@ public class ConexoesMySQL {
 
 
                 conexao.commit();
-                JOptionPane.showMessageDialog(null, "Aluno cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                
             }
         } catch (SQLException e) {
             try { conexao.rollback(); } catch (SQLException ex) {}
@@ -175,7 +175,7 @@ public class ConexoesMySQL {
                 }
 
                 conexao.commit();
-                JOptionPane.showMessageDialog(null, "Dados do Aluno alterados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            
             }
         } catch (SQLException e) {
             try { conexao.rollback(); } catch (SQLException ex) {}
@@ -281,7 +281,7 @@ public class ConexoesMySQL {
                 psUpsert.executeBatch();
 
                 conexao.commit();
-                JOptionPane.showMessageDialog(null, "Notas lançadas com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            
             }
         } catch (SQLException e) {
             try { conexao.rollback(); } catch (SQLException ex) {}
@@ -307,7 +307,7 @@ public class ConexoesMySQL {
         for (int i = 0; i < notas.length; i++) {
             notas[i] = valores.get(i);
         }
-        return notas; // tamanho = quantidade de notas realmente lançadas
+        return notas; 
 }
     // ========================================================================
     // EGRESSO - GRAVAR E ALTERAR
@@ -356,7 +356,7 @@ public class ConexoesMySQL {
                 if (notas != null) {
                     for (int i = 0; i < notas.length; i++) {
                         if (Float.isNaN(notas[i])) {
-                            continue; // nota vazia: não cria linha nenhuma em Nota
+                            continue; 
                         }
                         psNota.setLong(1, egresso.getMatricula());
                         psNota.setInt(2, i + 1);
@@ -420,7 +420,7 @@ public class ConexoesMySQL {
                     boolean temNotaValida = false;
                     for (int i = 0; i < notas.length; i++) {
                         if (Float.isNaN(notas[i])) {
-                            continue; // nota vazia: não grava nem atualiza essa posição
+                            continue; 
                         }
                         temNotaValida = true;
                         psNota.setLong(1, egresso.getMatricula());
@@ -434,7 +434,7 @@ public class ConexoesMySQL {
                 }
 
             conexao.commit();
-            JOptionPane.showMessageDialog(null, "Dados do Egresso alterados com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            
         }
     } catch (SQLException e) {
         try { conexao.rollback(); } catch (SQLException ex) {}
@@ -547,7 +547,7 @@ public class ConexoesMySQL {
             ps.setString(2, turma.getNomeTurma());
             
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Turma criada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            
         } catch (SQLException e) {
             registrarErroLog(String.valueOf(e.getErrorCode()), "Erro ao inserir Turma: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao criar turma: " + e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -612,7 +612,6 @@ public class ConexoesMySQL {
         java.sql.Connection conexao = realizaConexaoMySQL();
         if (conexao == null) return;
 
-        // Atualiza apenas o nome da turma onde o código for igual ao informado
         String sql = "UPDATE Turma SET NomeTurma = ? WHERE CodigoTurma = ?";
 
         try (java.sql.PreparedStatement ps = conexao.prepareStatement(sql)) {
@@ -621,7 +620,7 @@ public class ConexoesMySQL {
 
             int linhas = ps.executeUpdate();
             if (linhas > 0) {
-                javax.swing.JOptionPane.showMessageDialog(null, "Turma alterada com sucesso!", "Sucesso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            
             } else {
                 javax.swing.JOptionPane.showMessageDialog(null, "Nenhuma turma foi alterada.", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
             }
@@ -648,7 +647,6 @@ public class ConexoesMySQL {
             try (PreparedStatement psPessoa = conexao.prepareStatement(sqlPessoa);
                 PreparedStatement psProfessor = conexao.prepareStatement(sqlProfessor)) {
             
-            // 1. Insere os dados básicos na tabela Pessoa
                 psPessoa.setLong(1, professor.getCPF());
                 psPessoa.setString(2, professor.getNome());
                 psPessoa.setString(3, professor.getDataNascimento()); 
@@ -659,7 +657,6 @@ public class ConexoesMySQL {
                 psPessoa.setString(8, professor.getEstado());
                 psPessoa.executeUpdate(); 
             
-            // 2. Insere os dados específicos na tabela Professor vinculando pelo CPF
                 psProfessor.setLong(1, professor.getCPF());
                 psProfessor.setString(2, professor.getDataAdmissao());
                 psProfessor.setDouble(3, professor.getSalarioBruto());
@@ -668,7 +665,6 @@ public class ConexoesMySQL {
                 psProfessor.executeUpdate();
             
                 conexao.commit(); 
-                JOptionPane.showMessageDialog(null, "Professor cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException e) {
             try { conexao.rollback(); } catch (SQLException ex) {} 
@@ -682,7 +678,6 @@ public class ConexoesMySQL {
         java.sql.Connection conexao = realizaConexaoMySQL();
         if (conexao == null) return null;
 
-        // Faz o JOIN entre Pessoa e Professor usando o CPF
         String sql = "SELECT * FROM Pessoa p "
                    + "INNER JOIN Professor prof ON p.CPF = prof.CPF_Pessoa "
                    + "WHERE p.CPF = ?";
@@ -692,7 +687,7 @@ public class ConexoesMySQL {
             try (java.sql.ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Professor prof = new Professor();
-                    // Dados de Pessoa
+            
                     prof.setCPF(rs.getLong("CPF"));
                     prof.setNome(rs.getString("Nome"));
                     prof.setDataNascimento(rs.getString("DataNascimento"));
@@ -702,7 +697,7 @@ public class ConexoesMySQL {
                     prof.setCidade(rs.getString("Cidade"));
                     prof.setEstado(rs.getString("Estado"));
 
-                    // Dados de Professor (verifique se os nomes das colunas no seu MySQL sÃ£o esses mesmos)
+                  
                     prof.setDataAdmissao(rs.getString("DataAdmissao"));
                     prof.setSalarioBruto(rs.getDouble("SalarioBruto"));
                     prof.setChefia(rs.getBoolean("isChefia"));
@@ -769,7 +764,7 @@ public class ConexoesMySQL {
             try (java.sql.PreparedStatement psPessoa = conexao.prepareStatement(sqlPessoa);
                  java.sql.PreparedStatement psProfessor = conexao.prepareStatement(sqlProfessor)) {
 
-                // Atualiza tabela Pessoa
+            
                 psPessoa.setString(1, professor.getNome());
                 psPessoa.setString(2, professor.getDataNascimento());
                 psPessoa.setString(3, professor.getTelefone());
@@ -780,7 +775,6 @@ public class ConexoesMySQL {
                 psPessoa.setLong(8, professor.getCPF());
                 psPessoa.executeUpdate();
 
-                // Atualiza tabela Professor
                 psProfessor.setString(1, professor.getDataAdmissao());
                 psProfessor.setDouble(2, professor.getSalarioBruto());
                 psProfessor.setBoolean(3, professor.isChefia());
@@ -789,7 +783,7 @@ public class ConexoesMySQL {
                 psProfessor.executeUpdate();
 
                 conexao.commit();
-                javax.swing.JOptionPane.showMessageDialog(null, "Dados do Professor alterados com sucesso!", "Sucesso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                
             }
         } catch (java.sql.SQLException e) {
             try { conexao.rollback(); } catch (java.sql.SQLException ex) {}

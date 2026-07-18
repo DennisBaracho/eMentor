@@ -5,6 +5,7 @@
 package ementor;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -335,7 +336,7 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Preencha o nome.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (lblDataNascimento.getText().isBlank()) {
+        if (lblDataNascimento.getText().isBlank() || lblDataNascimento.getText().equals("AAAA/MM/DD")) {
             JOptionPane.showMessageDialog(this, "Preencha a data de nascimento.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -363,7 +364,6 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Preencha o estado.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
         if (lblMatricula.getText().isBlank()) {
             JOptionPane.showMessageDialog(this, "Preencha a matrícula.", "Campo obrigatório", JOptionPane.WARNING_MESSAGE);
             return;
@@ -378,8 +378,8 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
         }
 
         try {
-            float[] notas = new float[10]; // todas zeradas — serão lançadas depois em outra tela
-            long cpf = Long.parseLong(lblCPF.getText());
+            float[] notas = new float[10]; 
+            long cpf = Long.parseLong(lblCPF.getText().replaceAll("[^0-9]", "")); 
             long matricula = Long.parseLong(lblMatricula.getText());
             int periodo = Integer.parseInt(lblPeriodo.getText());
             long turma = Long.parseLong(lblTurma.getText());
@@ -388,18 +388,63 @@ public class MenuCadastrarAluno extends javax.swing.JFrame {
             aluno.setDados(
                 lblNome.getText(), lblDataNascimento.getText(), cpf, lblTelefone.getText(),
                 lblRua.getText(), lblBairro.getText(), lblCidade.getText(), lblEstado.getText(),
-                matricula, periodo, notas, turma);
+                matricula, periodo, notas, turma
+            );
 
-            ConexoesMySQL banco = new ConexoesMySQL();
-            banco.insereAluno(aluno);
+            BarraProgresso barra = new BarraProgresso();
+            barra.setVisible(true); 
 
-            MenuOpçõesAluno MinhaJanela = new MenuOpçõesAluno();
-            MinhaJanela.setVisible(true);
-            this.dispose();
+            javax.swing.Timer timer = new javax.swing.Timer(30, null);
+            timer.addActionListener(e -> {
+                int valorAtual = barra.getBarra().getValue();
+                if (valorAtual < 90) {
+                    barra.getBarra().setValue(valorAtual + 1);
+                }
+            });
+            timer.start();
+
+            // 5. Execução em Segundo Plano com SwingWorker
+            SwingWorker<Boolean, Void> worker = new SwingWorker<>() {
+                @Override
+                protected Boolean doInBackground() {
+                    try {
+                        ConexoesMySQL banco = new ConexoesMySQL();
+                        banco.insereAluno(aluno);
+                        return true;
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        return false;
+                    }
+                }
+
+                @Override
+                protected void done() {
+                    timer.stop();
+                    barra.getBarra().setValue(100);
+
+                    javax.swing.Timer fechamento = new javax.swing.Timer(150, e -> {
+                        barra.dispose();
+
+                        JOptionPane.showMessageDialog(
+                            MenuCadastrarAluno.this, 
+                            "Aluno cadastrado com sucesso!", 
+                            "Sucesso", 
+                            JOptionPane.INFORMATION_MESSAGE
+                        );
+
+                        MenuOpçõesAluno minhaJanela = new MenuOpçõesAluno();
+                        minhaJanela.setVisible(true);
+                        MenuCadastrarAluno.this.dispose();
+                    });
+                    fechamento.setRepeats(false);
+                    fechamento.start();
+                }
+            };
+            worker.execute();
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
-                "Verifique se CPF, telefone, matrícula, período e turma foram preenchidos com números válidos.",
+                "Verifique se CPF, matrícula, período e turma foram preenchidos com números válidos.",
                 "Erro de formato", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
