@@ -198,7 +198,7 @@ public class MenuOpçõesEgresso extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        ListaNotas MinhaJanela = new ListaNotas();
+        ListaNotas MinhaJanela = new ListaNotas(true);
         MinhaJanela.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton7ActionPerformed

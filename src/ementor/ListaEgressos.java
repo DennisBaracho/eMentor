@@ -93,7 +93,7 @@ public class ListaEgressos extends javax.swing.JFrame {
         jPanel1.add(jLabel1);
         jLabel1.setBounds(20, 5, 220, 25);
 
-        jTable1.setBackground(new java.awt.Color(30, 30, 30));
+        jTable1.setBackground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null, null, null, null},
