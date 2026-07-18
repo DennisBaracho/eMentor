@@ -96,6 +96,9 @@ public class ListaNotas extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         jButton4.setBackground(new java.awt.Color(45, 60, 135));
         jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -117,9 +120,8 @@ public class ListaNotas extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("Lista de Notas");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(20, 10, 400, 16);
+        jLabel1.setBounds(20, 10, 120, 16);
 
-        jTable1.setBackground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null, null, null},
@@ -134,7 +136,7 @@ public class ListaNotas extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(0, 40, 800, 560);
+        jScrollPane1.setBounds(0, 40, 800, 510);
 
         jButton5.setBackground(new java.awt.Color(45, 60, 135));
         jButton5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
@@ -153,6 +155,33 @@ public class ListaNotas extends javax.swing.JFrame {
         jButton6.addActionListener(this::jButton6ActionPerformed);
         jPanel1.add(jButton6);
         jButton6.setBounds(690, 10, 100, 23);
+
+        jButton1.setBackground(new java.awt.Color(45, 60, 135));
+        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Egressos");
+        jButton1.setToolTipText("");
+        jButton1.setBorderPainted(false);
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+        jPanel1.add(jButton1);
+        jButton1.setBounds(350, 10, 90, 23);
+
+        jButton2.setBackground(new java.awt.Color(45, 60, 135));
+        jButton2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Todos");
+        jButton2.setBorderPainted(false);
+        jPanel1.add(jButton2);
+        jButton2.setBounds(170, 10, 72, 23);
+
+        jButton3.setBackground(new java.awt.Color(45, 60, 135));
+        jButton3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Alunos");
+        jButton3.setBorderPainted(false);
+        jButton3.addActionListener(this::jButton3ActionPerformed);
+        jPanel1.add(jButton3);
+        jButton3.setBounds(250, 10, 90, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -204,6 +233,14 @@ public class ListaNotas extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -230,6 +267,9 @@ public class ListaNotas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
